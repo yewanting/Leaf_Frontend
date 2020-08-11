@@ -47,8 +47,15 @@
     </div>
     <!-- 中间部分 -->
     <div class="mid" id="mainview">
-      <div v-for="(com,index) in curComList" :key="index" @click="change_form">
-        <MyButton v-if="com.type=='button'" :index="index" :title="com.attr.title" :background_color="com.attr.background_color" :height="30" :width="100"></MyButton>
+      <div v-for="(com,index) in curComList" :key="index" >
+        <MyButton
+          v-if="com.type=='button'"
+          :index="index"
+          :title="com.attr.title"
+          :background_color="com.attr.background_color"
+          :height="30"
+          :width="100"
+        ></MyButton>
       </div>
     </div>
     <div class="right">
@@ -64,30 +71,9 @@
       </div>
       <div class="right_content">
         <div>
-          <span>{{curComID}}</span>
-          <ul v-show="('button'==curComType)">
-
-            <li v-for="(v,k) in curComAttr" :key="k">
-              <div v-show="k=='title'">
-                <span>按钮文本：</span>
-                <input 
-                  type="text"
-                  :value="v"
-                  @change="onChange('title',$event.target.value)"
-                />
-              </div>
-
-               <input v-show="k=='background_color'"
-                type="color"
-                :value="v"
-                @change="onChange('background_color',$event.target.value)"
-              />
-
-            </li>
-
-          </ul>
-
-
+          <div v-show="('button'==curComType)">
+            <MyButtonChange />
+          </div>
         </div>
       </div>
     </div>
@@ -96,6 +82,8 @@
 
 <script>
 import MyButton from "../components/button.vue";
+import MyButtonChange from "../components/button_change.vue";
+
 export default {
   data() {
     return {
@@ -262,62 +250,43 @@ export default {
     };
   },
 
-  computed:{
-    curComList(){
-      return this.$store.state.cur_com_list
+  computed: {
+    curComList() {
+      return this.$store.state.cur_com_list;
     },
-    curComType(){
-      return this.$store.state.cur_com_type
+    curComType() {
+      return this.$store.state.cur_com_type;
     },
-    curComAttr(){
-      return this.$store.state.cur_com_attr
+    curComAttr() {
+      return this.$store.state.cur_com_attr;
     },
-    curComID(){
-      return this.$store.state.cur_com_id
-    }
+    curComID() {
+      return this.$store.state.cur_com_id;
+    },
   },
 
   components: {
     MyButton,
+    MyButtonChange,
   },
   mounted() {
     this.initList();
   },
   methods: {
-    onChange(attr,value){
-      console.log(attr,value)
-      var curlist = this.curComList
-      curlist[this.curComID]["attr"][attr] = value
 
-      var curattr = this.curComAttr
-      curattr[attr] = value
-
-      this.$store.commit("CURCOMATTR",curattr)
-      this.$store.commit("CURCOMLIST",curlist)
-
-    },
-    change_form() {
-      this.component_choose_change = this.$store.state.cur_click_Element;
-      this.component_choose = this.$store.state.cur_click_component;
-    },
-   
     choose_component(component) {
-
-      var curlist = this.curComList
+      var curlist = this.curComList;
 
       if (component == "按钮") {
-
-
         curlist.push({
           type: "button",
-          attr:{
+          attr: {
             title: "猪猪按钮" + curlist.length,
-            background_color:"#ffffff",
+            background_color: "#ffffff",
             height: 30,
             width: 200,
-          }
-          
-          
+
+          },
         });
         this.$store.commit("CURCOMLIST", curlist);
       }
