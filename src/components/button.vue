@@ -33,43 +33,7 @@ export default {
         padding_left: "0",
       },
 
-      // stylevalue:
-      //   'height:' +
-      //   this.height +
-      //   'px;' +
-      //   'width:' +
-      //   this.width +
-      //   'px;' +
-      //   'background-color:' +
-      //   this.background_color +
-      //   ';' +
-      //   'border-color:' +
-      //   this.border_color +
-      //   ';' +
-      //   'color:' +
-      //   this.text_color +
-      //   ';' +
-      //   'font-size' +
-      //   this.text_size +
-      //   'px;' +
-      //   'width' +
-      //   this.width +
-      //   'px;' +
-      //   'height' +
-      //   this.height +
-      //   'px;' +
-      //   'line-height' +
-      //   this.line_height +
-      //   'px;' +
-      //   'border-radius' +
-      //   this.border_radius +
-      //   'px;' +
-      //   'padding-top' +
-      //   this.padding_top +
-      //   'px;' +
-      //   'padding-left' +
-      //   this.padding_left +
-      //   'px;',
+     
     };
   },
   computed:{
@@ -160,7 +124,7 @@ export default {
       var e = event || window.event;
       // console.log("开始拖拽");
       // console.log("当前移动的是", e.target);
-
+    //  console.log(e.target.parentNode)
       this.$store.commit("CURRENTELEM", e.target.parentNode);
       // this.$store.state.currentElem = e.target.parentNode
     },
@@ -169,16 +133,16 @@ export default {
       event.preventDefault();
     },
     onDrop(event) {
-      console.log(event);
+      // console.log(event);
       var e = event || window.event;
 
       var curNode = this.$store.state.currentElem;
       var targetNode = this.$el.parentNode;
       var parentnode = curNode.parentNode;
 
-      console.log(curNode);
-      console.log(targetNode);
-      console.log(parentnode);
+      // console.log(curNode);
+      // console.log(targetNode);
+      // console.log(parentnode);
 
       parentnode.insertBefore(curNode, targetNode);
     },

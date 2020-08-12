@@ -49,7 +49,7 @@
     <div class="mid" id="mainview">
       <div v-for="(com,index) in curComList" :key="index">
         <!-- 按钮 -->
-        <MyButton
+        <my_button
           v-if="com.type=='button'"
           :index="index"
           :position="com.attr.position"
@@ -64,8 +64,19 @@
           :border_radius="com.attr.border_radius"
           :padding_top="com.attr.padding_top"
           :padding_left="com.attr.padding_left"
-        ></MyButton>
+        ></my_button>
 
+        <!-- 轮播图 -->
+        <my_banner
+         v-if="com.type=='banner'"
+         :index="index"
+         :imgsrc="com.attr.imgsrc"
+         :width="com.attr.width"
+         :height="com.attr.height"
+         :border_radius="com.attr.border_radius"
+        >
+
+        </my_banner>
 
       </div>
     </div>
@@ -82,8 +93,11 @@
       </div>
       <div class="right_content">
         <div>
-          <div v-show="('button'==curComType)">
-            <MyButtonChange></MyButtonChange>
+          <div v-if="('button'==curComType)">
+            <my_button_change></my_button_change>
+          </div>
+          <div v-if="('banner'==curComType)">
+            <my_banner_change></my_banner_change>
           </div>
         </div>
       </div>
@@ -92,9 +106,13 @@
 </template>
 
 <script>
-import MyButton from "../components/button.vue";
-import MyButtonChange from "../components/button_change.vue";
+// 按钮
+import my_button from "../components/button.vue";
+import my_button_change from "../components/button_change.vue";
 
+// 轮播图
+import my_banner from "../components/banner.vue"
+import my_banner_change from "../components/banner_change.vue"
 export default {
   data() {
     return {
@@ -186,9 +204,8 @@ export default {
           content: "砍价",
         },
       ],
-
       titlelist: ["组件样式", "组件配置"],
-       
+     
     };
   },
 
@@ -211,8 +228,10 @@ export default {
   },
 
   components: {
-    MyButton,
-    MyButtonChange,
+    my_button,
+    my_button_change,
+    my_banner,
+    my_banner_change 
   },
   mounted() {
     this.initList();
@@ -220,6 +239,23 @@ export default {
   methods: {
     choose_component(component) {
       var curlist = this.curComList;
+
+      if(component == '轮播'){
+        curlist.push({
+          type: "banner",
+          attr: {
+           imgsrc:[ "../../static/images/lunbo1.png",
+            "../../static/images/lunbo2.png",
+            "../../static/images/lunbo3.png",
+            "../../static/images/lunbo4.png",
+            "../../static/images/lunbo1.png",
+            ],
+            width: "500",
+            height: "200",
+            border_radius:"0"
+          },
+        });
+      }
 
       if (component == "按钮") {
         curlist.push({
@@ -237,9 +273,11 @@ export default {
             padding_top: "0",
             padding_left: "0",
           },
-        });
-        this.$store.commit("CURCOMLIST", curlist);
+        });    
       }
+
+
+      this.$store.commit("CURCOMLIST", curlist);
     },
 
  
@@ -350,6 +388,8 @@ ul {
   position: absolute;
   height: 800px;
   width: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   top: 0;
   left: 0;
   right: 0;
