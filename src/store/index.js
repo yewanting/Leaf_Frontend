@@ -9,10 +9,11 @@ const state = {
     currentElem:null,
     cur_com_list:[
        ],
-
+    title_choice:"组件样式",
     cur_com_type:"",
     cur_com_attr:{},
-    cur_com_id:-1
+    cur_com_id:-1,
+    
 
 
 

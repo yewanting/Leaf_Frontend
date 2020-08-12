@@ -1,5 +1,6 @@
 const CURRENTELEM = 'CURRENTELEM'
 const CURCOMLIST = 'CURCOMLIST'
+const TITLECHOICE = 'TITLECHOICE'
 const CURCOMTYPE = 'CURCOMTYPE'
 const CURCOMATTR = 'CURCOMATTR'
 const CURCOMID = 'CURCOMID'
@@ -12,6 +13,10 @@ export default {
 
     [CURCOMLIST](state,res){
         state.cur_com_list = res   
+    },
+
+    [TITLECHOICE](state,res){
+        state.title_choice = res   
     },
 
     [CURCOMTYPE](state,res){

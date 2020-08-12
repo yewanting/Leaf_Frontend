@@ -47,15 +47,26 @@
     </div>
     <!-- 中间部分 -->
     <div class="mid" id="mainview">
-      <div v-for="(com,index) in curComList" :key="index" >
+      <div v-for="(com,index) in curComList" :key="index">
+        <!-- 按钮 -->
         <MyButton
           v-if="com.type=='button'"
           :index="index"
+          :position="com.attr.position"
           :title="com.attr.title"
           :background_color="com.attr.background_color"
-          :height="30"
-          :width="100"
+          :border_color="com.attr.border_color"
+          :text_color="com.attr.text_color"
+          :text_size="com.attr.text_size"
+          :width="com.attr.width"
+          :height="com.attr.height"
+          :line_height="com.attr.line_height"
+          :border_radius="com.attr.border_radius"
+          :padding_top="com.attr.padding_top"
+          :padding_left="com.attr.padding_left"
         ></MyButton>
+
+
       </div>
     </div>
     <div class="right">
@@ -63,7 +74,7 @@
         <ul>
           <li v-for="(item_title,index) in titlelist" :key="index">
             <span
-              :class="((title_choice==item_title)?'isclicked':'')"
+              :class="((titleChoice==item_title)?'isclicked':'')"
               @click="clicktitle(item_title)"
             >{{item_title}}</span>
           </li>
@@ -72,7 +83,7 @@
       <div class="right_content">
         <div>
           <div v-show="('button'==curComType)">
-            <MyButtonChange />
+            <MyButtonChange></MyButtonChange>
           </div>
         </div>
       </div>
@@ -175,82 +186,16 @@ export default {
           content: "砍价",
         },
       ],
-      count: 0,
-      imgs: ["../../static/images/1.jpg"],
-      pic: "../../static/images/1.jpg",
-
-      componentlist: [],
 
       titlelist: ["组件样式", "组件配置"],
-      title_choice: "组件样式",
-      btn_choices: [
-        {
-          title: "按钮位置",
-          content_type: "radio",
-        },
-        {
-          title: "按钮背景颜色",
-          attrName: "background",
-          content_type: "color",
-        },
-        {
-          title: "按钮边框颜色",
-          attrName: "border_color",
-          content_type: "color",
-        },
-        {
-          title: "文字内容",
-          attrName: "text_content",
-          content_type: "text",
-        },
-        {
-          title: "文字颜色",
-          attrName: "text_color",
-          content_type: "color",
-        },
-        {
-          title: "文字大小",
-          attrName: "text_size",
-          content_type: "text",
-        },
-        {
-          title: "按钮宽度",
-          attrName: "Width",
-          content_type: "text",
-        },
-        {
-          title: "按钮高度",
-          attrName: "Height",
-          content_type: "text",
-        },
-        {
-          title: "按钮行高",
-          attrName: "line_height",
-          content_type: "text",
-        },
-        {
-          title: "按钮圆角",
-          attrName: "border_radius",
-          content_type: "text",
-        },
-        {
-          title: "上内边距",
-          attrName: "padding_top",
-          content_type: "text",
-        },
-        {
-          title: "下内边距",
-          attrName: "padding_bottom",
-          content_type: "text",
-        },
-      ],
-      component_choose: "",
-      component_choose_change: "",
-      value: "",
+       
     };
   },
 
   computed: {
+    titleChoice(){
+      return this.$store.state. title_choice;
+    },
     curComList() {
       return this.$store.state.cur_com_list;
     },
@@ -273,7 +218,6 @@ export default {
     this.initList();
   },
   methods: {
-
     choose_component(component) {
       var curlist = this.curComList;
 
@@ -281,48 +225,25 @@ export default {
         curlist.push({
           type: "button",
           attr: {
-            title: "猪猪按钮" + curlist.length,
+            title: "按钮" + curlist.length,
             background_color: "#ffffff",
-            height: 30,
-            width: 200,
-
+            border_color: "#000000",
+            text_color: "#000000",
+            text_size: "15",
+            width: "100",
+            height: "30",
+            line_height: "0",
+            border_radius: "0",
+            padding_top: "0",
+            padding_left: "0",
           },
         });
         this.$store.commit("CURCOMLIST", curlist);
       }
     },
 
-    initmove() {
-      let list = document.getElementById("target").childNodes;
-      //  console.log(lilist.length);
-      for (let i = 0; i < list.length; i++) {
-        this.move(list[i]);
-      }
-    },
-    move(source) {
-      source.ondragstart = function (event) {
-        var e = event || window.event;
-        console.log("开始拖拽");
-        console.log("当前移动的是", e.target.id);
-        e.dataTransfer.setData("text", e.target.id);
-      };
+ 
 
-      source.ondragover = function (event) {
-        var event = event || window.event;
-        event.preventDefault();
-      };
-      source.ondrop = function (event) {
-        var e = event || window.event;
-        var data = e.dataTransfer.getData("text");
-        var fa = document.getElementById("target");
-        console.log("最终放下的位置", e.target.id);
-        //要放的元素是data
-        fa.insertBefore(document.getElementById(data), e.target);
-        //暂时先实现组件只能从下往上拖
-        //从上往下拖还没实现，需要判断拖动的方向，并且写个函数insertAfter
-        //insertAfter(document.getElementById(data),target)
-      };
-    },
     initList() {
       // 初始化上部组件库
       let curtopul = document.getElementById("component_ul");
@@ -357,7 +278,7 @@ export default {
       }
     },
     clicktitle(item_title) {
-      this.title_choice = item_title;
+      this.$store.commit("TITLECHOICE",item_title)
     },
   },
 };
