@@ -17,6 +17,12 @@
         <input type="text" :value="v" @change="onChange('border_radius',$event.target.value)" />
       </div>
 
+      <div v-show="k=='banner_seconds'">
+        <span>轮播速度(图片停留秒数)：</span>
+        <input type="text" :value="v" @change="onChange('banner_seconds',$event.target.value)" />
+      </div>
+
+
     </div>
   </div>
 </template>
@@ -31,6 +37,7 @@ export default {
         width: "",
         height: "",
         border_radius: "",
+        banner_seconds:"",
       },
     };
   },
@@ -55,7 +62,7 @@ export default {
   created() {},
   methods: {
     onChange(attr, value) {
-      // console.log(attr,value);
+      console.log(attr,value);
       var curlist = this.curComList;
 
       curlist[this.curComID]["attr"][attr] = value;

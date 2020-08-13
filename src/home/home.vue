@@ -74,9 +74,33 @@
          :width="com.attr.width"
          :height="com.attr.height"
          :border_radius="com.attr.border_radius"
+         :banner_seconds="com.attr.banner_seconds"
         >
-
         </my_banner>
+
+        <!-- 课程列表 -->
+        <my_courselist
+        v-if="com.type=='courselist'"
+        :index = index
+        :title = com.attr.title
+        :title_background_color = com.attr.title_background_color
+        :title_color = com.attr.title_color
+        :title_font_size = com.attr.title_font_size
+        :descripe = com.attr.descripe
+        :descripe_background_color = com.attr.descripe_background_color
+        :descripe_color = com.attr.descripe_color
+        :descripe_font_size = com.attr.descripe_font_size
+        :price = com.attr.price
+        :price_background_color = com.attr.price_background_color
+        :price_color = com.attr.price_color
+        :price_position = com.attr.price_position
+        :price_size = com.attr.price_size
+        :course_img = com.attr.course_img
+        :course_img_width = com.attr.course_img_width
+        :course_img_height = com.attr.course_img_height
+        :course_img_border_radius = com.attr.course_img_border_radius
+        >
+        </my_courselist>
 
       </div>
     </div>
@@ -99,6 +123,9 @@
           <div v-if="('banner'==curComType)">
             <my_banner_change></my_banner_change>
           </div>
+          <div v-if="('courselist'==curComType)">
+            <my_courselist_change></my_courselist_change>
+          </div>
         </div>
       </div>
     </div>
@@ -113,6 +140,11 @@ import my_button_change from "../components/button_change.vue";
 // 轮播图
 import my_banner from "../components/banner.vue"
 import my_banner_change from "../components/banner_change.vue"
+
+
+// 课程列表
+import my_courselist from "../components/courselist.vue"
+import my_courselist_change from "../components/courselist_change.vue"
 export default {
   data() {
     return {
@@ -231,7 +263,9 @@ export default {
     my_button,
     my_button_change,
     my_banner,
-    my_banner_change 
+    my_banner_change ,
+    my_courselist,
+    my_courselist_change,
   },
   mounted() {
     this.initList();
@@ -252,7 +286,8 @@ export default {
             ],
             width: "500",
             height: "200",
-            border_radius:"0"
+            border_radius:"0",
+            banner_seconds:"3000",
           },
         });
       }
@@ -275,6 +310,37 @@ export default {
           },
         });    
       }
+      // 传单个课程
+      // 传课程群，在原有课程后面添加
+      //从父组件实时刷新待解决
+      if(component=="课程列表"){
+         curlist.push({
+          type: "courselist",
+          attr: {
+            title: "课程" + curlist.length,
+            title_background_color: "#ffffff",
+            title_color:"#666666",
+            title_font_size:"20",
+            descripe:"课程"+curlist.length+"简介",
+            descripe_background_color: "#ffffff",
+            descripe_color:"#000000",
+            descripe_font_size:"15",
+            price:"￥"+99,
+            price_position:"right",
+            price_background_color:"#ffffff",
+            price_color:"#123456",
+            price_size:"15",
+            course_img:
+               "../../static/images/1.jpg",
+            course_img_width:"100",
+            course_img_height:"100",
+            course_img_border_radius:"0",
+          },
+        }); 
+      }
+      // console.log("home",this)
+
+     
 
 
       this.$store.commit("CURCOMLIST", curlist);

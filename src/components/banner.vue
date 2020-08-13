@@ -48,17 +48,10 @@ export default {
   data() {
     return {
       attr: {
-        title: "",
-        background_color: "#ffffff",
         border_color: "#ffffff",
-        text_color: "#000000",
-        text_size: "15",
         width: "100",
         height: "30",
-        line_height: "0",
-        border_radius: "0",
-        padding_top: "0",
-        padding_left: "0",
+        banner_seconds:"3000"
       },
       curindex: 0,
       timer: null,
@@ -111,22 +104,15 @@ export default {
   props: [
     "index",
     "imgsrc",
-    "title",
-    "background_color",
-    "border_color",
-    "text_color",
-    "text_size",
+    "border_radius",
     "width",
     "height",
-    "line_height",
-    "border_radius",
-    "padding_top",
-    "padding_left",
+    "banner_seconds"
   ],
 
   created() {
     console.log("成功创建一个轮播图");
-    setInterval(this.change_auto, 3000);
+    setInterval(this.change_auto, this.banner_seconds);
   },
   methods: {
     change_auto() {
@@ -162,7 +148,7 @@ export default {
         totalbanner.style.marginLeft = "-" + this.kuan * this.curindex + "px";
         totalbanner.style.transition = 0.3 + "s";
       }
-      this.timer = setInterval(this.change_auto, 3000);
+      this.timer = setInterval(this.change_auto,this.banner_seconds);
     },
     click_com_change() {
       // this.attr.title = this.title;
@@ -174,6 +160,7 @@ export default {
       this.attr.height = this.height;
       // this.attr.line_height = this.line_height;
       this.attr.border_radius = this.border_radius;
+      this.attr.banner_seconds = this.banner_seconds;
       // this.attr.padding_top = this.padding_top;
       // this.attr.padding_left = this.padding_left;
 
