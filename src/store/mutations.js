@@ -4,6 +4,9 @@ const TITLECHOICE = 'TITLECHOICE'
 const CURCOMTYPE = 'CURCOMTYPE'
 const CURCOMATTR = 'CURCOMATTR'
 const CURCOMID = 'CURCOMID'
+const IFYES = 'IFYES'
+const IFSHOWYESNO = 'IFSHOWYESNO'
+const DELETECOMPONENT = 'DELETECOMPONENT'
 
 export default {
     [CURRENTELEM](state,res){
@@ -30,6 +33,15 @@ export default {
     [CURCOMID](state,res){
         state.cur_com_id = res   
     },
+    [IFYES](state,res){
+        state.if_yes = res
+    },
+    [IFSHOWYESNO](state,res){
+        state.if_show_yes_no = res
+    },
+    [DELETECOMPONENT](state,res){
+        state.delete_component = res
+    }
   
   
 }

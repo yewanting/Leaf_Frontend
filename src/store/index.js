@@ -13,6 +13,9 @@ const state = {
     cur_com_type:"",
     cur_com_attr:{},
     cur_com_id:-1,
+    if_show_yes_no:0,
+    if_yes:"否",
+    delete_component:null,
     
 
 

@@ -47,6 +47,7 @@
     </div>
     <!-- 中间部分 -->
     <div class="mid" id="mainview">
+      <my_toast></my_toast>
       <div v-for="(com,index) in curComList" :key="index">
         <!-- 按钮 -->
         <my_button
@@ -102,6 +103,22 @@
         >
         </my_courselist>
 
+
+        <!-- 搜索框 -->
+        <my_find
+        v-if="com.type=='find'"
+        :index = index
+        :text = com.attr.text
+        :border_color = com.attr.border_color
+        :text_color = com.attr.text_color
+        :text_size = com.attr.text_size
+        :big_height = com.attr.big_height
+        :width = com.attr.width
+        :height = com.attr.height
+        :border_radius = com.attr.border_radius
+        :find_icon_size = com.attr.find_icon_size
+        >
+        </my_find>
       </div>
     </div>
     <div class="right">
@@ -126,6 +143,10 @@
           <div v-if="('courselist'==curComType)">
             <my_courselist_change></my_courselist_change>
           </div>
+           <div v-if="('find'==curComType)">
+            <my_find_change></my_find_change>
+          </div>
+
         </div>
       </div>
     </div>
@@ -133,6 +154,7 @@
 </template>
 
 <script>
+import my_toast from '../components/toast.vue';
 // 按钮
 import my_button from "../components/button.vue";
 import my_button_change from "../components/button_change.vue";
@@ -145,6 +167,10 @@ import my_banner_change from "../components/banner_change.vue"
 // 课程列表
 import my_courselist from "../components/courselist.vue"
 import my_courselist_change from "../components/courselist_change.vue"
+
+// 搜索框
+import my_find from "../components/find.vue"
+import my_find_change from "../components/find_change.vue"
 export default {
   data() {
     return {
@@ -260,12 +286,15 @@ export default {
   },
 
   components: {
+    my_toast,
     my_button,
     my_button_change,
     my_banner,
     my_banner_change ,
     my_courselist,
     my_courselist_change,
+    my_find,
+    my_find_change,
   },
   mounted() {
     this.initList();
@@ -317,11 +346,11 @@ export default {
          curlist.push({
           type: "courselist",
           attr: {
-            title: "课程" + curlist.length,
+            title: "课程",
             title_background_color: "#ffffff",
             title_color:"#666666",
             title_font_size:"20",
-            descripe:"课程"+curlist.length+"简介",
+            descripe:"课程简介",
             descripe_background_color: "#ffffff",
             descripe_color:"#000000",
             descripe_font_size:"15",
@@ -339,6 +368,24 @@ export default {
         }); 
       }
       // console.log("home",this)
+
+      if(component=="搜索")
+      {
+          curlist.push({
+          type: "find",
+          attr: {
+            text:"请输入搜索内容",
+            border_color: "#b8b5b5",
+            text_color: "#000000",
+            text_size: "15",
+            big_height:"50",
+            width: "70",
+            height: "30",
+            border_radius: "50",
+            find_icon_size:"20"
+          },
+        }); 
+      }
 
      
 

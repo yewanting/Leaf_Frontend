@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10594760",
+      "name": "表-公报_jurassic",
+      "font_class": "jurassic_gongbao",
+      "unicode": "e6b1",
+      "unicode_decimal": 59057
+    },
+    {
       "icon_id": "4551252",
       "name": "加号",
       "font_class": "jiahao",

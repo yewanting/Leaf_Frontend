@@ -136,7 +136,7 @@ export default {
     },
     get_pre() {
       clearInterval(this.timer);
-      console.log(this.curindex);
+      // console.log(this.curindex);
       if (this.curindex == 0) {
         this.curindex = this.maxlen - 1;
         var totalbanner = document.getElementById("banner");

@@ -115,10 +115,10 @@
 
       <!-- 添加新课程 -->
     </div>
-    <!-- <div class="add" @click="add_course">
+    <div class="add" @click="add_course">
         <i class = "iconfont icon-jiahao"></i>
         <span>添加新课程</span>
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -179,46 +179,46 @@ export default {
       this.$store.commit("CURCOMATTR", curattr);
       this.$store.commit("CURCOMLIST", curlist);
     },
-    // add_course() {
-    //   console.log(this.curComID);
-    //   let tmp_list = this.curComList;
-    //   for (let i = tmp_list.length - 1; i >= 0; i--) {
-    //     tmp_list[i + 1] = tmp_list[i];
-    //   }
-    //   tmp_list[0] = {
-    //     type: "courselist",
-    //     attr: {
-    //       title: "课程",
-    //       title_background_color: "#ffffff",
-    //       title_color: "#666666",
-    //       title_font_size: "20",
-    //       descripe: "课程简介",
-    //       descripe_background_color: "#ffffff",
-    //       descripe_color: "#000000",
-    //       descripe_font_size: "15",
-    //       price: "￥" + 99,
-    //       price_position: "right",
-    //       price_background_color: "#ffffff",
-    //       price_color: "#123456",
-    //       price_size: "15",
-    //       course_img: "../../static/images/1.jpg",
-    //       course_img_width: "100",
-    //       course_img_height: "100",
-    //       course_img_border_radius: "0",
-    //     },
-    //   };
-    //   for (let i = 0; i < tmp_list.length; i++) {
-    //     console.log(tmp_list[i]);
-    //   }
+    add_course() {
+      console.log(this.curComID);
+      let tmp_list = this.curComList;
+      for (let i = tmp_list.length - 1; i >= 0; i--) {
+        tmp_list[i + 1] = tmp_list[i];
+      }
+      tmp_list[0] = {
+        type: "courselist",
+        attr: {
+          title: "课程",
+          title_background_color: "#ffffff",
+          title_color: "#666666",
+          title_font_size: "20",
+          descripe: "课程简介",
+          descripe_background_color: "#ffffff",
+          descripe_color: "#000000",
+          descripe_font_size: "15",
+          price: "￥" + 99,
+          price_position: "right",
+          price_background_color: "#ffffff",
+          price_color: "#123456",
+          price_size: "15",
+          course_img: "../../static/images/1.jpg",
+          course_img_width: "100",
+          course_img_height: "100",
+          course_img_border_radius: "0",
+        },
+      };
+      // for (let i = 0; i < tmp_list.length; i++) {
+      //   console.log(tmp_list[i]);
+      // }
 
-    //   //  该方法无法实时刷新，强制刷新也无效，待解决
-    //   // 触发home则刷新
-    //   this.$store.commit("CURCOMLIST", tmp_list);
-    //   // console.log("子组件",this)
-    //   //待解决
-    //   this.$forceUpdate();
-    //   // console.log(this.$el.parentNode)
-    // },
+      //  该方法无法实时刷新，强制刷新也无效，待解决
+      // 触发home则刷新
+      this.$store.commit("CURCOMLIST", tmp_list);
+      // console.log("子组件",this)
+      //待解决
+      this.$forceUpdate();
+      // console.log(this.$el.parentNode)
+    },
   },
 };
 </script>

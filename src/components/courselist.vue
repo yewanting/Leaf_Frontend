@@ -88,7 +88,7 @@ export default {
          'float:'+
          this.price_position+';'
         
-         console.log(price_form_s);
+        //  console.log(price_form_s);
          return price_form_s;
      }
   },
@@ -145,7 +145,7 @@ export default {
     },
     onDragStart(event) {
       var e = event || window.event;
-      console.log(e.target.parentNode)
+      // console.log(e.target.parentNode)
       this.$store.commit(
         "CURRENTELEM",
         e.target.parentNode

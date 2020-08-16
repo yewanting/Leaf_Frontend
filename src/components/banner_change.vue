@@ -62,7 +62,7 @@ export default {
   created() {},
   methods: {
     onChange(attr, value) {
-      console.log(attr,value);
+      // console.log(attr,value);
       var curlist = this.curComList;
 
       curlist[this.curComID]["attr"][attr] = value;

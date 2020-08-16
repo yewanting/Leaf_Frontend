@@ -6,9 +6,6 @@
     @click="click_com_change"
     :draggable="true"
   >
-    <!-- <button
-      :style="'height:'+height +'px;' + 'width:' +width +'px;' +'background-color:' +background_color +';' +'border-color:' +border_color +';' +'color:' +text_color +';' +'font-size' +text_size +'px;' +'width' +width +'px;' +'height' +height +'px;' +'line-height' +line_height + 'px;' +'border-radius' +border_radius +'px;' +'padding-top' +padding_top +'px;' +'padding-left' +padding_left +'px;'"
-    >{{title}}</button> -->
     <button :style="stylevalue">{{title}}</button>
   </div>
 </template>
