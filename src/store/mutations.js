@@ -7,13 +7,12 @@ const CURCOMID = 'CURCOMID'
 const IFYES = 'IFYES'
 const IFSHOWYESNO = 'IFSHOWYESNO'
 const DELETECOMPONENT = 'DELETECOMPONENT'
+const COURSERFORM = 'COURSERFORM'
 
 export default {
     [CURRENTELEM](state,res){
         state.currentElem = res   
     },
-
-
     [CURCOMLIST](state,res){
         state.cur_com_list = res   
     },
@@ -41,6 +40,9 @@ export default {
     },
     [DELETECOMPONENT](state,res){
         state.delete_component = res
+    },
+    [COURSERFORM](state,res){
+        state.course_form = res
     }
   
   

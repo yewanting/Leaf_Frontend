@@ -69,56 +69,67 @@
 
         <!-- 轮播图 -->
         <my_banner
-         v-if="com.type=='banner'"
-         :index="index"
-         :imgsrc="com.attr.imgsrc"
-         :width="com.attr.width"
-         :height="com.attr.height"
-         :border_radius="com.attr.border_radius"
-         :banner_seconds="com.attr.banner_seconds"
-        >
-        </my_banner>
+          v-if="com.type=='banner'"
+          :index="index"
+          :imgsrc="com.attr.imgsrc"
+          :width="com.attr.width"
+          :height="com.attr.height"
+          :border_radius="com.attr.border_radius"
+          :banner_seconds="com.attr.banner_seconds"
+        ></my_banner>
 
         <!-- 课程列表 -->
-        <my_courselist
-        v-if="com.type=='courselist'"
-        :index = index
-        :title = com.attr.title
-        :title_background_color = com.attr.title_background_color
-        :title_color = com.attr.title_color
-        :title_font_size = com.attr.title_font_size
-        :descripe = com.attr.descripe
-        :descripe_background_color = com.attr.descripe_background_color
-        :descripe_color = com.attr.descripe_color
-        :descripe_font_size = com.attr.descripe_font_size
-        :price = com.attr.price
-        :price_background_color = com.attr.price_background_color
-        :price_color = com.attr.price_color
-        :price_position = com.attr.price_position
-        :price_size = com.attr.price_size
-        :course_img = com.attr.course_img
-        :course_img_width = com.attr.course_img_width
-        :course_img_height = com.attr.course_img_height
-        :course_img_border_radius = com.attr.course_img_border_radius
-        >
-        </my_courselist>
 
+        <my_courselist
+          v-if="com.type=='courselist'"
+          :index="index"
+          :title_background_color="com.attr.title_background_color"
+          :title_color="com.attr.title_color"
+          :title_font_size="com.attr.title_font_size"
+          :descripe_background_color="com.attr.descripe_background_color"
+          :descripe_color="com.attr.descripe_color"
+          :descripe_font_size="com.attr.descripe_font_size"
+          :label_background_color="com.attr.label_background_color"
+          :label_color="com.attr.label_color"
+          :label_font_size="com.attr.label_font_size"
+          :price_background_color="com.attr.price_background_color"
+          :price_color="com.attr.price_color"
+          :price_position="com.attr.price_position"
+          :price_size="com.attr.price_size"
+          :course_img_width="com.attr.course_img_width"
+          :course_img_height="com.attr.course_img_height"
+          :course_img_border_radius="com.attr.course_img_border_radius"
+          :goods="com.content"
+        ></my_courselist>
 
         <!-- 搜索框 -->
         <my_find
-        v-if="com.type=='find'"
-        :index = index
-        :text = com.attr.text
-        :border_color = com.attr.border_color
-        :text_color = com.attr.text_color
-        :text_size = com.attr.text_size
-        :big_height = com.attr.big_height
-        :width = com.attr.width
-        :height = com.attr.height
-        :border_radius = com.attr.border_radius
-        :find_icon_size = com.attr.find_icon_size
+          v-if="com.type=='find'"
+          :index="index"
+          :text="com.attr.text"
+          :border_color="com.attr.border_color"
+          :text_color="com.attr.text_color"
+          :text_size="com.attr.text_size"
+          :big_height="com.attr.big_height"
+          :width="com.attr.width"
+          :height="com.attr.height"
+          :border_radius="com.attr.border_radius"
+          :find_icon_size="com.attr.find_icon_size"
+        ></my_find>
+
+        <!-- 经典语录 -->
+        <my_talk 
+        v-if="com.type=='talk'"
+        :index="index"
+        :text_background_color ="com.attr.text_background_color"
+        :text_color ="com.attr.text_color"
+        :text_font_size ="com.attr.text_font_size"
+        :course_img_width ="com.attr.course_img_width"
+        :course_img_height ="com.attr.course_img_height"
+        :course_img_border_radius ="com.attr.course_img_border_radius"
+        :talk ="com.content"
         >
-        </my_find>
+        </my_talk>
       </div>
     </div>
     <div class="right">
@@ -143,10 +154,9 @@
           <div v-if="('courselist'==curComType)">
             <my_courselist_change></my_courselist_change>
           </div>
-           <div v-if="('find'==curComType)">
+          <div v-if="('find'==curComType)">
             <my_find_change></my_find_change>
           </div>
-
         </div>
       </div>
     </div>
@@ -154,23 +164,26 @@
 </template>
 
 <script>
-import my_toast from '../components/toast.vue';
+import my_toast from "../components/toast.vue";
 // 按钮
 import my_button from "../components/button.vue";
 import my_button_change from "../components/button_change.vue";
 
 // 轮播图
-import my_banner from "../components/banner.vue"
-import my_banner_change from "../components/banner_change.vue"
-
+import my_banner from "../components/banner.vue";
+import my_banner_change from "../components/banner_change.vue";
 
 // 课程列表
-import my_courselist from "../components/courselist.vue"
-import my_courselist_change from "../components/courselist_change.vue"
+import my_courselist from "../components/courselist.vue";
+import my_courselist_change from "../components/courselist_change.vue";
 
 // 搜索框
-import my_find from "../components/find.vue"
-import my_find_change from "../components/find_change.vue"
+import my_find from "../components/find.vue";
+import my_find_change from "../components/find_change.vue";
+
+// 经典语录
+import my_talk from "../components/talk.vue";
+import my_talk_change from "../components/talk_change.vue";
 export default {
   data() {
     return {
@@ -263,13 +276,12 @@ export default {
         },
       ],
       titlelist: ["组件样式", "组件配置"],
-     
     };
   },
 
   computed: {
-    titleChoice(){
-      return this.$store.state. title_choice;
+    titleChoice() {
+      return this.$store.state.title_choice;
     },
     curComList() {
       return this.$store.state.cur_com_list;
@@ -283,6 +295,9 @@ export default {
     curComID() {
       return this.$store.state.cur_com_id;
     },
+    course_form() {
+      return this.$store.state.course_form;
+    },
   },
 
   components: {
@@ -290,11 +305,13 @@ export default {
     my_button,
     my_button_change,
     my_banner,
-    my_banner_change ,
+    my_banner_change,
     my_courselist,
     my_courselist_change,
     my_find,
     my_find_change,
+    my_talk,
+    my_talk_change,
   },
   mounted() {
     this.initList();
@@ -303,20 +320,21 @@ export default {
     choose_component(component) {
       var curlist = this.curComList;
 
-      if(component == '轮播'){
+      if (component == "轮播") {
         curlist.push({
           type: "banner",
           attr: {
-           imgsrc:[ "../../static/images/lunbo1.png",
-            "../../static/images/lunbo2.png",
-            "../../static/images/lunbo3.png",
-            "../../static/images/lunbo4.png",
-            "../../static/images/lunbo1.png",
+            imgsrc: [
+              "../../static/images/lunbo1.png",
+              "../../static/images/lunbo2.png",
+              "../../static/images/lunbo3.png",
+              "../../static/images/lunbo4.png",
+              "../../static/images/lunbo1.png",
             ],
             width: "500",
             height: "200",
-            border_radius:"0",
-            banner_seconds:"3000",
+            border_radius: "0",
+            banner_seconds: "3000",
           },
         });
       }
@@ -337,63 +355,126 @@ export default {
             padding_top: "0",
             padding_left: "0",
           },
-        });    
+        });
       }
       // 传单个课程
       // 传课程群，在原有课程后面添加
       //从父组件实时刷新待解决
-      if(component=="课程列表"){
-         curlist.push({
+      if (component == "课程列表") {
+        curlist.push({
           type: "courselist",
           attr: {
-            title: "课程",
             title_background_color: "#ffffff",
-            title_color:"#666666",
-            title_font_size:"20",
-            descripe:"课程简介",
+            title_color: "#000000",
+            title_font_size: "20",
             descripe_background_color: "#ffffff",
-            descripe_color:"#000000",
-            descripe_font_size:"15",
-            price:"￥"+99,
-            price_position:"right",
-            price_background_color:"#ffffff",
-            price_color:"#123456",
-            price_size:"15",
-            course_img:
-               "../../static/images/1.jpg",
-            course_img_width:"100",
-            course_img_height:"100",
-            course_img_border_radius:"0",
+            descripe_color: "#a89e9e",
+            descripe_font_size: "15",
+            label_background_color: "#f8c9c9",
+            label_color: "#ffffff",
+            label_font_size: "16",
+            price_position: "right",
+            price_background_color: "#ffffff",
+            price_color: "#fb940e",
+            price_size: "15",
+            course_img_width: "150",
+            course_img_height: "150",
+            course_img_border_radius: "0",
           },
-        }); 
+          content: [
+            {
+              title: "课程标题",
+              descripe: "课程简介",
+              price: "￥" + 99,
+              label: "课程标签",
+              course_img: "../../static/images/good_pic.png",
+            },
+            {
+              title: "课程标题",
+              descripe: "课程简介",
+              price: "￥" + 99,
+              label: "课程标签",
+              course_img: "../../static/images/good_pic.png",
+            },
+            {
+              title: "课程标题",
+              descripe: "课程简介",
+              price: "￥" + 99,
+              label: "课程标签",
+              course_img: "../../static/images/good_pic.png",
+            },
+            {
+              title: "课程标题",
+              descripe: "课程简介",
+              price: "￥" + 99,
+              label: "课程标签",
+              course_img: "../../static/images/good_pic.png",
+            },
+          ],
+        });
       }
       // console.log("home",this)
 
-      if(component=="搜索")
-      {
-          curlist.push({
+      if (component == "搜索") {
+        curlist.push({
           type: "find",
           attr: {
-            text:"请输入搜索内容",
+            text: "请输入搜索内容",
             border_color: "#b8b5b5",
             text_color: "#000000",
             text_size: "15",
-            big_height:"50",
+            big_height: "50",
             width: "70",
             height: "30",
             border_radius: "50",
-            find_icon_size:"20"
+            find_icon_size: "20",
           },
-        }); 
+        });
       }
 
-     
-
+      if (component == "经典语录") {
+        curlist.push({
+          type: "talk",
+          attr: {
+            text_background_color: "#ffffff",
+            text_color: "#000000",
+            text_font_size: "20",
+            course_img_width: "150",
+            course_img_height: "150",
+            course_img_border_radius: "0",
+          },
+          content:[
+            {
+              descripe: "经典语录经典语录经典语录经典语录经典语录",
+              course_img: "../../static/images/talk_pic.png",
+              love_count:"666",
+              comment_count:"666"
+           },
+             {
+              descripe: "经典语录经典语录经典语录经典语录经典语录",
+              course_img: "../../static/images/talk_pic.png",
+              love_count:"666",
+              comment_count:"666"
+            },
+            {
+              descripe: "经典语录经典语录经典语录经典语录经典语录",
+              course_img: "../../static/images/talk_pic.png",
+              love_count:"666",
+              comment_count:"666"
+            },
+             {
+              descripe:"经典语录经典语录经典语录经典语录经典语录",
+              course_img: "../../static/images/talk_pic.png",
+              love_count:"666",
+              comment_count:"666"
+            },
+            
+          ]
+        });
+      }
 
       this.$store.commit("CURCOMLIST", curlist);
     },
-
- 
 
     initList() {
       // 初始化上部组件库
@@ -429,7 +510,7 @@ export default {
       }
     },
     clicktitle(item_title) {
-      this.$store.commit("TITLECHOICE",item_title)
+      this.$store.commit("TITLECHOICE", item_title);
     },
   },
 };
@@ -510,6 +591,9 @@ ul {
   border: 1px solid grey;
   margin: auto;
   box-shadow: 0px 10px 30px rgb(226, 225, 224);
+}
+.mid::-webkit-scrollbar {
+  display: none;
 }
 
 /* 右端改变样式 */

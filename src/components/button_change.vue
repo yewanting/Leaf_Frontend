@@ -1,11 +1,6 @@
 <template>
   <div>
     <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
-      <!-- <div v-show="k=='position'">
-        <span>按钮位置：</span>
-        居左<input type="radio" name = "position" value="left"   @change="onChange('position',$event.target.value)" />
-        居右<input type="radio" name = "position" value="right"  @change="onChange('position',$event.target.value)" />
-      </div> -->
 
       <div v-show="k=='title'">
         <span>按钮文本：</span>
