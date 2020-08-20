@@ -9,8 +9,8 @@
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
     :draggable="true"
-     class="total" 
-     :style="'margin-top:'+this.margin_top+'px;'"
+    class="total"
+    :style="'margin-top:'+this.margin_top+'px;'"
   >
     <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
     <i class="iconfont icon-chahao" v-if="is_show==true" @click="remove_component"></i>
@@ -36,66 +36,64 @@ export default {
         border_radius: "0",
         padding_top: "0",
         padding_left: "0",
-        margin_top:"0",
+        margin_top: "0",
       },
-      is_show:false,
-      lastenter:null,
-
-     
+      is_show: false,
+      lastenter: null,
     };
   },
-  computed:{
-  stylevalue(){
-        let s =  'height:' +
+  computed: {
+    stylevalue() {
+      let s =
+        "height:" +
         this.height +
-        'px;' +
-        'width:' +
+        "px;" +
+        "width:" +
         this.width +
-        'px;' +
-        'background-color:' +
+        "px;" +
+        "background-color:" +
         this.background_color +
-        ';' +
-        'border-color:' +
+        ";" +
+        "border-color:" +
         this.border_color +
-        ';' +
-        'color:' +
+        ";" +
+        "color:" +
         this.text_color +
-        ';' +
-        'font-size:' +
+        ";" +
+        "font-size:" +
         this.text_size +
-        'px;' +
-        'width:' +
+        "px;" +
+        "width:" +
         this.width +
-        'px;' +
-        'height:' +
+        "px;" +
+        "height:" +
         this.height +
-        'px;' +
-        'line-height:' +
+        "px;" +
+        "line-height:" +
         this.line_height +
-        'px;' +
-        'border-radius:' +
+        "px;" +
+        "border-radius:" +
         this.border_radius +
-        'px;' +
-        'padding-top:' +
+        "px;" +
+        "padding-top:" +
         this.padding_top +
-        'px;' +
-        'padding-left:' +
+        "px;" +
+        "padding-left:" +
         this.padding_left +
-        'px;'
-        // 'float:'+
-        // this.position
-        return s;
-  },
-  cur_move_id(){
-     return this.$store.state.cur_move_id;
-  },
+        "px;";
+      // 'float:'+
+      // this.position
+      return s;
+    },
+    cur_move_id() {
+      return this.$store.state.cur_move_id;
+    },
     curComList() {
       return this.$store.state.cur_com_list;
     },
     curComAttr() {
       return this.$store.state.cur_com_attr;
     },
-       
   },
   props: [
     "index",
@@ -111,7 +109,7 @@ export default {
     "border_radius",
     "padding_top",
     "padding_left",
-    "margin_top"
+    "margin_top",
   ],
 
   created() {
@@ -149,11 +147,10 @@ export default {
 
       event.preventDefault();
     },
-     onDragEnter(event){
+    onDragEnter(event) {
       var event = event || window.event;
       this.lastenter = event.target;
-      if(this.index!=this.cur_move_id)
-      {
+      if (this.index != this.cur_move_id) {
         // console.log("进入的区域",this.lastenter);
         var curlist = this.curComList;
 
@@ -164,73 +161,63 @@ export default {
         this.$store.commit("CURCOMATTR", curattr);
         this.$store.commit("CURCOMLIST", curlist);
       }
-
-     
-     
     },
-    onDragLeave(event){
+    onDragLeave(event) {
       var event = event || window.event;
-       if(this.index!=this.cur_move_id&&this.lastenter==event.target)
-       {      
-          // console.log("离开的区域",event.target)
-          var curlist = this.curComList;
+      if (this.index != this.cur_move_id && this.lastenter == event.target) {
+        // console.log("离开的区域",event.target)
+        var curlist = this.curComList;
 
-          curlist[this.index]["attr"]["margin_top"] = 0;
-          var curattr = this.curComAttr;
-          curattr["margin_top"] = 0;
+        curlist[this.index]["attr"]["margin_top"] = 0;
+        var curattr = this.curComAttr;
+        curattr["margin_top"] = 0;
 
-          this.$store.commit("CURCOMATTR", curattr);
-          this.$store.commit("CURCOMLIST", curlist);
-       }
-
- 
+        this.$store.commit("CURCOMATTR", curattr);
+        this.$store.commit("CURCOMLIST", curlist);
+      }
     },
     onDrop(event) {
-      console.log("放下")
       var e = event || window.event;
       var curNode = this.$store.state.currentElem;
       var targetNode = this.$el.parentNode;
       var parentnode = curNode.parentNode;
-      
 
       let tmp = parentnode.insertBefore(curNode, targetNode);
-      if(typeof tmp == 'object')
-      {
-          var curlist = this.curComList;
+      if (typeof tmp == "object") {
+        var curlist = this.curComList;
 
-          curlist[this.index]["attr"]["margin_top"] = 0;
-          var curattr = this.curComAttr;
-          curattr["margin_top"] = 0;
+        curlist[this.index]["attr"]["margin_top"] = 0;
+        var curattr = this.curComAttr;
+        curattr["margin_top"] = 0;
 
-          this.$store.commit("CURCOMATTR", curattr);
-          this.$store.commit("CURCOMLIST", curlist);
+        this.$store.commit("CURCOMATTR", curattr);
+        this.$store.commit("CURCOMLIST", curlist);
       }
-        
     },
-      show_border(){
-        this.$el.style.border  = "1px dotted rgb(241, 15, 15)"
-        this.$el.style.cursor = "move";
-        this.is_show = true;
-   },
-    unshow_border(){
-        this.$el.style.border = "none";
-        this.$el.style.cursor = "none";
-        this.is_show = false;
+    show_border() {
+      this.$el.style.border = "1px dotted rgb(241, 15, 15)";
+      this.$el.style.cursor = "move";
+      this.is_show = true;
     },
-    remove_component(){
-        this.$store.commit("IFSHOWYESNO",1)
-        this.$store.commit("DELETECOMPONENT",this.$el)
-    }
+    unshow_border() {
+      this.$el.style.border = "none";
+      this.$el.style.cursor = "none";
+      this.is_show = false;
+    },
+    remove_component() {
+      this.$store.commit("IFSHOWYESNO", 1);
+      this.$store.commit("DELETECOMPONENT", this.$el);
+    },
   },
 };
 </script>
 
 
 <style scoped>
-.total{
-    margin:0;
-    position: relative;
-    width: 100%;
+.total {
+  margin: 0;
+  position: relative;
+  width: 100%;
 }
 .icon-jurassic_gongbao {
   position: absolute;
@@ -251,5 +238,4 @@ export default {
 .icon-chahao:hover {
   cursor: pointer;
 }
-
 </style>

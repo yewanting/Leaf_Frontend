@@ -6,6 +6,8 @@
     @click="click_com_change"
     @mouseenter="show_border"
     @mouseleave="unshow_border"
+    @dragenter="onDragEnter"
+    @dragleave="onDragLeave"
     :draggable="true"
     class="total"
     :style="'height:' +
@@ -16,7 +18,9 @@
         'px;' +
         'border-radius:'+
         border_radius+
-        'px;'
+        'px;'+
+        'margin-top:'+
+        margin_top+'px;'
         "
       
   >
@@ -55,7 +59,8 @@ export default {
         border_color: "#ffffff",
         width: "100",
         height: "30",
-        banner_seconds:"3000"
+        banner_seconds:"3000",
+        margin_top:"0",
       },
       curindex: 0,
       timer: null,
@@ -105,6 +110,15 @@ export default {
         "px;";
       return s;
     },
+    cur_move_id() {
+      return this.$store.state.cur_move_id;
+    },
+    curComList() {
+      return this.$store.state.cur_com_list;
+    },
+    curComAttr() {
+      return this.$store.state.cur_com_attr;
+    },
   },
   props: [
     "index",
@@ -112,7 +126,8 @@ export default {
     "border_radius",
     "width",
     "height",
-    "banner_seconds"
+    "banner_seconds",
+    "margin_top",
   ],
 
   created() {
@@ -156,18 +171,12 @@ export default {
       this.timer = setInterval(this.change_auto,this.banner_seconds);
     },
     click_com_change() {
-      // this.attr.title = this.title;
-      // this.attr.background_color = this.background_color;
-      // this.attr.border_color = this.border_color;
-      // this.attr.text_color = this.text_color;
-      // this.attr.text_size = this.text_size;
+
       this.attr.width = this.width;
       this.attr.height = this.height;
-      // this.attr.line_height = this.line_height;
       this.attr.border_radius = this.border_radius;
       this.attr.banner_seconds = this.banner_seconds;
-      // this.attr.padding_top = this.padding_top;
-      // this.attr.padding_left = this.padding_left;
+
 
       this.$store.commit("CURCOMTYPE", "banner");
       this.$store.commit("CURCOMATTR", this.attr);
@@ -175,15 +184,45 @@ export default {
     },
     onDragStart(event) {
       var e = event || window.event;
-      // console.log(e.target.parentNode.parentNode.parentNode.parentNode)
+
       this.$store.commit(
         "CURRENTELEM",
         e.target.parentNode.parentNode.parentNode.parentNode
       );
+       this.$store.commit("CURMOVEID", this.index);
     },
     onDragOver(event) {
       var event = event || window.event;
       event.preventDefault();
+    },
+      onDragEnter(event) {
+      var event = event || window.event;
+      this.lastenter = event.target;
+      if (this.index != this.cur_move_id) {
+        // console.log("进入的区域",this.lastenter);
+        var curlist = this.curComList;
+
+        curlist[this.index]["attr"]["margin_top"] = 30;
+        var curattr = this.curComAttr;
+        curattr["margin_top"] = 30;
+
+        this.$store.commit("CURCOMATTR", curattr);
+        this.$store.commit("CURCOMLIST", curlist);
+      }
+    },
+    onDragLeave(event) {
+      var event = event || window.event;
+      if (this.index != this.cur_move_id && this.lastenter == event.target) {
+        // console.log("离开的区域",event.target)
+        var curlist = this.curComList;
+
+        curlist[this.index]["attr"]["margin_top"] = 0;
+        var curattr = this.curComAttr;
+        curattr["margin_top"] = 0;
+
+        this.$store.commit("CURCOMATTR", curattr);
+        this.$store.commit("CURCOMLIST", curlist);
+      }
     },
     onDrop(event) {
       var e = event || window.event;
@@ -192,7 +231,17 @@ export default {
       var targetNode = this.$el.parentNode;
       var parentnode = curNode.parentNode;
 
-      parentnode.insertBefore(curNode, targetNode);
+      let tmp = parentnode.insertBefore(curNode, targetNode);
+      if (typeof tmp == "object") {
+        var curlist = this.curComList;
+
+        curlist[this.index]["attr"]["margin_top"] = 0;
+        var curattr = this.curComAttr;
+        curattr["margin_top"] = 0;
+
+        this.$store.commit("CURCOMATTR", curattr);
+        this.$store.commit("CURCOMLIST", curlist);
+      }
     },
        show_border(){
         this.$el.style.border  = "1px dotted rgb(241, 15, 15)"

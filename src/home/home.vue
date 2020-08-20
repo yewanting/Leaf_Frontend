@@ -77,6 +77,7 @@
           :height="com.attr.height"
           :border_radius="com.attr.border_radius"
           :banner_seconds="com.attr.banner_seconds"
+          :margin_top="com.attr.margin_top"
         ></my_banner>
 
         <!-- 课程列表 -->
@@ -100,6 +101,7 @@
           :course_img_width="com.attr.course_img_width"
           :course_img_height="com.attr.course_img_height"
           :course_img_border_radius="com.attr.course_img_border_radius"
+          :margin_top="com.attr.margin_top"
           :goods="com.content"
         ></my_courselist>
 
@@ -116,6 +118,7 @@
           :height="com.attr.height"
           :border_radius="com.attr.border_radius"
           :find_icon_size="com.attr.find_icon_size"
+          :margin_top="com.attr.margin_top"
         ></my_find>
 
         <!-- 经典语录 -->
@@ -128,6 +131,7 @@
           :course_img_width="com.attr.course_img_width"
           :course_img_height="com.attr.course_img_height"
           :course_img_border_radius="com.attr.course_img_border_radius"
+          :margin_top="com.attr.margin_top"
           :talk="com.content"
         ></my_talk>
 
@@ -143,6 +147,7 @@
           :color="com.attr.color"
           :font_size="com.attr.font_size"
           :position="com.attr.position"
+          :margin_top="com.attr.margin_top"
         ></my_title>
 
         <!-- 分割线 -->
@@ -152,6 +157,7 @@
           :border_wide="com.attr.border_wide"
           :border_form="com.attr.border_form"
           :border_color="com.attr.border_color"
+          :margin_top="com.attr.margin_top"
         ></my_separator>
 
 
@@ -393,6 +399,7 @@ export default {
             height: "200",
             border_radius: "0",
             banner_seconds: "3000",
+            margin_top:"0",
           },
         });
       }
@@ -436,6 +443,7 @@ export default {
             course_img_width: "150",
             course_img_height: "150",
             course_img_border_radius: "0",
+            margin_top:"0"
           },
           content: [
             {
@@ -484,6 +492,7 @@ export default {
             height: "30",
             border_radius: "50",
             find_icon_size: "20",
+            margin_top:"0"
           },
         });
       }
@@ -498,6 +507,7 @@ export default {
             course_img_width: "150",
             course_img_height: "150",
             course_img_border_radius: "0",
+            margin_top:"0",
           },
           content: [
             {
@@ -537,6 +547,7 @@ export default {
             color: "#000000",
             font_size: "18",
             position: "left",
+            margin_top:"0"
           },
         });
       }
@@ -548,6 +559,7 @@ export default {
             border_color: "#000000",
             border_form: "solid",
             border_wide: "1",
+            margin_top:"10",
           },
         });
       }
@@ -591,6 +603,7 @@ export default {
     clicktitle(item_title) {
       this.$store.commit("TITLECHOICE", item_title);
     },
+
   },
 };
 </script>
