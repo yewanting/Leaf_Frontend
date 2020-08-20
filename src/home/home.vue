@@ -118,18 +118,42 @@
         ></my_find>
 
         <!-- 经典语录 -->
-        <my_talk 
-        v-if="com.type=='talk'"
-        :index="index"
-        :text_background_color ="com.attr.text_background_color"
-        :text_color ="com.attr.text_color"
-        :text_font_size ="com.attr.text_font_size"
-        :course_img_width ="com.attr.course_img_width"
-        :course_img_height ="com.attr.course_img_height"
-        :course_img_border_radius ="com.attr.course_img_border_radius"
-        :talk ="com.content"
-        >
-        </my_talk>
+        <my_talk
+          v-if="com.type=='talk'"
+          :index="index"
+          :text_background_color="com.attr.text_background_color"
+          :text_color="com.attr.text_color"
+          :text_font_size="com.attr.text_font_size"
+          :course_img_width="com.attr.course_img_width"
+          :course_img_height="com.attr.course_img_height"
+          :course_img_border_radius="com.attr.course_img_border_radius"
+          :talk="com.content"
+        ></my_talk>
+
+        <!-- 地图 -->
+        <!-- <my_map></my_map> -->
+
+        <!-- 标题 -->
+        <my_title
+          v-if="com.type=='title'"
+          :index="index"
+          :content="com.attr.content"
+          :background_color="com.attr.background_color"
+          :color="com.attr.color"
+          :font_size="com.attr.font_size"
+          :position="com.attr.position"
+        ></my_title>
+
+        <!-- 分割线 -->
+        <my_separator
+          v-if="com.type=='separator'"
+          :index="index"
+          :border_wide="com.attr.border_wide"
+          :border_form="com.attr.border_form"
+          :border_color="com.attr.border_color"
+        ></my_separator>
+
+        
       </div>
     </div>
     <div class="right">
@@ -156,6 +180,18 @@
           </div>
           <div v-if="('find'==curComType)">
             <my_find_change></my_find_change>
+          </div>
+          <div v-if="('talk'==curComType)">
+            <my_talk_change></my_talk_change>
+          </div>
+          <!-- <div v-if="('map'==curComType)">
+            <my_map_change></my_map_change>
+          </div>-->
+          <div v-if="('title'==curComType)">
+            <my_title_change></my_title_change>
+          </div>
+          <div v-if="('separator'==curComType)">
+            <my_separator_change></my_separator_change>
           </div>
         </div>
       </div>
@@ -184,6 +220,23 @@ import my_find_change from "../components/find_change.vue";
 // 经典语录
 import my_talk from "../components/talk.vue";
 import my_talk_change from "../components/talk_change.vue";
+
+// 地图
+import my_map from "../components/map.vue";
+import my_map_change from "../components/map_change.vue";
+
+// 标题
+import my_title from "../components/title.vue";
+import my_title_change from "../components/title_change.vue";
+
+// 分割线
+import my_separator from "../components/separator.vue";
+import my_separator_change from "../components/separator_change.vue";
+
+
+
+//提示框
+import my_div from "../common_components/div.vue"
 export default {
   data() {
     return {
@@ -312,6 +365,12 @@ export default {
     my_find_change,
     my_talk,
     my_talk_change,
+    my_map,
+    my_map_change,
+    my_title,
+    my_title_change,
+    my_separator,
+    my_separator_change,
   },
   mounted() {
     this.initList();
@@ -343,7 +402,7 @@ export default {
         curlist.push({
           type: "button",
           attr: {
-            title: "按钮" + curlist.length,
+            title: "按钮"+curlist.length,
             background_color: "#ffffff",
             border_color: "#000000",
             text_color: "#000000",
@@ -357,9 +416,6 @@ export default {
           },
         });
       }
-      // 传单个课程
-      // 传课程群，在原有课程后面添加
-      //从父组件实时刷新待解决
       if (component == "课程列表") {
         curlist.push({
           type: "courselist",
@@ -443,33 +499,56 @@ export default {
             course_img_height: "150",
             course_img_border_radius: "0",
           },
-          content:[
+          content: [
             {
               descripe: "经典语录经典语录经典语录经典语录经典语录",
               course_img: "../../static/images/talk_pic.png",
-              love_count:"666",
-              comment_count:"666"
-           },
-             {
-              descripe: "经典语录经典语录经典语录经典语录经典语录",
-              course_img: "../../static/images/talk_pic.png",
-              love_count:"666",
-              comment_count:"666"
+              love_count: "666",
+              comment_count: "666",
             },
             {
               descripe: "经典语录经典语录经典语录经典语录经典语录",
               course_img: "../../static/images/talk_pic.png",
-              love_count:"666",
-              comment_count:"666"
+              love_count: "666",
+              comment_count: "666",
             },
-             {
-              descripe:"经典语录经典语录经典语录经典语录经典语录",
+            {
+              descripe: "经典语录经典语录经典语录经典语录经典语录",
               course_img: "../../static/images/talk_pic.png",
-              love_count:"666",
-              comment_count:"666"
+              love_count: "666",
+              comment_count: "666",
             },
-            
-          ]
+            {
+              descripe: "经典语录经典语录经典语录经典语录经典语录",
+              course_img: "../../static/images/talk_pic.png",
+              love_count: "666",
+              comment_count: "666",
+            },
+          ],
+        });
+      }
+
+      if (component == "标题") {
+        curlist.push({
+          type: "title",
+          attr: {
+            content: "标题文本",
+            background_color: "#ffffff",
+            color: "#000000",
+            font_size: "18",
+            position: "left",
+          },
+        });
+      }
+
+      if (component == "分割线") {
+        curlist.push({
+          type: "separator",
+          attr: {
+            border_color: "#000000",
+            border_form: "solid",
+            border_wide: "1",
+          },
         });
       }
 

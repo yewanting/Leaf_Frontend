@@ -68,7 +68,6 @@ export default {
     return {
       attr: {
         title: "",
-        // position:"",
         background_color: "",
         border_color: "",
         text_color: "",

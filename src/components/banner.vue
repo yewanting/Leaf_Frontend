@@ -4,6 +4,8 @@
     @dragover="onDragOver"
     @drop="onDrop"
     @click="click_com_change"
+    @mouseenter="show_border"
+    @mouseleave="unshow_border"
     :draggable="true"
     class="total"
     :style="'height:' +
@@ -18,6 +20,8 @@
         "
       
   >
+   <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
+    <i class="iconfont icon-chahao" v-if="is_show==true" @click="remove_component"></i>
     <ul id="banner">
       <li
         v-for="(imgpath,index) in imgsrc"
@@ -57,6 +61,7 @@ export default {
       timer: null,
       kuan: 500,
       maxlen: 4,
+      is_show:false
     };
   },
   computed: {
@@ -189,6 +194,20 @@ export default {
 
       parentnode.insertBefore(curNode, targetNode);
     },
+       show_border(){
+        this.$el.style.border  = "1px dotted rgb(241, 15, 15)"
+        this.$el.style.cursor = "move";
+        this.is_show = true;
+   },
+    unshow_border(){
+        this.$el.style.border = "none";
+        this.$el.style.cursor = "none";
+        this.is_show = false;
+    },
+    remove_component(){
+        this.$store.commit("IFSHOWYESNO",1)
+        this.$store.commit("DELETECOMPONENT",this.$el)
+    }
   },
 };
 </script> 
@@ -202,7 +221,7 @@ export default {
 .total {
   position: relative;
   height: 250px;
-  width: 500px;
+  width: 100%;
   overflow: hidden;
 }
 #banner {
@@ -235,6 +254,25 @@ img {
 }
 .next:hover,
 .pre:hover {
+  cursor: pointer;
+}
+.icon-jurassic_gongbao {
+  position: absolute;
+  z-index: 100;
+  width: 20px;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: auto;
+  font-size: 20px;
+  color: #f58f8f;
+}
+.icon-chahao {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.icon-chahao:hover {
   cursor: pointer;
 }
 </style>

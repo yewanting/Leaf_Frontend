@@ -4,8 +4,16 @@
     @dragover="onDragOver"
     @drop="onDrop"
     @click="click_com_change"
+    @mouseenter="show_border"
+    @mouseleave="unshow_border"
+
+    @dragenter="onDragEnter"
+    @dragleave="onDragLeave"
     :draggable="true"
+     class="total" 
   >
+    <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
+    <i class="iconfont icon-chahao" v-if="is_show==true" @click="remove_component"></i>
     <button :style="stylevalue">{{title}}</button>
   </div>
 </template>
@@ -29,6 +37,8 @@ export default {
         padding_top: "0",
         padding_left: "0",
       },
+      is_show:false,
+      lastenter:null,
 
      
     };
@@ -74,6 +84,9 @@ export default {
         // 'float:'+
         // this.position
         return s;
+  },
+  cur_move_id(){
+     return this.$store.state.cur_move_id;
   }
        
   },
@@ -119,15 +132,40 @@ export default {
     },
     onDragStart(event) {
       var e = event || window.event;
-      // console.log("开始拖拽");
-      // console.log("当前移动的是", e.target);
-    //  console.log(e.target.parentNode)
       this.$store.commit("CURRENTELEM", e.target.parentNode);
-      // this.$store.state.currentElem = e.target.parentNode
+      this.$store.commit("CURMOVEID", this.index);
     },
     onDragOver(event) {
       var event = event || window.event;
+
       event.preventDefault();
+    },
+     onDragEnter(event){
+      var event = event || window.event;
+      this.lastenter = event.target;
+      if(this.index!=this.cur_move_id)
+      {
+        console.log("进入的区域",this.lastenter);
+      }
+
+     
+     
+    },
+// nextElementSibling
+    onDragLeave(event){
+      var event = event || window.event;
+       if(this.index!=this.cur_move_id)
+      console.log("离开的区域",event.target)
+      //  if(this.lastenter ==event.target)
+      // {
+      //   console.log("离开的区域",event.target)
+      //   event.target.style.background = 'red';
+      // }
+      // var parentnode = event.target.parentNode;
+      // parentnode.removeChild(event.target.previousSibling);
+
+
+      //  console.log("离开该区域",event.target)
     },
     onDrop(event) {
       // console.log(event);
@@ -143,10 +181,49 @@ export default {
 
       parentnode.insertBefore(curNode, targetNode);
     },
+      show_border(){
+        this.$el.style.border  = "1px dotted rgb(241, 15, 15)"
+        this.$el.style.cursor = "move";
+        this.is_show = true;
+   },
+    unshow_border(){
+        this.$el.style.border = "none";
+        this.$el.style.cursor = "none";
+        this.is_show = false;
+    },
+    remove_component(){
+        this.$store.commit("IFSHOWYESNO",1)
+        this.$store.commit("DELETECOMPONENT",this.$el)
+    }
   },
 };
 </script>
 
 
 <style scoped>
+.total{
+    margin:0;
+    position: relative;
+    width: 100%;
+}
+.icon-jurassic_gongbao {
+  position: absolute;
+  z-index: 100;
+  width: 20px;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: auto;
+  font-size: 20px;
+  color: #f58f8f;
+}
+.icon-chahao {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.icon-chahao:hover {
+  cursor: pointer;
+}
+
 </style>

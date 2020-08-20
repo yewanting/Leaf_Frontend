@@ -3,15 +3,11 @@
     <div class="form_class">
       <span>列表样式：</span>
       <input type="radio" name="form" value="小图" @click="choose_form('小图')" /> 小图
-      <input type="radio" name="form" value="详细列表" @click="choose_form('详细列表')" /> 详细列表
+      <input type="radio" name="form" value="详细列表"  checked @click="choose_form('详细列表')" /> 详细列表
       <input type="radio" name="form" value="大图" @click="choose_form('大图')" /> 大图
       <input type="radio" name="form" value="横向滑动" @click="choose_form('横向滑动')" /> 横向滑动
     </div>
     <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
-      <div v-if="k=='title'">
-        <span>课程标题：</span>
-        <input type="text" :value="v" @change="onChange('title',$event.target.value)" />
-      </div>
 
       <div v-if="k=='title_background_color'">
         <span>课程标题背景颜色：</span>
@@ -100,6 +96,7 @@
         />
         居右：
         <input
+          checked
           type="radio"
           value="right"
           name="price_position"
@@ -162,35 +159,38 @@ export default {
       return this.$store.state.course_form;
     },
     curComAttr() {
-      let attr = this.$store.state.cur_com_attr;
-      let cur_attr = {};
-      if (this.courseForm != "详细列表") {
-        cur_attr.title_background_color = attr.title_background_color;
-        cur_attr.title_color = attr.title_color;
-        cur_attr.title_font_size = attr.title_font_size;
-        cur_attr.price_background_color = attr.price_background_color;
-        cur_attr.price_color = attr.price_color;
-        cur_attr.price_size = attr.price_size;
-      } else {
-        cur_attr.title_background_color = attr.title_background_color;
-        cur_attr.title_color = attr.title_color;
-        cur_attr.title_font_size = attr.title_font_size;
-        cur_attr.descripe_background_color = "#ffffff";
-        cur_attr.descripe_color = "#a89e9e";
-        cur_attr.descripe_font_size = "15";
-        cur_attr.label_background_color = "#f8c9c9";
-        cur_attr.label_color = "#ffffff";
-        cur_attr.label_font_size = "16";
-        cur_attr.price_background_color = attr.price_background_color;
-        cur_attr.price_color = attr.price_color;
-        cur_attr.price_size = attr.price_size;
-        cur_attr.course_img_width = attr.course_img_width;
-        cur_attr.course_img_height = attr.course_img_height;
-        cur_attr.course_img_border_radius = attr.course_img_border_radius;
-      }
-      this.$store.commit("CURCOMATTR", cur_attr);
+      // let attr = this.$store.state.cur_com_attr;
+      // let cur_attr = {};
+      // if (this.courseForm != "详细列表") {
+      //   cur_attr.title_background_color = attr.title_background_color;
+      //   cur_attr.title_color = attr.title_color;
+      //   cur_attr.title_font_size = attr.title_font_size;
+      //   cur_attr.price_background_color = attr.price_background_color;
+      //   cur_attr.price_color = attr.price_color;
+      //   cur_attr.price_size = attr.price_size;
+      // } else {
+      //   cur_attr.title_background_color = attr.title_background_color;
+      //   cur_attr.title_color = attr.title_color;
+      //   cur_attr.title_font_size = attr.title_font_size;
+      //   cur_attr.descripe_background_color = "#ffffff";
+      //   cur_attr.descripe_color = "#a89e9e";
+      //   cur_attr.descripe_font_size = "15";
+      //   cur_attr.label_background_color = "#f8c9c9";
+      //   cur_attr.label_color = "#ffffff";
+      //   cur_attr.label_font_size = "16";
+      //   cur_attr.price_background_color = attr.price_background_color;
+      //   cur_attr.price_color = attr.price_color;
+      //   cur_attr.price_size = attr.price_size;
+      //   cur_attr.course_img_width = attr.course_img_width;
+      //   cur_attr.course_img_height = attr.course_img_height;
+      //   cur_attr.course_img_border_radius = attr.course_img_border_radius;
+      // }
+      // this.$store.commit("CURCOMATTR", cur_attr);
 
-      return cur_attr;
+      // return cur_attr;
+
+      return this.$store.state.cur_com_attr;
+
     },
     curComID() {
       return this.$store.state.cur_com_id;

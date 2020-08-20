@@ -6,6 +6,9 @@
     @click="click_com_change"
     @mouseenter="show_border"
     @mouseleave="unshow_border"
+
+    @dragenter="onDragEnter"
+    @dragleave="onDragLeave"
     :draggable="true"    
     class="total"
     :style="big_div_form"
@@ -34,7 +37,8 @@ export default {
             border_radius: "50",
             find_icon_size:"20"
       },
-      is_show:false
+      is_show:false,
+      lastenter:null,
      
     };
   },
@@ -113,11 +117,42 @@ export default {
         "CURRENTELEM",
         e.target.parentNode
       );
+     this.$store.commit("CURMOVEID", this.index);
     },
     onDragOver(event) {
       var event = event || window.event;
       event.preventDefault();
     },
+    onDragEnter(event){
+      var event = event || window.event;
+      // this.lastenter = event.target;
+      // console.log("进入的区域",this.lastenter);
+      // var div = document.createElement("div");
+      // div.style.width="100%";
+      // div.style.height = "10px";
+      // div.style.border = "1px solid red";
+      // div.innerText="拖放到这里"
+      // var parentnode = event.target.parentNode;
+      // console.log("进入该区域",event.target)
+      // console.log("兄弟元素",event.target.previousSibling)
+      // parentnode.insertBefore(div,event.target.previousElementSibling);
+     
+    },
+// nextElementSibling
+    onDragLeave(event){
+      var event = event || window.event;
+      // if(this.lastenter ==event.target)
+      // {
+      //   console.log("离开的区域",event.target)
+      // }
+   
+      // var parentnode = event.target.parentNode;
+      // parentnode.removeChild(event.target.previousSibling);
+
+
+      //  console.log("离开该区域",event.target)
+    },
+
     onDrop(event) {
       var e = event || window.event;
 
@@ -191,4 +226,5 @@ export default {
 .icon-chahao:hover{
     cursor: pointer;
 }
+
 </style>
