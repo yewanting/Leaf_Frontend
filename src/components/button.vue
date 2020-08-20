@@ -6,11 +6,11 @@
     @click="click_com_change"
     @mouseenter="show_border"
     @mouseleave="unshow_border"
-
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
     :draggable="true"
      class="total" 
+     :style="'margin-top:'+this.margin_top+'px;'"
   >
     <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
     <i class="iconfont icon-chahao" v-if="is_show==true" @click="remove_component"></i>
@@ -36,6 +36,7 @@ export default {
         border_radius: "0",
         padding_top: "0",
         padding_left: "0",
+        margin_top:"0",
       },
       is_show:false,
       lastenter:null,
@@ -87,7 +88,13 @@ export default {
   },
   cur_move_id(){
      return this.$store.state.cur_move_id;
-  }
+  },
+    curComList() {
+      return this.$store.state.cur_com_list;
+    },
+    curComAttr() {
+      return this.$store.state.cur_com_attr;
+    },
        
   },
   props: [
@@ -104,6 +111,7 @@ export default {
     "border_radius",
     "padding_top",
     "padding_left",
+    "margin_top"
   ],
 
   created() {
@@ -124,6 +132,7 @@ export default {
       this.attr.padding_top = this.padding_top;
       this.attr.padding_left = this.padding_left;
       this.attr.width = this.width;
+      this.attr.margin_top = this.margin_top;
 
       // console.log(this.stylevalue)
       this.$store.commit("CURCOMTYPE", "button");
@@ -145,41 +154,58 @@ export default {
       this.lastenter = event.target;
       if(this.index!=this.cur_move_id)
       {
-        console.log("进入的区域",this.lastenter);
+        // console.log("进入的区域",this.lastenter);
+        var curlist = this.curComList;
+
+        curlist[this.index]["attr"]["margin_top"] = 30;
+        var curattr = this.curComAttr;
+        curattr["margin_top"] = 30;
+
+        this.$store.commit("CURCOMATTR", curattr);
+        this.$store.commit("CURCOMLIST", curlist);
       }
 
      
      
     },
-// nextElementSibling
     onDragLeave(event){
       var event = event || window.event;
-       if(this.index!=this.cur_move_id)
-      console.log("离开的区域",event.target)
-      //  if(this.lastenter ==event.target)
-      // {
-      //   console.log("离开的区域",event.target)
-      //   event.target.style.background = 'red';
-      // }
-      // var parentnode = event.target.parentNode;
-      // parentnode.removeChild(event.target.previousSibling);
+       if(this.index!=this.cur_move_id&&this.lastenter==event.target)
+       {      
+          // console.log("离开的区域",event.target)
+          var curlist = this.curComList;
 
+          curlist[this.index]["attr"]["margin_top"] = 0;
+          var curattr = this.curComAttr;
+          curattr["margin_top"] = 0;
 
-      //  console.log("离开该区域",event.target)
+          this.$store.commit("CURCOMATTR", curattr);
+          this.$store.commit("CURCOMLIST", curlist);
+       }
+
+ 
     },
     onDrop(event) {
-      // console.log(event);
+      console.log("放下")
       var e = event || window.event;
-
       var curNode = this.$store.state.currentElem;
       var targetNode = this.$el.parentNode;
       var parentnode = curNode.parentNode;
+      
 
-      // console.log(curNode);
-      // console.log(targetNode);
-      // console.log(parentnode);
+      let tmp = parentnode.insertBefore(curNode, targetNode);
+      if(typeof tmp == 'object')
+      {
+          var curlist = this.curComList;
 
-      parentnode.insertBefore(curNode, targetNode);
+          curlist[this.index]["attr"]["margin_top"] = 0;
+          var curattr = this.curComAttr;
+          curattr["margin_top"] = 0;
+
+          this.$store.commit("CURCOMATTR", curattr);
+          this.$store.commit("CURCOMLIST", curlist);
+      }
+        
     },
       show_border(){
         this.$el.style.border  = "1px dotted rgb(241, 15, 15)"

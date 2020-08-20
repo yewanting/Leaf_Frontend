@@ -47,5 +47,6 @@ export default {
     },
     [CURMOVEID](state,res){
         state.cur_move_id = res
-    }
+    },
+
 }

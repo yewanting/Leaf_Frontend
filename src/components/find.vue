@@ -73,7 +73,6 @@ export default {
          this.find_icon_size+'px;'
          return find_icon_form_s;
      },
-  
   },
  
   props: [
@@ -125,32 +124,10 @@ export default {
     },
     onDragEnter(event){
       var event = event || window.event;
-      // this.lastenter = event.target;
-      // console.log("进入的区域",this.lastenter);
-      // var div = document.createElement("div");
-      // div.style.width="100%";
-      // div.style.height = "10px";
-      // div.style.border = "1px solid red";
-      // div.innerText="拖放到这里"
-      // var parentnode = event.target.parentNode;
-      // console.log("进入该区域",event.target)
-      // console.log("兄弟元素",event.target.previousSibling)
-      // parentnode.insertBefore(div,event.target.previousElementSibling);
      
     },
-// nextElementSibling
     onDragLeave(event){
       var event = event || window.event;
-      // if(this.lastenter ==event.target)
-      // {
-      //   console.log("离开的区域",event.target)
-      // }
-   
-      // var parentnode = event.target.parentNode;
-      // parentnode.removeChild(event.target.previousSibling);
-
-
-      //  console.log("离开该区域",event.target)
     },
 
     onDrop(event) {

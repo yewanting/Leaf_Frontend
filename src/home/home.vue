@@ -65,6 +65,7 @@
           :border_radius="com.attr.border_radius"
           :padding_top="com.attr.padding_top"
           :padding_left="com.attr.padding_left"
+          :margin_top="com.attr.margin_top"
         ></my_button>
 
         <!-- 轮播图 -->
@@ -153,7 +154,7 @@
           :border_color="com.attr.border_color"
         ></my_separator>
 
-        
+
       </div>
     </div>
     <div class="right">
@@ -235,8 +236,6 @@ import my_separator_change from "../components/separator_change.vue";
 
 
 
-//提示框
-import my_div from "../common_components/div.vue"
 export default {
   data() {
     return {
@@ -408,11 +407,12 @@ export default {
             text_color: "#000000",
             text_size: "15",
             width: "100",
-            height: "30",
+            height: "40",
             line_height: "0",
             border_radius: "0",
             padding_top: "0",
             padding_left: "0",
+            margin_top:"0",
           },
         });
       }
