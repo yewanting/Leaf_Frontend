@@ -174,6 +174,14 @@
           </li>
         </ul>
       </div>
+      <div class="saved">
+        <div @click="download_code">
+          <span>下载源码</span>
+        </div>
+         <div>
+          <span>保存</span>
+        </div>
+      </div>
       <div class="right_content">
         <div>
           <div v-if="('button'==curComType)">
@@ -477,7 +485,6 @@ export default {
           ],
         });
       }
-      // console.log("home",this)
 
       if (component == "搜索") {
         curlist.push({
@@ -603,6 +610,24 @@ export default {
     clicktitle(item_title) {
       this.$store.commit("TITLECHOICE", item_title);
     },
+    funcDownload(content, filename){
+    // 创建隐藏的可下载链接
+      var eleLink = document.createElement('a');
+      eleLink.download = filename;
+      eleLink.style.display = 'none';
+      // 字符内容转变成blob地址
+      var blob = new Blob([content]);
+      eleLink.href = URL.createObjectURL(blob);
+      // 触发点击
+      document.body.appendChild(eleLink);
+      eleLink.click();
+      // 然后移除
+      document.body.removeChild(eleLink);
+    },
+    download_code(){
+       var curs = document.querySelector('#mainview').outerHTML;
+       this.funcDownload(curs, 'index.html')
+    }
 
   },
 };
@@ -620,6 +645,7 @@ export default {
   box-shadow: 0px 10px 30px rgb(226, 225, 224);
   border: 1px solid rgb(151, 138, 138);
 }
+
 .left_top {
   width: 100%;
   height: 60%;
@@ -669,6 +695,7 @@ ul {
   font-size: 25px;
 }
 
+
 /* 中间手机端 */
 .mid {
   position: absolute;
@@ -715,9 +742,50 @@ ul {
 span:hover {
   cursor: pointer;
 }
+.saved{
+  color: #da8383;
+  font-weight: bold;
+  width: 100%;
+  height: 6vh;
+  background-color: rgb(241, 248, 255);
+}
+.saved div{
+  margin-left:30px ;
+  margin-bottom: 10px;
+  width:100px;
+  font-size: 15px;
+  color: #494343;
+  border: 1px solid rgb(120, 112, 124);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+} 
+.saved div:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 25px 10px rgba(230, 46, 230, 0.4);
+  }
+.saved div:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(230, 46, 230, 0.4),
+      transparent
+    );
+    transition: all 650ms;
+  }
+  
+.saved div:hover:before {
+    left: 100%;
+  }
 .right_content {
   width: 100%;
-  height: 96vh;
+  height: 90vh;
   background-color: rgb(241, 248, 255);
 }
 .right_content li {
