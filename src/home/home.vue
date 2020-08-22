@@ -656,7 +656,7 @@ export default {
       var curs =
         '<head><link rel="stylesheet" type="text/css" href="index.css"><meta charset = "utf-8"></head>';
       curs += document.querySelector("#mainview").outerHTML;
-      return curs.replace(/..\/..\/static\/images\//g, "");
+      return curs.replace(/..\/..\/static\//g, "");
     },
     loadNode(node) {
       // 遍历所有的子节点
@@ -684,21 +684,29 @@ export default {
     },
     download_code() {
       //  const data = ["/static/css/index.css"]; // 需要下载打包的路径, 可以是本地相对路径, 也可以是跨域的全路径
-      const data = this.get_img();
-      data.push("/static/css/index.css");
+      const img_data = this.get_img();
+      const css_data = "/static/css/index.css";
       const zip = new JSZip();
-      const cache = {};
       const promises = [];
-      data.forEach((item) => {
-        const promise = getFile(item).then((data) => {
+      const imgs = zip.folder("images")
+      img_data.forEach((item) => {
+        const img_promise = getFile(item).then((data) => {
           // 下载文件, 并存成ArrayBuffer对象
           const arr_name = item.split("/");
+          const file_name = arr_name[arr_name.length - 1]; // 获取文件名
+           imgs.file(file_name,data, {binary: true})
+        });
+        // promises.push(img_promise);
+      });
+
+      const css_promise = getFile(css_data).then((data) => {
+          // 下载文件, 并存成ArrayBuffer对象
+          const arr_name = css_data.split("/");
           const file_name = arr_name[arr_name.length - 1]; // 获取文件名
 
           zip.file(file_name, data, { binary: true }); // 逐个添加文件
         });
-        promises.push(promise);
-      });
+        promises.push(css_promise);
 
       let index_content = this.get_code();
       let cur_index_content = new Blob([index_content]);
