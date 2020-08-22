@@ -9,7 +9,7 @@
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
     :draggable="true"
-    class="total"
+    class="find_total"
     :style="big_div_form"
   >
     <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
@@ -200,48 +200,6 @@ export default {
 
 
 <style scoped>
-.total {
-  margin: 0;
-  position: relative;
-  width: 100%;
-}
-.find_div {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  border: 1px solid rgb(168, 161, 161);
-}
-.input_find {
-  border: none;
-  outline: none;
-  margin-left: 10px;
-  margin-top: 5px;
-  width: 60%;
-}
-.icon-sousuo {
-  margin: 5px;
-  float: right;
-}
-.icon-jurassic_gongbao {
-  position: absolute;
-  z-index: 100;
-  width: 20px;
-  left: 0;
-  right: 0;
-  top: 0;
-  margin: auto;
-  font-size: 20px;
-  color: #f58f8f;
-}
-.icon-chahao {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.icon-chahao:hover {
-  cursor: pointer;
-}
+
+
 </style>

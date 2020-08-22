@@ -9,7 +9,7 @@
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
     :draggable="true"
-    class="total"
+    class="talk_total"
     :style="'margin-top:'+this.margin_top+'px;'"
   >
     <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
@@ -19,14 +19,14 @@
       :key="index"
       class="total_talk_form"
     >
-      <div class="left">
-        <img :src="talk_item.course_img" :style="img_form" />
+      <div class="talk_left">
+        <img :src="talk_item.course_img" :style="img_form"  class="talk_img"/>
       </div>
-      <div class="right" :style="'height:'+course_img_height+'px;'">
+      <div :style="'height:'+course_img_height+'px;'">
         <div>
           <span :style="descripe_form">{{talk_item.descripe}}</span>
         </div>
-        <div class="right_bottom"> 
+        <div class="talk_right_bottom"> 
         <i class="iconfont icon-aixin"></i>
           <span>{{talk_item.love_count}}</span>
           <i class="iconfont icon-pinglun"></i>
@@ -199,49 +199,5 @@ export default {
 </script> 
 
 <style scoped>
-.total{
-  margin:0;
-  position: relative;
-  width: 100%;
-}
-.total_talk_form{
-    padding-bottom: 2%;
-    border-bottom: 1px solid rgb(240, 221, 221);
-}
-.left {
-  float: left;
-  box-shadow: 0px 10px 30px #fae3e3;
-  margin-right: 10px;
-}
 
-.icon-jurassic_gongbao {
-  position: absolute;
-  z-index: 100;
-  width: 20px;
-  left: 0;
-  right: 0;
-  top: 0;
-  margin: auto;
-  font-size: 20px;
-  color: #f58f8f;
-}
-.icon-chahao {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.icon-chahao:hover {
-  cursor: pointer;
-}
-img {
-  width: 100%;
-  height: 100%;
-}
-.icon-aixin,.icon-pinglun{
-    color:#bbacac
-}
-.right_bottom{
-    float: right;
-    color:#979595
-}
 </style>

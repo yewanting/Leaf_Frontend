@@ -9,7 +9,7 @@
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
     :draggable="true"    
-    class="total" 
+    class="title_total" 
     :style="'text-align:'+this.position+';margin-top:'+this.margin_top+'px;'"
     >
     <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
@@ -152,32 +152,7 @@ export default {
 
 
 <style scoped>
-.total{
-    margin:0;
-    position: relative;
-    width: 100%;
-    font-weight: bold;
-    height: 50px;
-}
-.icon-jurassic_gongbao {
-  position: absolute;
-  z-index: 100;
-  width: 20px;
-  left: 0;
-  right: 0;
-  top: 0;
-  margin: auto;
-  font-size: 20px;
-  color: #f58f8f;
-}
-.icon-chahao {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.icon-chahao:hover {
-  cursor: pointer;
-}
+
 
 
 </style>

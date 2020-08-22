@@ -1,20 +1,20 @@
 <template>
-  <div class="total">
+  <div>
     <!-- 左边的选择 -->
-    <div class="left">
-      <div class="left_top">
-        <div class="top_title">
-          <div class="top_title_mid">
+    <div class="main_view_left">
+      <div class="main_view_left_top">
+        <div class="main_view_top_title">
+          <div class="main_view_top_title_mid">
             <i class="iconfont icon-chuangkouwindow33"></i>
             组件库
           </div>
         </div>
-        <div class="top_content">
+        <div class="main_view_top_content">
           <ul id="component_ul">
             <li
               v-for="(component_item,index) in component_content"
               :key="index"
-              class="component_list"
+              class="main_view_component_list"
               @click="choose_component(component_item.content)"
             >
               <i class="iconfont" :class="component_item.icon_class"></i>
@@ -23,19 +23,19 @@
           </ul>
         </div>
       </div>
-      <div class="left_bottom">
-        <div class="bottom_title">
-          <div class="bottom_title_mid">
+      <div class="main_view_left_bottom">
+        <div class="main_view_bottom_title">
+          <div class="main_view_bottom_title_mid">
             <i class="iconfont icon-chuangkouwindow33"></i>
             营销组件
           </div>
         </div>
-        <div class="bottom_content">
+        <div class="main_view_bottom_content">
           <ul id="extra_component">
             <li
               v-for="(extra_component_item,index) in extal_component"
               :key="index"
-              class="component_list"
+              class="main_view_component_list"
               @click="choose_component(component_item.content)"
             >
               <i class="iconfont" :class="extra_component_item.icon_class"></i>
@@ -46,7 +46,7 @@
       </div>
     </div>
     <!-- 中间部分 -->
-    <div class="mid" id="mainview">
+    <div class="main_view_mid" id="mainview">
       <my_toast></my_toast>
       <div v-for="(com,index) in curComList" :key="index">
         <!-- 按钮 -->
@@ -163,26 +163,26 @@
 
       </div>
     </div>
-    <div class="right">
-      <div class="right_title">
+    <div class="main_view_right">
+      <div class="main_view_right_title">
         <ul>
           <li v-for="(item_title,index) in titlelist" :key="index">
             <span
-              :class="((titleChoice==item_title)?'isclicked':'')"
+              :class="((titleChoice==item_title)?'main_view_isclicked':'')"
               @click="clicktitle(item_title)"
             >{{item_title}}</span>
           </li>
         </ul>
       </div>
-      <div class="saved">
+      <div class="main_view_saved">
         <div @click="download_code">
           <span>下载源码</span>
         </div>
-         <div>
+         <div @click="get_code">
           <span>保存</span>
         </div>
       </div>
-      <div class="right_content">
+      <div class="main_view_right_content">
         <div>
           <div v-if="('button'==curComType)">
             <my_button_change></my_button_change>
@@ -249,6 +249,27 @@ import my_separator from "../components/separator.vue";
 import my_separator_change from "../components/separator_change.vue";
 
 
+
+//下载依赖
+// npm i axios, JSZip, FileSaver -s
+import axios from "axios";
+import JSZip from "jszip";
+import FileSaver from "file-saver";
+const getFile = url => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "get",
+      url,
+      responseType: "ArrayBuffer"
+    })
+      .then(data => {
+        resolve(data.data);
+      })
+      .catch(error => {
+        reject(error.toString());
+      });
+  });
+};
 
 export default {
   data() {
@@ -342,6 +363,8 @@ export default {
         },
       ],
       titlelist: ["组件样式", "组件配置"],
+      img_sz:[],
+      mp:"",
     };
   },
 
@@ -387,6 +410,7 @@ export default {
   },
   mounted() {
     this.initList();
+    this.mp = new Map();
   },
   methods: {
     choose_component(component) {
@@ -610,24 +634,81 @@ export default {
     clicktitle(item_title) {
       this.$store.commit("TITLECHOICE", item_title);
     },
-    funcDownload(content, filename){
-    // 创建隐藏的可下载链接
-      var eleLink = document.createElement('a');
-      eleLink.download = filename;
-      eleLink.style.display = 'none';
-      // 字符内容转变成blob地址
-      var blob = new Blob([content]);
-      eleLink.href = URL.createObjectURL(blob);
-      // 触发点击
-      document.body.appendChild(eleLink);
-      eleLink.click();
-      // 然后移除
-      document.body.removeChild(eleLink);
+    // funcDownload(content, filename){
+    // // 创建隐藏的可下载链接
+    //   var eleLink = document.createElement('a');
+    //   eleLink.download = filename;
+    //   eleLink.style.display = 'none';
+    //   // 字符内容转变成blob地址
+    //   var blob = new Blob([content]);
+    //   eleLink.href = URL.createObjectRL(blob);
+    //   // 触发点击
+    //   document.body.appendChild(eleLink);
+    //   eleLink.click();
+    //   // 然后移除
+    //   document.body.removeChild(eleLink);
+    // },
+    // download_code(){    
+    //    var curs = document.querySelector('#mainview').outerHTML;
+    //    this.funcDownload(curs, 'index.html')  
+    // },
+    get_code()
+    {
+        var curs = '<head><link rel="stylesheet" type="text/css" href="index.css"><meta charset = "utf-8"></head>'
+        curs += document.querySelector('#mainview').outerHTML;
+        return curs.replace(/..\/..\/static\/images\//g,"");
+
     },
-    download_code(){
-       var curs = document.querySelector('#mainview').outerHTML;
-       this.funcDownload(curs, 'index.html')
-    }
+    loadNode(node){
+      // 遍历所有的子节点
+        for(var i=0;i<node.childNodes.length;i++){
+            if(node.childNodes[i].src&&this.mp.get(node.childNodes[i].src)===undefined)
+            {
+                this.img_sz.push(node.childNodes[i].src);
+                this.mp.set(node.childNodes[i].src,1);
+            }
+            if(node.childNodes[i].nodeType === 1 && node.childNodes[i].childNodes.length > 0){
+                this.loadNode(node.childNodes[i])
+        }
+      }
+      return this.img_sz;
+    },
+    get_img(){
+      var total_mainview = document.querySelector('#mainview')
+       let img_sz =  this.loadNode(total_mainview);
+       return img_sz;
+    },
+     download_code() {
+  
+      //  const data = ["/static/css/index.css"]; // 需要下载打包的路径, 可以是本地相对路径, 也可以是跨域的全路径
+       const data = this.get_img();
+       data.push("/static/css/index.css")
+       const zip = new JSZip();
+       const cache = {};
+       const promises = [];
+       data.forEach(item => {
+         const promise = getFile(item).then(data => {
+           // 下载文件, 并存成ArrayBuffer对象
+           const arr_name = item.split("/");
+           const file_name = arr_name[arr_name.length - 1]; // 获取文件名
+           
+           zip.file(file_name, data, { binary: true }); // 逐个添加文件
+           cache[file_name] = data;
+         });
+         promises.push(promise);
+       });
+       
+       let index_content = this.get_code();
+       zip.file("index.html", index_content, { binary: true }); // 逐个添加文件
+      //  promises.push(new Promise(index_content));
+       Promise.all(promises).then(() => {
+         zip.generateAsync({ type: "blob" }).then(content => {
+           // 生成二进制流
+           FileSaver.saveAs(content, "test.zip"); // 利用file-saver保存文件  自定义文件名
+         });
+       });
+    },
+
 
   },
 };
@@ -635,162 +716,5 @@ export default {
 
 
 <style scoped>
-/* 左端组件库 */
-.left {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 300px;
-  height: 99vh;
-  box-shadow: 0px 10px 30px rgb(226, 225, 224);
-  border: 1px solid rgb(151, 138, 138);
-}
 
-.left_top {
-  width: 100%;
-  height: 60%;
-  border-top: 1px solid rgb(151, 138, 138);
-}
-.left_bottom {
-  width: 100%;
-  height: 40%;
-  border-top: 1px solid rgb(151, 138, 138);
-}
-.top_title {
-  width: 100%;
-  height: 5%;
-}
-.bottom_title {
-  width: 100%;
-  height: 8%;
-}
-.top_title_mid,
-.bottom_title_mid {
-  border-bottom: 1px solid orangered;
-  color: orangered;
-}
-.top_content {
-  width: 100%;
-  height: 95%;
-}
-.bottom_content {
-  width: 100%;
-  height: 90%;
-}
-ul {
-  width: 100%;
-  height: 100%;
-  list-style: none;
-  padding: 0;
-}
-.component_list {
-  float: left;
-  border: 1px solid grey;
-  font-size: 12px;
-}
-.component_list:hover {
-  cursor: pointer;
-}
-.iconfont {
-  font-size: 25px;
-}
-
-
-/* 中间手机端 */
-.mid {
-  position: absolute;
-  height: 800px;
-  width: 500px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 1px solid grey;
-  margin: auto;
-  box-shadow: 0px 10px 30px rgb(226, 225, 224);
-}
-.mid::-webkit-scrollbar {
-  display: none;
-}
-
-/* 右端改变样式 */
-.right {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 350px;
-  height: 99vh;
-  box-shadow: 0px 10px 30px rgb(226, 225, 224);
-  /* border: 1px solid rgb(151, 138, 138); */
-}
-.right_title ul {
-  height: 3vh;
-  box-shadow: 0px 10px 30px rgb(238, 231, 224);
-}
-.right_title li {
-  float: left;
-  margin-left: 60px;
-  width: 100px;
-}
-.isclicked {
-  color: rgb(252, 153, 118);
-  padding-bottom: 5px;
-  border-bottom: 3px solid orangered;
-}
-span:hover {
-  cursor: pointer;
-}
-.saved{
-  color: #da8383;
-  font-weight: bold;
-  width: 100%;
-  height: 6vh;
-  background-color: rgb(241, 248, 255);
-}
-.saved div{
-  margin-left:30px ;
-  margin-bottom: 10px;
-  width:100px;
-  font-size: 15px;
-  color: #494343;
-  border: 1px solid rgb(120, 112, 124);
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-} 
-.saved div:hover {
-    cursor: pointer;
-    box-shadow: 1px 1px 25px 10px rgba(230, 46, 230, 0.4);
-  }
-.saved div:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 30px;
-    background: linear-gradient(
-      120deg,
-      transparent,
-      rgba(230, 46, 230, 0.4),
-      transparent
-    );
-    transition: all 650ms;
-  }
-  
-.saved div:hover:before {
-    left: 100%;
-  }
-.right_content {
-  width: 100%;
-  height: 90vh;
-  background-color: rgb(241, 248, 255);
-}
-.right_content li {
-  height: 50px;
-  margin-left: 20px;
-  color: rgb(121, 111, 111);
-}
 </style>

@@ -9,7 +9,7 @@
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
     :draggable="true"
-    class="total"
+    class="course_total"
     :style="(course_form=='横向滑动')?row:'margin-top:'+this.margin_top+'px;'"
   >
     <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
@@ -23,8 +23,8 @@
       :key="index"
       v-show="course_form=='详细列表'"
     >
-      <div class="left">
-        <img :src="goods_item.course_img" :style="img_form" />
+      <div class="course_left">
+        <img :src="goods_item.course_img" :style="img_form" class="course_img"/>
       </div>
       <div :style="'height:'+course_img_height+'px;'">
         <div>
@@ -53,6 +53,7 @@
           :src="goods_item.course_img"
           :style="'border-radius:' +course_img_border_radius +
         'px;'"
+          class="course_img"
         />
       </div>
       <div :style="small_bottom">
@@ -82,6 +83,7 @@
           :src="goods_item.course_img"
           :style="'border-radius:' +course_img_border_radius +
         'px;'"
+         class="course_img"
         />
       </div>
       <div>
@@ -104,7 +106,8 @@
       v-show="course_form=='横向滑动'"
     >
       <div :style="row_top">
-        <img :src="goods_item.course_img" />
+        <img :src="goods_item.course_img"
+        class="course_img" />
       </div>
       <div style="float:left;">
         <div>
@@ -406,49 +409,5 @@ export default {
 
 
 <style scoped>
-.total {
-  position: relative;
-  width: 100%;
-  overflow:auto;
-  zoom:1;
-}
-.left {
-  float: left;
-  box-shadow: 0px 10px 30px #fae3e3;
-  margin-right: 10px;
-}
-.signal_course {
-  padding-bottom: 2%;
-  border-bottom: 1px solid rgb(240, 221, 221);
-}
-.icon-jurassic_gongbao {
-  position: absolute;
-  z-index: 100;
-  width: 20px;
-  left: 0;
-  right: 0;
-  top: 0;
-  margin: auto;
-  font-size: 20px;
-  color: #f58f8f;
-}
-.icon-chahao {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.icon-chahao:hover {
-  cursor: pointer;
-}
 
-img {
-  width: 100%;
-  height: 100%;
-}
-.row {
-  overflow-y: hidden;
-  overflow-x: scroll;
-  display: flex;
-  white-space: nowrap;
-}
 </style>

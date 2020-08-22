@@ -10,7 +10,7 @@
     @dragleave="onDragLeave"
     :style="'margin-top:'+this.margin_top+'px;'"
     :draggable="true"
-    class="total"
+    class="separator_total"
   >
     <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
     <i class="iconfont icon-chahao" v-if="is_show==true" @click="remove_component"></i>
@@ -142,32 +142,5 @@ export default {
 
 
 <style scoped>
-.total {
-  margin: 0;
-  position: relative;
-  width: 100%;
-  height: 10px;
-}
-.icon-jurassic_gongbao {
-  position: absolute;
-  z-index: 100;
-  width: 20px;
-  left: 0;
-  right: 0;
-  top: 0;
-  margin: auto;
-  font-size: 20px;
-  color: #f58f8f;
-}
-.icon-chahao {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.icon-chahao:hover {
-  cursor: pointer;
-}
-.separator_form {
-  margin-top: 4px;
-}
+
 </style>
