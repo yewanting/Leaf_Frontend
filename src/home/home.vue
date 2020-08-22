@@ -159,8 +159,6 @@
           :border_color="com.attr.border_color"
           :margin_top="com.attr.margin_top"
         ></my_separator>
-
-
       </div>
     </div>
     <div class="main_view_right">
@@ -178,7 +176,7 @@
         <div @click="download_code">
           <span>下载源码</span>
         </div>
-         <div @click="get_code">
+        <div @click="get_code">
           <span>保存</span>
         </div>
       </div>
@@ -248,24 +246,26 @@ import my_title_change from "../components/title_change.vue";
 import my_separator from "../components/separator.vue";
 import my_separator_change from "../components/separator_change.vue";
 
-
-
 //下载依赖
 // npm i axios, JSZip, FileSaver -s
 import axios from "axios";
 import JSZip from "jszip";
 import FileSaver from "file-saver";
-const getFile = url => {
+const getFile = (url) => {
   return new Promise((resolve, reject) => {
     axios({
       method: "get",
       url,
-      responseType: "ArrayBuffer"
+      responseType: "blob",
+      headers: {
+        "Content-Type": "application/json; application/octet-stream",
+      },
     })
-      .then(data => {
+      .then((data) => {
+        // console.log(data.data);
         resolve(data.data);
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error.toString());
       });
   });
@@ -363,8 +363,8 @@ export default {
         },
       ],
       titlelist: ["组件样式", "组件配置"],
-      img_sz:[],
-      mp:"",
+      img_sz: [],
+      mp: "",
     };
   },
 
@@ -431,7 +431,7 @@ export default {
             height: "200",
             border_radius: "0",
             banner_seconds: "3000",
-            margin_top:"0",
+            margin_top: "0",
           },
         });
       }
@@ -440,7 +440,7 @@ export default {
         curlist.push({
           type: "button",
           attr: {
-            title: "按钮"+curlist.length,
+            title: "按钮" + curlist.length,
             background_color: "#ffffff",
             border_color: "#000000",
             text_color: "#000000",
@@ -451,7 +451,7 @@ export default {
             border_radius: "0",
             padding_top: "0",
             padding_left: "0",
-            margin_top:"0",
+            margin_top: "0",
           },
         });
       }
@@ -475,7 +475,7 @@ export default {
             course_img_width: "150",
             course_img_height: "150",
             course_img_border_radius: "0",
-            margin_top:"0"
+            margin_top: "0",
           },
           content: [
             {
@@ -523,7 +523,7 @@ export default {
             height: "30",
             border_radius: "50",
             find_icon_size: "20",
-            margin_top:"0"
+            margin_top: "0",
           },
         });
       }
@@ -538,7 +538,7 @@ export default {
             course_img_width: "150",
             course_img_height: "150",
             course_img_border_radius: "0",
-            margin_top:"0",
+            margin_top: "0",
           },
           content: [
             {
@@ -578,7 +578,7 @@ export default {
             color: "#000000",
             font_size: "18",
             position: "left",
-            margin_top:"0"
+            margin_top: "0",
           },
         });
       }
@@ -590,7 +590,7 @@ export default {
             border_color: "#000000",
             border_form: "solid",
             border_wide: "1",
-            margin_top:"10",
+            margin_top: "10",
           },
         });
       }
@@ -648,73 +648,73 @@ export default {
     //   // 然后移除
     //   document.body.removeChild(eleLink);
     // },
-    // download_code(){    
+    // download_code(){
     //    var curs = document.querySelector('#mainview').outerHTML;
-    //    this.funcDownload(curs, 'index.html')  
+    //    this.funcDownload(curs, 'index.html')
     // },
-    get_code()
-    {
-        var curs = '<head><link rel="stylesheet" type="text/css" href="index.css"><meta charset = "utf-8"></head>'
-        curs += document.querySelector('#mainview').outerHTML;
-        return curs.replace(/..\/..\/static\/images\//g,"");
-
+    get_code() {
+      var curs =
+        '<head><link rel="stylesheet" type="text/css" href="index.css"><meta charset = "utf-8"></head>';
+      curs += document.querySelector("#mainview").outerHTML;
+      return curs.replace(/..\/..\/static\/images\//g, "");
     },
-    loadNode(node){
+    loadNode(node) {
       // 遍历所有的子节点
-        for(var i=0;i<node.childNodes.length;i++){
-            if(node.childNodes[i].src&&this.mp.get(node.childNodes[i].src)===undefined)
-            {
-                this.img_sz.push(node.childNodes[i].src);
-                this.mp.set(node.childNodes[i].src,1);
-            }
-            if(node.childNodes[i].nodeType === 1 && node.childNodes[i].childNodes.length > 0){
-                this.loadNode(node.childNodes[i])
+      for (var i = 0; i < node.childNodes.length; i++) {
+        if (
+          node.childNodes[i].src &&
+          this.mp.get(node.childNodes[i].src) === undefined
+        ) {
+          this.img_sz.push(node.childNodes[i].src);
+          this.mp.set(node.childNodes[i].src, 1);
+        }
+        if (
+          node.childNodes[i].nodeType === 1 &&
+          node.childNodes[i].childNodes.length > 0
+        ) {
+          this.loadNode(node.childNodes[i]);
         }
       }
       return this.img_sz;
     },
-    get_img(){
-      var total_mainview = document.querySelector('#mainview')
-       let img_sz =  this.loadNode(total_mainview);
-       return img_sz;
+    get_img() {
+      var total_mainview = document.querySelector("#mainview");
+      let img_sz = this.loadNode(total_mainview);
+      return img_sz;
     },
-     download_code() {
-  
+    download_code() {
       //  const data = ["/static/css/index.css"]; // 需要下载打包的路径, 可以是本地相对路径, 也可以是跨域的全路径
-       const data = this.get_img();
-       data.push("/static/css/index.css")
-       const zip = new JSZip();
-       const cache = {};
-       const promises = [];
-       data.forEach(item => {
-         const promise = getFile(item).then(data => {
-           // 下载文件, 并存成ArrayBuffer对象
-           const arr_name = item.split("/");
-           const file_name = arr_name[arr_name.length - 1]; // 获取文件名
-           
-           zip.file(file_name, data, { binary: true }); // 逐个添加文件
-           cache[file_name] = data;
-         });
-         promises.push(promise);
-       });
-       
-       let index_content = this.get_code();
-       zip.file("index.html", index_content, { binary: true }); // 逐个添加文件
-      //  promises.push(new Promise(index_content));
-       Promise.all(promises).then(() => {
-         zip.generateAsync({ type: "blob" }).then(content => {
-           // 生成二进制流
-           FileSaver.saveAs(content, "test.zip"); // 利用file-saver保存文件  自定义文件名
-         });
-       });
+      const data = this.get_img();
+      data.push("/static/css/index.css");
+      const zip = new JSZip();
+      const cache = {};
+      const promises = [];
+      data.forEach((item) => {
+        const promise = getFile(item).then((data) => {
+          // 下载文件, 并存成ArrayBuffer对象
+          const arr_name = item.split("/");
+          const file_name = arr_name[arr_name.length - 1]; // 获取文件名
+
+          zip.file(file_name, data, { binary: true }); // 逐个添加文件
+        });
+        promises.push(promise);
+      });
+
+      let index_content = this.get_code();
+      let cur_index_content = new Blob([index_content]);
+      zip.file("index.html", cur_index_content, { binary: true }); // 逐个添加文件
+
+      Promise.all(promises).then(() => {
+        zip.generateAsync({ type: "blob" }).then((content) => {
+          // 生成二进制流
+          FileSaver.saveAs(content, "test.zip"); // 利用file-saver保存文件  自定义文件名
+        });
+      });
     },
-
-
   },
 };
 </script>
 
 
 <style scoped>
-
 </style>
