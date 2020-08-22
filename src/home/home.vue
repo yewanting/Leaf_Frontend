@@ -176,7 +176,7 @@
         <div @click="download_code">
           <span>下载源码</span>
         </div>
-        <div @click="get_code">
+        <div>
           <span>保存</span>
         </div>
       </div>
@@ -654,7 +654,9 @@ export default {
     // },
     get_code() {
       var curs =
-        '<head><link rel="stylesheet" type="text/css" href="index.css"><meta charset = "utf-8"></head>';
+        '<head><link rel="stylesheet" type="text/css" href="index.css">'+
+        '<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">'+
+        '<meta charset = "utf-8"></head>';
       curs += document.querySelector("#mainview").outerHTML;
       return curs.replace(/..\/..\/static\//g, "");
     },
@@ -683,24 +685,26 @@ export default {
       return img_sz;
     },
     download_code() {
-      //  const data = ["/static/css/index.css"]; // 需要下载打包的路径, 可以是本地相对路径, 也可以是跨域的全路径
+       const data = ["/static/css/index.css"]; // 需要下载打包的路径, 可以是本地相对路径, 也可以是跨域的全路径
       const img_data = this.get_img();
       const css_data = "/static/css/index.css";
       const zip = new JSZip();
       const promises = [];
+
+      // 把图片存到images的文件夹中
       const imgs = zip.folder("images")
       img_data.forEach((item) => {
         const img_promise = getFile(item).then((data) => {
-          // 下载文件, 并存成ArrayBuffer对象
           const arr_name = item.split("/");
           const file_name = arr_name[arr_name.length - 1]; // 获取文件名
            imgs.file(file_name,data, {binary: true})
         });
-        // promises.push(img_promise);
+       promises.push(img_promise);
       });
+       
 
+      // 压缩css
       const css_promise = getFile(css_data).then((data) => {
-          // 下载文件, 并存成ArrayBuffer对象
           const arr_name = css_data.split("/");
           const file_name = arr_name[arr_name.length - 1]; // 获取文件名
 
@@ -708,14 +712,41 @@ export default {
         });
         promises.push(css_promise);
 
+
+      // 压缩html
       let index_content = this.get_code();
       let cur_index_content = new Blob([index_content]);
       zip.file("index.html", cur_index_content, { binary: true }); // 逐个添加文件
 
+
+      // 压缩iconfont
+       const iconfont_data = [
+       "/static/iconfont/demo.css",
+       "/static/iconfont/demo_index.html",
+       "/static/iconfont/iconfont.css",
+       "/static/iconfont/iconfont.eot",
+       "/static/iconfont/iconfont.js",
+       "/static/iconfont/iconfont.json",
+       "/static/iconfont/iconfont.svg",
+       "/static/iconfont/iconfont.ttf",
+       "/static/iconfont/iconfont.woff",
+       "/static/iconfont/iconfont.woff2"
+       ];
+     
+      const iconfonts = zip.folder("iconfont")
+      iconfont_data.forEach((item) => {
+        const iconfont_promise = getFile(item).then((data) => {
+          const arr_name = item.split("/");
+          const file_name = arr_name[arr_name.length - 1]; // 获取文件名
+           iconfonts.file(file_name,data, {binary: true})
+        });
+         promises.push(iconfont_promise);
+      });
+
       Promise.all(promises).then(() => {
         zip.generateAsync({ type: "blob" }).then((content) => {
           // 生成二进制流
-          FileSaver.saveAs(content, "test.zip"); // 利用file-saver保存文件  自定义文件名
+          FileSaver.saveAs(content, "project.zip"); // 利用file-saver保存文件  自定义文件名
         });
       });
     },
