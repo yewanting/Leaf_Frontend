@@ -49,119 +49,121 @@
         </div>
       </nav>
       <!-- 中间部分 -->
-      <article id="mainview">
-        <my_toast></my_toast>
-        <div v-for="(com,index) in curComList" :key="index">
-          <!-- 按钮 -->
-          <my_button
-            v-if="com.type=='button'"
-            :index="index"
-            :position="com.attr.position"
-            :title="com.attr.title"
-            :background_color="com.attr.background_color"
-            :border_color="com.attr.border_color"
-            :text_color="com.attr.text_color"
-            :text_size="com.attr.text_size"
-            :width="com.attr.width"
-            :height="com.attr.height"
-            :line_height="com.attr.line_height"
-            :border_radius="com.attr.border_radius"
-            :padding_top="com.attr.padding_top"
-            :padding_left="com.attr.padding_left"
-            :margin_top="com.attr.margin_top"
-          ></my_button>
+      <article>
+        <div class="main_view_mid" id="mainview">
+          <my_toast></my_toast>
+          <div v-for="(com,index) in curComList" :key="index">
+            <!-- 按钮 -->
+            <my_button
+              v-if="com.type=='button'"
+              :index="index"
+              :position="com.attr.position"
+              :title="com.attr.title"
+              :background_color="com.attr.background_color"
+              :border_color="com.attr.border_color"
+              :text_color="com.attr.text_color"
+              :text_size="com.attr.text_size"
+              :width="com.attr.width"
+              :height="com.attr.height"
+              :line_height="com.attr.line_height"
+              :border_radius="com.attr.border_radius"
+              :padding_top="com.attr.padding_top"
+              :padding_left="com.attr.padding_left"
+              :margin_top="com.attr.margin_top"
+            ></my_button>
 
-          <!-- 轮播图 -->
-          <my_banner
-            v-if="com.type=='banner'"
-            :index="index"
-            :imgsrc="com.attr.imgsrc"
-            :width="com.attr.width"
-            :height="com.attr.height"
-            :border_radius="com.attr.border_radius"
-            :banner_seconds="com.attr.banner_seconds"
-            :margin_top="com.attr.margin_top"
-          ></my_banner>
+            <!-- 轮播图 -->
+            <my_banner
+              v-if="com.type=='banner'"
+              :index="index"
+              :imgsrc="com.attr.imgsrc"
+              :width="com.attr.width"
+              :height="com.attr.height"
+              :border_radius="com.attr.border_radius"
+              :banner_seconds="com.attr.banner_seconds"
+              :margin_top="com.attr.margin_top"
+            ></my_banner>
 
-          <!-- 课程列表 -->
+            <!-- 课程列表 -->
 
-          <my_courselist
-            v-if="com.type=='courselist'"
-            :index="index"
-            :title_background_color="com.attr.title_background_color"
-            :title_color="com.attr.title_color"
-            :title_font_size="com.attr.title_font_size"
-            :descripe_background_color="com.attr.descripe_background_color"
-            :descripe_color="com.attr.descripe_color"
-            :descripe_font_size="com.attr.descripe_font_size"
-            :label_background_color="com.attr.label_background_color"
-            :label_color="com.attr.label_color"
-            :label_font_size="com.attr.label_font_size"
-            :price_background_color="com.attr.price_background_color"
-            :price_color="com.attr.price_color"
-            :price_position="com.attr.price_position"
-            :price_size="com.attr.price_size"
-            :course_img_width="com.attr.course_img_width"
-            :course_img_height="com.attr.course_img_height"
-            :course_img_border_radius="com.attr.course_img_border_radius"
-            :margin_top="com.attr.margin_top"
-            :goods="com.content"
-          ></my_courselist>
+            <my_courselist
+              v-if="com.type=='courselist'"
+              :index="index"
+              :title_background_color="com.attr.title_background_color"
+              :title_color="com.attr.title_color"
+              :title_font_size="com.attr.title_font_size"
+              :descripe_background_color="com.attr.descripe_background_color"
+              :descripe_color="com.attr.descripe_color"
+              :descripe_font_size="com.attr.descripe_font_size"
+              :label_background_color="com.attr.label_background_color"
+              :label_color="com.attr.label_color"
+              :label_font_size="com.attr.label_font_size"
+              :price_background_color="com.attr.price_background_color"
+              :price_color="com.attr.price_color"
+              :price_position="com.attr.price_position"
+              :price_size="com.attr.price_size"
+              :course_img_width="com.attr.course_img_width"
+              :course_img_height="com.attr.course_img_height"
+              :course_img_border_radius="com.attr.course_img_border_radius"
+              :margin_top="com.attr.margin_top"
+              :goods="com.content"
+            ></my_courselist>
 
-          <!-- 搜索框 -->
-          <my_find
-            v-if="com.type=='find'"
-            :index="index"
-            :text="com.attr.text"
-            :border_color="com.attr.border_color"
-            :text_color="com.attr.text_color"
-            :text_size="com.attr.text_size"
-            :big_height="com.attr.big_height"
-            :width="com.attr.width"
-            :height="com.attr.height"
-            :border_radius="com.attr.border_radius"
-            :find_icon_size="com.attr.find_icon_size"
-            :margin_top="com.attr.margin_top"
-          ></my_find>
+            <!-- 搜索框 -->
+            <my_find
+              v-if="com.type=='find'"
+              :index="index"
+              :text="com.attr.text"
+              :border_color="com.attr.border_color"
+              :text_color="com.attr.text_color"
+              :text_size="com.attr.text_size"
+              :big_height="com.attr.big_height"
+              :width="com.attr.width"
+              :height="com.attr.height"
+              :border_radius="com.attr.border_radius"
+              :find_icon_size="com.attr.find_icon_size"
+              :margin_top="com.attr.margin_top"
+            ></my_find>
 
-          <!-- 经典语录 -->
-          <my_talk
-            v-if="com.type=='talk'"
-            :index="index"
-            :text_background_color="com.attr.text_background_color"
-            :text_color="com.attr.text_color"
-            :text_font_size="com.attr.text_font_size"
-            :course_img_width="com.attr.course_img_width"
-            :course_img_height="com.attr.course_img_height"
-            :course_img_border_radius="com.attr.course_img_border_radius"
-            :margin_top="com.attr.margin_top"
-            :talk="com.content"
-          ></my_talk>
+            <!-- 经典语录 -->
+            <my_talk
+              v-if="com.type=='talk'"
+              :index="index"
+              :text_background_color="com.attr.text_background_color"
+              :text_color="com.attr.text_color"
+              :text_font_size="com.attr.text_font_size"
+              :course_img_width="com.attr.course_img_width"
+              :course_img_height="com.attr.course_img_height"
+              :course_img_border_radius="com.attr.course_img_border_radius"
+              :margin_top="com.attr.margin_top"
+              :talk="com.content"
+            ></my_talk>
 
-          <!-- 地图 -->
-          <!-- <my_map></my_map> -->
+            <!-- 地图 -->
+            <!-- <my_map></my_map> -->
 
-          <!-- 标题 -->
-          <my_title
-            v-if="com.type=='title'"
-            :index="index"
-            :content="com.attr.content"
-            :background_color="com.attr.background_color"
-            :color="com.attr.color"
-            :font_size="com.attr.font_size"
-            :position="com.attr.position"
-            :margin_top="com.attr.margin_top"
-          ></my_title>
+            <!-- 标题 -->
+            <my_title
+              v-if="com.type=='title'"
+              :index="index"
+              :content="com.attr.content"
+              :background_color="com.attr.background_color"
+              :color="com.attr.color"
+              :font_size="com.attr.font_size"
+              :position="com.attr.position"
+              :margin_top="com.attr.margin_top"
+            ></my_title>
 
-          <!-- 分割线 -->
-          <my_separator
-            v-if="com.type=='separator'"
-            :index="index"
-            :border_wide="com.attr.border_wide"
-            :border_form="com.attr.border_form"
-            :border_color="com.attr.border_color"
-            :margin_top="com.attr.margin_top"
-          ></my_separator>
+            <!-- 分割线 -->
+            <my_separator
+              v-if="com.type=='separator'"
+              :index="index"
+              :border_wide="com.attr.border_wide"
+              :border_form="com.attr.border_form"
+              :border_color="com.attr.border_color"
+              :margin_top="com.attr.margin_top"
+            ></my_separator>
+          </div>
         </div>
       </article>
       <aside>
@@ -213,11 +215,6 @@
         </div>
       </aside>
     </main>
-
-
-
-
-
   </div>
 </template>
 
