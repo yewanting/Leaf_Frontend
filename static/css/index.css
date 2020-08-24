@@ -8,9 +8,6 @@ body {
   flex-direction: column;
 }
 
-header {
-  background-color: #d8c6c6;
-}
 
 main {
   flex: 1;
@@ -19,14 +16,31 @@ main {
   align-items: stretch;
   width: 100%;
 }
-nav {
+
+nav{
   width: 300px;
   order: -1;
   box-shadow: 0px 10px 30px rgb(226, 225, 224);
+  align-items: stretch;
+  height: 96vh;
 }
-
+nav *{
+  display: flex;
+  width: 96px;
+  flex-wrap: wrap;
+}
+nav .main_view_top_title_mid{
+  width: 100%;
+  height: 25px;
+}
+nav .main_view_bottom_title_mid{
+  width: 100%;
+  height: 25px;
+}
 article {
   flex: 1;
+  position: relative;
+
 }
 
 aside {
@@ -41,29 +55,26 @@ footer {
 
 .main_view_left_top {
   width: 100%;
-  height: 60%;
+  height: 75%;
   border-top: 1px solid rgb(151, 138, 138);
 }
 
 .main_view_left_bottom {
   width: 100%;
-  height: 40%;
+  height: 25%;
   border-top: 1px solid rgb(151, 138, 138);
 }
 
-.main_view_top_title {
+.main_view_top_title,.main_view_bottom_title {
   width: 100%;
-  height: 5%;
-}
-
-.main_view_bottom_title {
-  width: 100%;
-  height: 8%;
+  height: 22px;
+  
 }
 
 .main_view_top_title_mid,
 .main_view_bottom_title_mid {
-  border-bottom: 1px solid orangered;
+  align-items: center;
+  justify-content: center;
   color: orangered;
 }
 
@@ -102,14 +113,15 @@ ul {
 /* 中间手机端 */
 .main_view_mid {
   position: absolute;
-  height: 800px;
-  width: 500px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  top: 0;
+  margin: 0;
+  top:0;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  height: 800px;
+  width: 450px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   border: 1px solid grey;
   margin: auto;
   box-shadow: 0px 10px 30px rgb(226, 225, 224);
@@ -132,7 +144,7 @@ ul {
 
 .main_view_right_title ul {
   display: flex;
-  height: 3vh;
+  height: 28px;
   box-shadow: 0px 10px 30px rgb(238, 231, 224);
 }
 
@@ -154,16 +166,25 @@ span:hover {
 }
 
 .main_view_saved {
-  color: #da8383;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: bold;
   width: 100%;
-  height: 6vh;
-  background-color: rgb(241, 248, 255);
+  background-color: rgb(207, 234, 241);
 }
 
+.icon-icon-test,.icon-shouji:hover{
+  cursor: pointer;
+}
+abbr{
+  width: 100px;
+}
 .main_view_saved div {
   margin-left: 30px;
   margin-bottom: 10px;
+  float: left;
   width: 100px;
   font-size: 15px;
   color: #494343;
@@ -198,7 +219,7 @@ span:hover {
 
 .main_view_right_content {
   width: 100%;
-  height:88vh;
+  height:92vh;
   background-color: rgb(241, 248, 255);
 }
 

@@ -1,6 +1,17 @@
 <template>
   <div>
-    <header>header seciton</header>
+    <header>
+      <div class="main_view_saved">
+          <abbr title="电脑端"><i class="iconfont icon-icon-test" @click="change_into_computer"></i></abbr> 
+          <abbr title="手机端"><i class="iconfont icon-shouji" @click="change_into_phone"></i></abbr>
+          <div @click="download_code">
+            <span>下载源码</span>
+          </div>
+          <div>
+            <span>保存</span>
+          </div>
+        </div>
+    </header>
 
     <main>
       <!-- 左边的选择 -->
@@ -176,14 +187,6 @@
               >{{item_title}}</span>
             </li>
           </ul>
-        </div>
-        <div class="main_view_saved">
-          <div @click="download_code">
-            <span>下载源码</span>
-          </div>
-          <div>
-            <span>保存</span>
-          </div>
         </div>
         <div class="main_view_right_content">
           <div>
@@ -415,7 +418,6 @@ export default {
     my_separator_change,
   },
   mounted() {
-    this.initList();
     this.mp = new Map();
   },
   methods: {
@@ -604,39 +606,6 @@ export default {
       this.$store.commit("CURCOMLIST", curlist);
     },
 
-    initList() {
-      // 初始化上部组件库
-      let curtopul = document.getElementById("component_ul");
-      let cur_top_ul_width = curtopul.offsetWidth;
-      let cur_top_ul_height = curtopul.offsetHeight;
-
-      let cur_top_li_width = cur_top_ul_width / 3.1;
-      let cur_top_li_height = cur_top_ul_height / 6.2;
-      let li_top_list = document
-        .getElementById("component_ul")
-        .getElementsByTagName("li");
-
-      for (let i = 0; i < li_top_list.length; i++) {
-        li_top_list[i].style.width = cur_top_li_width + "px";
-        li_top_list[i].style.height = cur_top_li_height + "px";
-      }
-
-      // 初始化下部组件库
-      let curbottomul = document.getElementById("extra_component");
-      let cur_bottom_ul_width = curbottomul.offsetWidth;
-      let cur_bottom_ul_height = curbottomul.offsetHeight;
-
-      let cur_bottom_li_width = cur_top_li_width;
-      let cur_bottom_li_height = cur_top_li_height;
-      let li_bottom_list = document
-        .getElementById("extra_component")
-        .getElementsByTagName("li");
-
-      for (let i = 0; i < li_bottom_list.length; i++) {
-        li_bottom_list[i].style.width = cur_bottom_li_width + "px";
-        li_bottom_list[i].style.height = cur_bottom_li_height + "px";
-      }
-    },
     clicktitle(item_title) {
       this.$store.commit("TITLECHOICE", item_title);
     },
@@ -735,6 +704,16 @@ export default {
         });
       });
     },
+    change_into_computer(){
+      let main_view = document.querySelector("#mainview");
+      main_view.style.width = "100%";
+      main_view.style.height =  "100%";
+    },
+    change_into_phone(){
+      let main_view = document.querySelector("#mainview");
+      main_view.style.width = "450px";
+      main_view.style.height = "800px";
+    }
   },
 };
 </script>
