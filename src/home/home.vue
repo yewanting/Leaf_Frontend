@@ -1,214 +1,223 @@
 <template>
   <div>
-    <!-- 左边的选择 -->
-    <div class="main_view_left">
-      <div class="main_view_left_top">
-        <div class="main_view_top_title">
-          <div class="main_view_top_title_mid">
-            <i class="iconfont icon-chuangkouwindow33"></i>
-            组件库
+    <header>header seciton</header>
+
+    <main>
+      <!-- 左边的选择 -->
+      <nav>
+        <div class="main_view_left_top">
+          <div class="main_view_top_title">
+            <div class="main_view_top_title_mid">
+              <i class="iconfont icon-chuangkouwindow33"></i>
+              组件库
+            </div>
+          </div>
+          <div class="main_view_top_content">
+            <ul id="component_ul">
+              <li
+                v-for="(component_item,index) in component_content"
+                :key="index"
+                class="main_view_component_list"
+                @click="choose_component(component_item.content)"
+              >
+                <i class="iconfont" :class="component_item.icon_class"></i>
+                {{component_item.content}}
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="main_view_top_content">
-          <ul id="component_ul">
-            <li
-              v-for="(component_item,index) in component_content"
-              :key="index"
-              class="main_view_component_list"
-              @click="choose_component(component_item.content)"
-            >
-              <i class="iconfont" :class="component_item.icon_class"></i>
-              {{component_item.content}}
+        <div class="main_view_left_bottom">
+          <div class="main_view_bottom_title">
+            <div class="main_view_bottom_title_mid">
+              <i class="iconfont icon-chuangkouwindow33"></i>
+              营销组件
+            </div>
+          </div>
+          <div class="main_view_bottom_content">
+            <ul id="extra_component">
+              <li
+                v-for="(extra_component_item,index) in extal_component"
+                :key="index"
+                class="main_view_component_list"
+                @click="choose_component(component_item.content)"
+              >
+                <i class="iconfont" :class="extra_component_item.icon_class"></i>
+                {{extra_component_item.content}}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- 中间部分 -->
+      <article id="mainview">
+        <my_toast></my_toast>
+        <div v-for="(com,index) in curComList" :key="index">
+          <!-- 按钮 -->
+          <my_button
+            v-if="com.type=='button'"
+            :index="index"
+            :position="com.attr.position"
+            :title="com.attr.title"
+            :background_color="com.attr.background_color"
+            :border_color="com.attr.border_color"
+            :text_color="com.attr.text_color"
+            :text_size="com.attr.text_size"
+            :width="com.attr.width"
+            :height="com.attr.height"
+            :line_height="com.attr.line_height"
+            :border_radius="com.attr.border_radius"
+            :padding_top="com.attr.padding_top"
+            :padding_left="com.attr.padding_left"
+            :margin_top="com.attr.margin_top"
+          ></my_button>
+
+          <!-- 轮播图 -->
+          <my_banner
+            v-if="com.type=='banner'"
+            :index="index"
+            :imgsrc="com.attr.imgsrc"
+            :width="com.attr.width"
+            :height="com.attr.height"
+            :border_radius="com.attr.border_radius"
+            :banner_seconds="com.attr.banner_seconds"
+            :margin_top="com.attr.margin_top"
+          ></my_banner>
+
+          <!-- 课程列表 -->
+
+          <my_courselist
+            v-if="com.type=='courselist'"
+            :index="index"
+            :title_background_color="com.attr.title_background_color"
+            :title_color="com.attr.title_color"
+            :title_font_size="com.attr.title_font_size"
+            :descripe_background_color="com.attr.descripe_background_color"
+            :descripe_color="com.attr.descripe_color"
+            :descripe_font_size="com.attr.descripe_font_size"
+            :label_background_color="com.attr.label_background_color"
+            :label_color="com.attr.label_color"
+            :label_font_size="com.attr.label_font_size"
+            :price_background_color="com.attr.price_background_color"
+            :price_color="com.attr.price_color"
+            :price_position="com.attr.price_position"
+            :price_size="com.attr.price_size"
+            :course_img_width="com.attr.course_img_width"
+            :course_img_height="com.attr.course_img_height"
+            :course_img_border_radius="com.attr.course_img_border_radius"
+            :margin_top="com.attr.margin_top"
+            :goods="com.content"
+          ></my_courselist>
+
+          <!-- 搜索框 -->
+          <my_find
+            v-if="com.type=='find'"
+            :index="index"
+            :text="com.attr.text"
+            :border_color="com.attr.border_color"
+            :text_color="com.attr.text_color"
+            :text_size="com.attr.text_size"
+            :big_height="com.attr.big_height"
+            :width="com.attr.width"
+            :height="com.attr.height"
+            :border_radius="com.attr.border_radius"
+            :find_icon_size="com.attr.find_icon_size"
+            :margin_top="com.attr.margin_top"
+          ></my_find>
+
+          <!-- 经典语录 -->
+          <my_talk
+            v-if="com.type=='talk'"
+            :index="index"
+            :text_background_color="com.attr.text_background_color"
+            :text_color="com.attr.text_color"
+            :text_font_size="com.attr.text_font_size"
+            :course_img_width="com.attr.course_img_width"
+            :course_img_height="com.attr.course_img_height"
+            :course_img_border_radius="com.attr.course_img_border_radius"
+            :margin_top="com.attr.margin_top"
+            :talk="com.content"
+          ></my_talk>
+
+          <!-- 地图 -->
+          <!-- <my_map></my_map> -->
+
+          <!-- 标题 -->
+          <my_title
+            v-if="com.type=='title'"
+            :index="index"
+            :content="com.attr.content"
+            :background_color="com.attr.background_color"
+            :color="com.attr.color"
+            :font_size="com.attr.font_size"
+            :position="com.attr.position"
+            :margin_top="com.attr.margin_top"
+          ></my_title>
+
+          <!-- 分割线 -->
+          <my_separator
+            v-if="com.type=='separator'"
+            :index="index"
+            :border_wide="com.attr.border_wide"
+            :border_form="com.attr.border_form"
+            :border_color="com.attr.border_color"
+            :margin_top="com.attr.margin_top"
+          ></my_separator>
+        </div>
+      </article>
+      <aside>
+        <div class="main_view_right_title">
+          <ul>
+            <li v-for="(item_title,index) in titlelist" :key="index">
+              <span
+                :class="((titleChoice==item_title)?'main_view_isclicked':'')"
+                @click="clicktitle(item_title)"
+              >{{item_title}}</span>
             </li>
           </ul>
         </div>
-      </div>
-      <div class="main_view_left_bottom">
-        <div class="main_view_bottom_title">
-          <div class="main_view_bottom_title_mid">
-            <i class="iconfont icon-chuangkouwindow33"></i>
-            营销组件
+        <div class="main_view_saved">
+          <div @click="download_code">
+            <span>下载源码</span>
+          </div>
+          <div>
+            <span>保存</span>
           </div>
         </div>
-        <div class="main_view_bottom_content">
-          <ul id="extra_component">
-            <li
-              v-for="(extra_component_item,index) in extal_component"
-              :key="index"
-              class="main_view_component_list"
-              @click="choose_component(component_item.content)"
-            >
-              <i class="iconfont" :class="extra_component_item.icon_class"></i>
-              {{extra_component_item.content}}
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!-- 中间部分 -->
-    <div class="main_view_mid" id="mainview">
-      <my_toast></my_toast>
-      <div v-for="(com,index) in curComList" :key="index">
-        <!-- 按钮 -->
-        <my_button
-          v-if="com.type=='button'"
-          :index="index"
-          :position="com.attr.position"
-          :title="com.attr.title"
-          :background_color="com.attr.background_color"
-          :border_color="com.attr.border_color"
-          :text_color="com.attr.text_color"
-          :text_size="com.attr.text_size"
-          :width="com.attr.width"
-          :height="com.attr.height"
-          :line_height="com.attr.line_height"
-          :border_radius="com.attr.border_radius"
-          :padding_top="com.attr.padding_top"
-          :padding_left="com.attr.padding_left"
-          :margin_top="com.attr.margin_top"
-        ></my_button>
-
-        <!-- 轮播图 -->
-        <my_banner
-          v-if="com.type=='banner'"
-          :index="index"
-          :imgsrc="com.attr.imgsrc"
-          :width="com.attr.width"
-          :height="com.attr.height"
-          :border_radius="com.attr.border_radius"
-          :banner_seconds="com.attr.banner_seconds"
-          :margin_top="com.attr.margin_top"
-        ></my_banner>
-
-        <!-- 课程列表 -->
-
-        <my_courselist
-          v-if="com.type=='courselist'"
-          :index="index"
-          :title_background_color="com.attr.title_background_color"
-          :title_color="com.attr.title_color"
-          :title_font_size="com.attr.title_font_size"
-          :descripe_background_color="com.attr.descripe_background_color"
-          :descripe_color="com.attr.descripe_color"
-          :descripe_font_size="com.attr.descripe_font_size"
-          :label_background_color="com.attr.label_background_color"
-          :label_color="com.attr.label_color"
-          :label_font_size="com.attr.label_font_size"
-          :price_background_color="com.attr.price_background_color"
-          :price_color="com.attr.price_color"
-          :price_position="com.attr.price_position"
-          :price_size="com.attr.price_size"
-          :course_img_width="com.attr.course_img_width"
-          :course_img_height="com.attr.course_img_height"
-          :course_img_border_radius="com.attr.course_img_border_radius"
-          :margin_top="com.attr.margin_top"
-          :goods="com.content"
-        ></my_courselist>
-
-        <!-- 搜索框 -->
-        <my_find
-          v-if="com.type=='find'"
-          :index="index"
-          :text="com.attr.text"
-          :border_color="com.attr.border_color"
-          :text_color="com.attr.text_color"
-          :text_size="com.attr.text_size"
-          :big_height="com.attr.big_height"
-          :width="com.attr.width"
-          :height="com.attr.height"
-          :border_radius="com.attr.border_radius"
-          :find_icon_size="com.attr.find_icon_size"
-          :margin_top="com.attr.margin_top"
-        ></my_find>
-
-        <!-- 经典语录 -->
-        <my_talk
-          v-if="com.type=='talk'"
-          :index="index"
-          :text_background_color="com.attr.text_background_color"
-          :text_color="com.attr.text_color"
-          :text_font_size="com.attr.text_font_size"
-          :course_img_width="com.attr.course_img_width"
-          :course_img_height="com.attr.course_img_height"
-          :course_img_border_radius="com.attr.course_img_border_radius"
-          :margin_top="com.attr.margin_top"
-          :talk="com.content"
-        ></my_talk>
-
-        <!-- 地图 -->
-        <!-- <my_map></my_map> -->
-
-        <!-- 标题 -->
-        <my_title
-          v-if="com.type=='title'"
-          :index="index"
-          :content="com.attr.content"
-          :background_color="com.attr.background_color"
-          :color="com.attr.color"
-          :font_size="com.attr.font_size"
-          :position="com.attr.position"
-          :margin_top="com.attr.margin_top"
-        ></my_title>
-
-        <!-- 分割线 -->
-        <my_separator
-          v-if="com.type=='separator'"
-          :index="index"
-          :border_wide="com.attr.border_wide"
-          :border_form="com.attr.border_form"
-          :border_color="com.attr.border_color"
-          :margin_top="com.attr.margin_top"
-        ></my_separator>
-      </div>
-    </div>
-    <div class="main_view_right">
-      <div class="main_view_right_title">
-        <ul>
-          <li v-for="(item_title,index) in titlelist" :key="index">
-            <span
-              :class="((titleChoice==item_title)?'main_view_isclicked':'')"
-              @click="clicktitle(item_title)"
-            >{{item_title}}</span>
-          </li>
-        </ul>
-      </div>
-      <div class="main_view_saved">
-        <div @click="download_code">
-          <span>下载源码</span>
-        </div>
-        <div>
-          <span>保存</span>
-        </div>
-      </div>
-      <div class="main_view_right_content">
-        <div>
-          <div v-if="('button'==curComType)">
-            <my_button_change></my_button_change>
-          </div>
-          <div v-if="('banner'==curComType)">
-            <my_banner_change></my_banner_change>
-          </div>
-          <div v-if="('courselist'==curComType)">
-            <my_courselist_change></my_courselist_change>
-          </div>
-          <div v-if="('find'==curComType)">
-            <my_find_change></my_find_change>
-          </div>
-          <div v-if="('talk'==curComType)">
-            <my_talk_change></my_talk_change>
-          </div>
-          <!-- <div v-if="('map'==curComType)">
-            <my_map_change></my_map_change>
-          </div>-->
-          <div v-if="('title'==curComType)">
-            <my_title_change></my_title_change>
-          </div>
-          <div v-if="('separator'==curComType)">
-            <my_separator_change></my_separator_change>
+        <div class="main_view_right_content">
+          <div>
+            <div v-if="('button'==curComType)">
+              <my_button_change></my_button_change>
+            </div>
+            <div v-if="('banner'==curComType)">
+              <my_banner_change></my_banner_change>
+            </div>
+            <div v-if="('courselist'==curComType)">
+              <my_courselist_change></my_courselist_change>
+            </div>
+            <div v-if="('find'==curComType)">
+              <my_find_change></my_find_change>
+            </div>
+            <div v-if="('talk'==curComType)">
+              <my_talk_change></my_talk_change>
+            </div>
+            <!-- <div v-if="('map'==curComType)">
+              <my_map_change></my_map_change>
+            </div>-->
+            <div v-if="('title'==curComType)">
+              <my_title_change></my_title_change>
+            </div>
+            <div v-if="('separator'==curComType)">
+              <my_separator_change></my_separator_change>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </aside>
+    </main>
+
+
+
+
+
   </div>
 </template>
 
@@ -634,28 +643,10 @@ export default {
     clicktitle(item_title) {
       this.$store.commit("TITLECHOICE", item_title);
     },
-    // funcDownload(content, filename){
-    // // 创建隐藏的可下载链接
-    //   var eleLink = document.createElement('a');
-    //   eleLink.download = filename;
-    //   eleLink.style.display = 'none';
-    //   // 字符内容转变成blob地址
-    //   var blob = new Blob([content]);
-    //   eleLink.href = URL.createObjectRL(blob);
-    //   // 触发点击
-    //   document.body.appendChild(eleLink);
-    //   eleLink.click();
-    //   // 然后移除
-    //   document.body.removeChild(eleLink);
-    // },
-    // download_code(){
-    //    var curs = document.querySelector('#mainview').outerHTML;
-    //    this.funcDownload(curs, 'index.html')
-    // },
     get_code() {
       var curs =
-        '<head><link rel="stylesheet" type="text/css" href="index.css">'+
-        '<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">'+
+        '<head><link rel="stylesheet" type="text/css" href="index.css">' +
+        '<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">' +
         '<meta charset = "utf-8"></head>';
       curs += document.querySelector("#mainview").outerHTML;
       return curs.replace(/..\/..\/static\//g, "");
@@ -685,62 +676,59 @@ export default {
       return img_sz;
     },
     download_code() {
-       const data = ["/static/css/index.css"]; // 需要下载打包的路径, 可以是本地相对路径, 也可以是跨域的全路径
+      const data = ["/static/css/index.css"]; // 需要下载打包的路径, 可以是本地相对路径, 也可以是跨域的全路径
       const img_data = this.get_img();
       const css_data = "/static/css/index.css";
       const zip = new JSZip();
       const promises = [];
 
       // 把图片存到images的文件夹中
-      const imgs = zip.folder("images")
+      const imgs = zip.folder("images");
       img_data.forEach((item) => {
         const img_promise = getFile(item).then((data) => {
           const arr_name = item.split("/");
           const file_name = arr_name[arr_name.length - 1]; // 获取文件名
-           imgs.file(file_name,data, {binary: true})
+          imgs.file(file_name, data, { binary: true });
         });
-       promises.push(img_promise);
+        promises.push(img_promise);
       });
-       
 
       // 压缩css
       const css_promise = getFile(css_data).then((data) => {
-          const arr_name = css_data.split("/");
-          const file_name = arr_name[arr_name.length - 1]; // 获取文件名
+        const arr_name = css_data.split("/");
+        const file_name = arr_name[arr_name.length - 1]; // 获取文件名
 
-          zip.file(file_name, data, { binary: true }); // 逐个添加文件
-        });
-        promises.push(css_promise);
-
+        zip.file(file_name, data, { binary: true }); // 逐个添加文件
+      });
+      promises.push(css_promise);
 
       // 压缩html
       let index_content = this.get_code();
       let cur_index_content = new Blob([index_content]);
       zip.file("index.html", cur_index_content, { binary: true }); // 逐个添加文件
 
-
       // 压缩iconfont
-       const iconfont_data = [
-       "/static/iconfont/demo.css",
-       "/static/iconfont/demo_index.html",
-       "/static/iconfont/iconfont.css",
-       "/static/iconfont/iconfont.eot",
-       "/static/iconfont/iconfont.js",
-       "/static/iconfont/iconfont.json",
-       "/static/iconfont/iconfont.svg",
-       "/static/iconfont/iconfont.ttf",
-       "/static/iconfont/iconfont.woff",
-       "/static/iconfont/iconfont.woff2"
-       ];
-     
-      const iconfonts = zip.folder("iconfont")
+      const iconfont_data = [
+        "/static/iconfont/demo.css",
+        "/static/iconfont/demo_index.html",
+        "/static/iconfont/iconfont.css",
+        "/static/iconfont/iconfont.eot",
+        "/static/iconfont/iconfont.js",
+        "/static/iconfont/iconfont.json",
+        "/static/iconfont/iconfont.svg",
+        "/static/iconfont/iconfont.ttf",
+        "/static/iconfont/iconfont.woff",
+        "/static/iconfont/iconfont.woff2",
+      ];
+
+      const iconfonts = zip.folder("iconfont");
       iconfont_data.forEach((item) => {
         const iconfont_promise = getFile(item).then((data) => {
           const arr_name = item.split("/");
           const file_name = arr_name[arr_name.length - 1]; // 获取文件名
-           iconfonts.file(file_name,data, {binary: true})
+          iconfonts.file(file_name, data, { binary: true });
         });
-         promises.push(iconfont_promise);
+        promises.push(iconfont_promise);
       });
 
       Promise.all(promises).then(() => {

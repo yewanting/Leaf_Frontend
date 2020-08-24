@@ -1,11 +1,49 @@
 /************ 主页面 ***************/
+body {
+  width: 100vw;
+  height: 100vh;
+  margin:0;
+  padding:0;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background-color: #d8c6c6;
+}
+
+main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+nav {
+  width: 300px;
+  order: -1;
+  box-shadow: 0px 10px 30px rgb(226, 225, 224);
+}
+
+article {
+  flex: 1;
+}
+
+aside {
+  width: 300px;
+  box-shadow: 0px 10px 30px rgb(226, 225, 224);
+}
+
+footer {
+  margin-top: auto;
+}
 /* 左端组件库 */
 .main_view_left {
   position: absolute;
   top: 0;
   left: 0;
   width: 300px;
-  height: 99vh;
+  /* height: 99vh; */
   box-shadow: 0px 10px 30px rgb(226, 225, 224);
   border: 1px solid rgb(151, 138, 138);
 }
@@ -96,12 +134,13 @@ ul {
   right: 0;
   top: 0;
   width: 350px;
-  height: 99vh;
+  /* height: 99vh; */
   box-shadow: 0px 10px 30px rgb(226, 225, 224);
   /* border: 1px solid rgb(151, 138, 138); */
 }
 
 .main_view_right_title ul {
+  display: flex;
   height: 3vh;
   box-shadow: 0px 10px 30px rgb(238, 231, 224);
 }
@@ -168,7 +207,7 @@ span:hover {
 
 .main_view_right_content {
   width: 100%;
-  height: 90vh;
+  height:88vh;
   background-color: rgb(241, 248, 255);
 }
 
