@@ -25,21 +25,35 @@
           添加内容
         </div>
       </nav>
-      <div  id = "nav_block" @mouseenter="show_nav" @mouseleave="unshow_nav">
-          <div class="main_view_top_content">
-            <ul id="component_ul">
-              <li
-                v-for="(component_item,index) in component_content"
-                :key="index"
-                class="main_view_component_list"
-                @click="choose_component(component_item.content)"
-              >
+      <i id="toast_kuang" class="iconfont icon-kuang2" v-show="(is_show_xiaoxi==true)"></i>
+      <div id="nav_block" @mouseenter="show_nav" @mouseleave="unshow_nav">
+        <div class="main_view_top_content">
+          <ul id="component_ul">
+            <li
+              v-for="(component_item,index) in component_content"
+              :key="index"
+              class="main_view_component_list"
+              @click="choose_component(component_item.content)"
+            >
+              <div>
                 <i class="iconfont" :class="component_item.icon_class"></i>
                 {{component_item.content}}
-              </li>
-            </ul>
-          </div>
- 
+              </div>
+              <div class="example">
+                <div
+                  class="example_item"
+                  v-for="(src,ind) in component_item.imgsrc"
+                  :key="ind"
+                  @mouseenter="get_left($event.currentTarget,src['src'])"
+                  @mouseleave="unshow_getleft"
+                >
+                  <img :src="src['src']" />
+                  {{src['title']}}
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
       <!-- 中间部分 -->
       <article :style="is_show_phone==true?phone_form:''">
@@ -265,95 +279,316 @@ export default {
       component_content: [
         {
           icon_class: "icon-lunbotu",
-          content: "轮播",
+          content: "轮播图",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-shipin",
           content: "视频",
+          imgsrc: [
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-Z-fenleidaohang",
           content: "分类导航",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-sousuo",
           content: "搜索",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-dizhi",
           content: "地址",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-tongzhi",
           content: "通知公告",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-biaoti",
           content: "标题",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-tupian",
           content: "图片",
+          imgsrc: [
+           {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-chuangkouwindow33",
           content: "橱窗",
+          imgsrc: [
+           {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-anniu",
           content: "按钮",
+          imgsrc: [
+           {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-fengexian",
           content: "分割线",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-tuwenliebiao",
           content: "图文列表",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-zhongdianguanggaowei",
           content: "广告位",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-liebiao",
           content: "课程列表",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-liebiao",
           content: "经典语录",
+          imgsrc: [
+           {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-liebiao",
           content: "推荐列表",
+          imgsrc: [
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
         {
           icon_class: "icon-liebiao",
           content: "讲师列表",
-        },
-      ],
-      extal_component: [
-        {
-          icon_class: "icon-youhuiquan",
-          content: "优惠券",
-        },
-        {
-          icon_class: "icon-pintuan",
-          content: "拼团",
-        },
-        {
-          icon_class: "icon-miaosha",
-          content: "秒杀",
-        },
-        {
-          icon_class: "icon-kanjia",
-          content: "砍价",
+          imgsrc: [
+           {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图1"
+            },
+             {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图2"
+            },
+            {
+              "src":"../../static/images/left/lunbo2.png",
+              "title":"轮播图3"
+            },
+          ],
         },
       ],
       titlelist: ["组件样式", "组件配置"],
       img_sz: [],
       mp: "",
-      is_show_phone:true,
+      is_show_phone: true,
+      is_show_xiaoxi: false,
     };
   },
 
@@ -376,10 +611,9 @@ export default {
     course_form() {
       return this.$store.state.course_form;
     },
-    phone_form(){
-      return 'background-image:  url("../../static/images/shouji_background.png");background-size: 520px 1000px; background-repeat: no-repeat;background-position-x: center;'
-    }
-    
+    phone_form() {
+      return 'background-image:  url("../../static/images/shouji_background.png");background-size: 520px 1000px; background-repeat: no-repeat;background-position-x: center;';
+    },
   },
 
   components: {
@@ -699,12 +933,23 @@ export default {
       main_view.style.width = "450px";
       main_view.style.height = "750px";
       this.is_show_phone = true;
-  },
+    },
     show_nav() {
-      document.querySelector("#nav_block").style.left = "25px";
+      document.querySelector("#nav_block").style.left = "28px";
     },
     unshow_nav() {
       document.querySelector("#nav_block").style.left = "-100%";
+    },
+    get_left(event,src) {
+      document.querySelector("#toast_kuang").style.left =
+        event.getBoundingClientRect().right + "px";
+      document.querySelector("#toast_kuang").style.top =
+        event.getBoundingClientRect().top - 80 + "px";
+      this.is_show_xiaoxi = true;
+       document.querySelector("#toast_kuang").style.backgroundImage =  'url("'+src+'")';
+    },
+    unshow_getleft() {
+      this.is_show_xiaoxi = false;
     },
   },
 };
@@ -712,4 +957,45 @@ export default {
 
 
 <style scoped>
+#nav_block {
+  transition-duration: 1s;
+  width: 400px;
+  position: absolute;
+  left: -100%;
+  background-color: #fdfdfd;
+  box-shadow: 0px 10px 30px rgb(226, 225, 224);
+  z-index: 2;
+  align-items: stretch;
+  height: 96vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.main_view_top_content,
+.main_view_bottom_content {
+  display: flex;
+  flex-wrap: wrap;
+}
+.example .example_item {
+  float: left;
+  width: 40%;
+  height: 110px;
+  margin: 15px;
+  text-align: center;
+}
+.example_item img {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #028c6a;
+}
+.icon-kuang2{
+  position: absolute;
+  font-size: 300px;
+  color: #9c9797;
+  z-index: 100;
+  background-size: 90% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("../../static/images/left/lunbo2.png");
+}
 </style>
