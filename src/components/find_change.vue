@@ -2,50 +2,50 @@
   <div>
     <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
       <div v-show="k=='text'">
-        <span>搜索框的文本：</span>
+        <span class="chang_title">搜索框的文本：</span>
         <input type="text" :value="v" @change="onChange('text',$event.target.value)" />
       </div>
 
       <div v-show="k=='border_color'">
-        <span>搜索框的圆弧颜色：</span>
+        <span class="chang_title">搜索框的圆弧颜色：</span>
         <input type="color" :value="v" @change="onChange('border_color',$event.target.value)" />
       </div>
 
       <div v-show="k=='text_color'">
-        <span>搜索框字体颜色：</span>
+        <span class="chang_title">搜索框字体颜色：</span>
         <input type="color" :value="v" @change="onChange('text_color',$event.target.value)" />
       </div>
 
       <div v-show="k=='text_size'">
-        <span>搜索框字体大小：</span>
+        <span class="chang_title">搜索框字体大小：</span>
         <input type="text" :value="v" @change="onChange('text_size',$event.target.value)" />
       </div>
 
 
 
       <div v-show="k=='height'">
-        <span>搜索框高度：</span>
+        <span class="chang_title">搜索框高度：</span>
         <input type="text" :value="v" @change="onChange('height',$event.target.value)" />
       </div>
 
 
       <div v-show="k=='width'">
-        <span>搜索框宽度：</span>
+        <span class="chang_title">搜索框宽度：</span>
         <input type="text" :value="v" @change="onChange('width',$event.target.value)" />
       </div>
 
       <div v-show="k=='border_radius'">
-        <span>搜索框圆弧大小：</span>
+        <span class="chang_title">搜索框圆弧大小：</span>
         <input type="text" :value="v" @change="onChange('border_radius',$event.target.value)" />
       </div>
 
       <div v-show="k=='find_icon_size'">
-        <span>搜索图标大小：</span>
+        <span class="chang_title">搜索图标大小：</span>
         <input type="text" :value="v" @change="onChange('find_icon_size',$event.target.value)" />
       </div>
 
       <div v-show="k=='big_height'">
-        <span>整个搜索框的高度：</span>
+        <span class="chang_title">整个搜索框的高度：</span>
         <input type="text" :value="v" @change="onChange('big_height',$event.target.value)" />
       </div>
 
@@ -113,5 +113,9 @@ export default {
   color: rgb(80, 71, 71);
   padding-top: 20px;
   padding-left: 20px;
+}
+.form_class .chang_title{
+  display: inline-block;
+  width: 130px;
 }
 </style>

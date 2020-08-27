@@ -1,21 +1,31 @@
 <template>
-  <div>
+  <div class="home_total">
     <header>
       <div class="main_view_saved">
-          <abbr title="电脑端"><i class="iconfont icon-icon-test" @click="change_into_computer"></i></abbr> 
-          <abbr title="手机端"><i class="iconfont icon-shouji" @click="change_into_phone"></i></abbr>
-          <div @click="download_code">
-            <span>下载源码</span>
-          </div>
-          <div>
-            <span>保存</span>
-          </div>
+        <abbr title="电脑端">
+          <i class="iconfont icon-icon-test" @click="change_into_computer"></i>
+        </abbr>
+        <abbr title="手机端">
+          <i class="iconfont icon-shouji" @click="change_into_phone"></i>
+        </abbr>
+        <div @click="download_code">
+          <span>下载源码</span>
         </div>
+        <div>
+          <span>保存</span>
+        </div>
+      </div>
     </header>
 
     <main>
       <!-- 左边的选择 -->
       <nav>
+        <div @mouseenter="show_nav" @mouseleave="unshow_nav" class="main_view_add_content">
+          <i class="iconfont icon-jiahao"></i>
+          添加内容
+        </div>
+      </nav>
+      <div  id = "nav_block" @mouseenter="show_nav" @mouseleave="unshow_nav">
         <div class="main_view_left_top">
           <div class="main_view_top_title">
             <div class="main_view_top_title_mid">
@@ -58,9 +68,9 @@
             </ul>
           </div>
         </div>
-      </nav>
+      </div>
       <!-- 中间部分 -->
-      <article>
+      <article :style="is_show_phone==true?phone_form:''">
         <div class="main_view_mid" id="mainview">
           <my_toast></my_toast>
           <div v-for="(com,index) in curComList" :key="index">
@@ -205,9 +215,6 @@
             <div v-if="('talk'==curComType)">
               <my_talk_change></my_talk_change>
             </div>
-            <!-- <div v-if="('map'==curComType)">
-              <my_map_change></my_map_change>
-            </div>-->
             <div v-if="('title'==curComType)">
               <my_title_change></my_title_change>
             </div>
@@ -374,6 +381,7 @@ export default {
       titlelist: ["组件样式", "组件配置"],
       img_sz: [],
       mp: "",
+      is_show_phone:true,
     };
   },
 
@@ -396,6 +404,10 @@ export default {
     course_form() {
       return this.$store.state.course_form;
     },
+    phone_form(){
+      return 'background-image:  url("../../static/images/shouji_background.png");background-size: 520px 1000px; background-repeat: no-repeat;background-position-x: center;'
+    }
+    
   },
 
   components: {
@@ -704,16 +716,24 @@ export default {
         });
       });
     },
-    change_into_computer(){
+    change_into_computer() {
       let main_view = document.querySelector("#mainview");
       main_view.style.width = "100%";
-      main_view.style.height =  "100%";
+      main_view.style.height = "100%";
+      this.is_show_phone = false;
     },
-    change_into_phone(){
+    change_into_phone() {
       let main_view = document.querySelector("#mainview");
       main_view.style.width = "450px";
-      main_view.style.height = "800px";
-    }
+      main_view.style.height = "750px";
+      this.is_show_phone = true;
+  },
+    show_nav() {
+      document.querySelector("#nav_block").style.left = "25px";
+    },
+    unshow_nav() {
+      document.querySelector("#nav_block").style.left = "-100%";
+    },
   },
 };
 </script>

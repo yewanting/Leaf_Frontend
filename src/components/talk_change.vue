@@ -2,7 +2,7 @@
   <div>
     <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
       <div v-if="k=='text_background_color'">
-        <span>经典语录背景颜色：</span>
+        <span class="chang_title">语录背景颜色：</span>
         <input
           type="color"
           :value="v"
@@ -11,28 +11,28 @@
       </div>
 
       <div v-if="k=='text_color'">
-        <span>经典语录文字颜色：</span>
+        <span class="chang_title">语录文字颜色：</span>
         <input type="color" :value="v" @change="onChange('text_color',$event.target.value)" />
       </div>
 
       <div v-if="k=='text_font_size'">
-        <span>经典语录文字大小：</span>
+        <span class="chang_title">语录文字大小：</span>
         <input type="text" :value="v" @change="onChange('text_font_size',$event.target.value)" />
       </div>
 
 
       <div v-if="k=='course_img_width'">
-        <span>经典语录图片宽度：</span>
+        <span class="chang_title">语录图片宽度：</span>
         <input type="text" :value="v" @change="onChange('course_img_width',$event.target.value)" />
       </div>
 
       <div v-if="k=='course_img_height'">
-        <span>经典语录图片高度：</span>
+        <span class="chang_title">语录图片高度：</span>
         <input type="text" :value="v" @change="onChange('course_img_height',$event.target.value)" />
       </div>
 
       <div v-if="k=='course_img_border_radius'">
-        <span>经典语录图片圆角：</span>
+        <span class="chang_title">语录图片圆角：</span>
         <input
           type="text"
           :value="v"
@@ -97,5 +97,9 @@ export default {
   color: rgb(80, 71, 71);
   padding-top: 20px;
   padding-left: 20px;
+}
+.form_class .chang_title{
+  display: inline-block;
+  width: 130px;
 }
 </style>

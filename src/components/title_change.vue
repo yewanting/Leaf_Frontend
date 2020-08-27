@@ -2,7 +2,7 @@
   <div>
     <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
       <div v-if="k=='position'">
-        <span>标题文本位置：</span>
+        <span class="chang_title">标题文本位置：</span>
         居左：
         <input
           type="radio"
@@ -28,22 +28,22 @@
       </div>
 
       <div v-show="k=='content'">
-        <span>标题文本：</span>
+        <span class="chang_title">标题文本：</span>
         <input type="text" :value="v" @change="onChange('content',$event.target.value)" />
       </div>
 
       <div v-show="k=='background_color'">
-        <span>标题背景颜色：</span>
+        <span class="chang_title">标题背景颜色：</span>
         <input type="color" :value="v" @change="onChange('background_color',$event.target.value)" />
       </div>
 
       <div v-show="k=='color'">
-        <span>标题字体颜色：</span>
+        <span class="chang_title">标题字体颜色：</span>
         <input type="color" :value="v" @change="onChange('color',$event.target.value)" />
       </div>
 
       <div v-show="k=='font_size'">
-        <span>标题字体大小：</span>
+        <span class="chang_title">标题字体大小：</span>
         <input type="text" :value="v" @change="onChange('font_size',$event.target.value)" />
       </div>  
     </div>
@@ -98,5 +98,9 @@ export default {
   color: rgb(80, 71, 71);
   padding-top: 20px;
   padding-left: 20px;
+}
+.form_class .chang_title{
+  display: inline-block;
+  width: 130px;
 }
 </style>

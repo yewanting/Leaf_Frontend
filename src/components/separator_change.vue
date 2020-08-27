@@ -3,17 +3,17 @@
     <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
 
       <div v-show="k=='border_color'">
-        <span>分割线颜色：</span>
+        <span class="chang_title">分割线颜色：</span>
         <input type="color" :value="v" @change="onChange('border_color',$event.target.value)" />
       </div>
 
       <div v-show="k=='border_wide'">
-        <span>分割线粗度：</span>
+        <span class="chang_title">分割线粗度：</span>
         <input type="text" :value="v" @change="onChange('border_wide',$event.target.value)" />
       </div>
 
      <div v-if="k=='border_form'">
-        <span>分割线样式：</span>
+        <span class="chang_title">分割线样式：</span>
         实线：
         <input
           type="radio"
@@ -83,5 +83,9 @@ export default {
   color:rgb(80, 71, 71);
   padding-top: 20px;
   padding-left: 20px;
+}
+.form_class .chang_title{
+  display: inline-block;
+  width: 130px;
 }
 </style>

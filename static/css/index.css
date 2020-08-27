@@ -1,5 +1,5 @@
 /************ 主页面 ***************/
-body {
+.home_total {
   width: 100vw;
   height: 100vh;
   margin:0;
@@ -15,27 +15,45 @@ main {
   display: flex;
   align-items: stretch;
   width: 100%;
+  justify-content: stretch;
 }
 
 nav{
-  width: 300px;
+  width: 28px;
+  text-align: center;
   order: -1;
+  z-index:3;
+  background-color: #028c6a;
   box-shadow: 0px 10px 30px rgb(226, 225, 224);
+  align-items: stretch;
+  color:#fdfdfd;
+}
+nav:hover{
+  cursor: pointer;
+}
+#nav_block{
+  transition-duration: 1s;
+  width: 300px;
+  position: absolute;
+  left: -100%;
+  background-color: #fdfdfd;
+  box-shadow: 0px 10px 30px rgb(226, 225, 224);
+  z-index: 2;
   align-items: stretch;
   height: 96vh;
 }
-nav *{
+
+#nav_block .main_view_top_title_mid{
+  width: 100%;
+  height: 25px;
+}
+#nav_block .main_view_bottom_title_mid{
+  width: 100%;
+  height: 25px;
+}
+.main_view_top_content,.main_view_bottom_content{
   display: flex;
-  width: 96px;
   flex-wrap: wrap;
-}
-nav .main_view_top_title_mid{
-  width: 100%;
-  height: 25px;
-}
-nav .main_view_bottom_title_mid{
-  width: 100%;
-  height: 25px;
 }
 article {
   flex: 1;
@@ -47,9 +65,8 @@ aside {
   width: 400px;
   box-shadow: 0px 10px 30px rgb(226, 225, 224);
 }
-
-footer {
-  margin-top: auto;
+ul{
+  list-style: none;
 }
 /* 左端组件库 */
 
@@ -75,7 +92,7 @@ footer {
 .main_view_bottom_title_mid {
   align-items: center;
   justify-content: center;
-  color: orangered;
+  color: #028c6a;
 }
 
 .main_view_top_content {
@@ -88,15 +105,18 @@ footer {
   height: 90%;
 }
 
-ul {
+#component_ul,#extra_component {
   width: 100%;
   height: 100%;
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .main_view_component_list {
-  float: left;
+  color:#028c6a;
+  width: 96px;
   border: 1px solid grey;
   font-size: 12px;
 }
@@ -109,7 +129,6 @@ ul {
   font-size: 25px;
 }
 
-
 /* 中间手机端 */
 .main_view_mid {
   position: absolute;
@@ -118,13 +137,13 @@ ul {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 800px;
+  height: 750px;
   width: 450px;
   overflow-y: scroll;
   overflow-x: hidden;
-  border: 1px solid grey;
+  /* border: 1px solid grey; */
   margin: auto;
-  box-shadow: 0px 10px 30px rgb(226, 225, 224);
+  /* box-shadow: 0px 10px 30px rgb(226, 225, 224); */
 }
 
 .main_view_mid::-webkit-scrollbar {
@@ -150,15 +169,15 @@ ul {
 
 
 .main_view_right_title li {
-  float: left;
+  color:#7bc5ae;
   margin-left: 60px;
   width: 100px;
 }
 
 .main_view_isclicked {
-  color: rgb(252, 153, 118);
+  color: #028c6a;
   padding-bottom: 5px;
-  border-bottom: 3px solid orangered;
+  border-bottom: 3px solid #028c6a;
 }
 
 span:hover {
@@ -166,29 +185,31 @@ span:hover {
 }
 
 .main_view_saved {
-  height: 25px;
+  height:33px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
   width: 100%;
-  background-color: rgb(207, 234, 241);
+  background-color: #028c6a;
 }
 
 .icon-icon-test,.icon-shouji:hover{
   cursor: pointer;
 }
+.main_view_saved .icon-icon-test,.main_view_saved .icon-shouji{
+  color:#fdfdfd;
+}
 abbr{
+  text-decoration:none;
   width: 100px;
 }
 .main_view_saved div {
   margin-left: 30px;
-  margin-bottom: 10px;
-  float: left;
   width: 100px;
   font-size: 15px;
-  color: #494343;
-  border: 1px solid rgb(120, 112, 124);
+  color: #fdfdfd;
+  border: 1px solid #fdfdfd;
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -219,8 +240,8 @@ abbr{
 
 .main_view_right_content {
   width: 100%;
-  height:92vh;
-  background-color: rgb(241, 248, 255);
+  height:93vh;
+  background-color: #d1ede1;
 }
 
 .main_view_right_content li {
@@ -252,7 +273,9 @@ abbr{
 .icon-chahao:hover {
   cursor: pointer;
 }
-
+.icon-jiahao{
+  font-size: 20px;
+}
 /* **********按钮页面  ************* */
 .btn_total {
   margin: 0;
@@ -286,6 +309,7 @@ abbr{
   height: 100%;
 }
 
+
 /****** 搜索框页面*******/
 .find_total {
     margin: 0;
@@ -308,7 +332,7 @@ abbr{
     margin-top: 5px;
     width: 60%;
   }
-  .icon-sousuo {
+  .find_div .icon-sousuo {
     margin: 5px;
     float: right;
   }
