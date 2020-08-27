@@ -26,13 +26,6 @@
         </div>
       </nav>
       <div  id = "nav_block" @mouseenter="show_nav" @mouseleave="unshow_nav">
-        <div class="main_view_left_top">
-          <div class="main_view_top_title">
-            <div class="main_view_top_title_mid">
-              <i class="iconfont icon-chuangkouwindow33"></i>
-              组件库
-            </div>
-          </div>
           <div class="main_view_top_content">
             <ul id="component_ul">
               <li
@@ -46,28 +39,7 @@
               </li>
             </ul>
           </div>
-        </div>
-        <div class="main_view_left_bottom">
-          <div class="main_view_bottom_title">
-            <div class="main_view_bottom_title_mid">
-              <i class="iconfont icon-chuangkouwindow33"></i>
-              营销组件
-            </div>
-          </div>
-          <div class="main_view_bottom_content">
-            <ul id="extra_component">
-              <li
-                v-for="(extra_component_item,index) in extal_component"
-                :key="index"
-                class="main_view_component_list"
-                @click="choose_component(component_item.content)"
-              >
-                <i class="iconfont" :class="extra_component_item.icon_class"></i>
-                {{extra_component_item.content}}
-              </li>
-            </ul>
-          </div>
-        </div>
+ 
       </div>
       <!-- 中间部分 -->
       <article :style="is_show_phone==true?phone_form:''">

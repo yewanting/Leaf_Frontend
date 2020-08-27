@@ -7,17 +7,17 @@
       </div>
 
       <div v-show="k=='border_color'">
-        <span class="chang_title">搜索框的圆弧颜色：</span>
+        <span class="chang_title">圆弧颜色：</span>
         <input type="color" :value="v" @change="onChange('border_color',$event.target.value)" />
       </div>
 
       <div v-show="k=='text_color'">
-        <span class="chang_title">搜索框字体颜色：</span>
+        <span class="chang_title">字体颜色：</span>
         <input type="color" :value="v" @change="onChange('text_color',$event.target.value)" />
       </div>
 
       <div v-show="k=='text_size'">
-        <span class="chang_title">搜索框字体大小：</span>
+        <span class="chang_title">字体大小：</span>
         <input type="text" :value="v" @change="onChange('text_size',$event.target.value)" />
       </div>
 
@@ -35,7 +35,7 @@
       </div>
 
       <div v-show="k=='border_radius'">
-        <span class="chang_title">搜索框圆弧大小：</span>
+        <span class="chang_title">圆弧大小：</span>
         <input type="text" :value="v" @change="onChange('border_radius',$event.target.value)" />
       </div>
 
@@ -45,7 +45,7 @@
       </div>
 
       <div v-show="k=='big_height'">
-        <span class="chang_title">整个搜索框的高度：</span>
+        <span class="chang_title">整个框的高度：</span>
         <input type="text" :value="v" @change="onChange('big_height',$event.target.value)" />
       </div>
 

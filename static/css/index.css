@@ -105,7 +105,7 @@ ul{
   height: 90%;
 }
 
-#component_ul,#extra_component {
+#component_ul{
   width: 100%;
   height: 100%;
   list-style: none;
@@ -116,8 +116,8 @@ ul{
 
 .main_view_component_list {
   color:#028c6a;
-  width: 96px;
-  border: 1px solid grey;
+  width:100%;
+  border-bottom: 2px solid grey;
   font-size: 12px;
 }
 
