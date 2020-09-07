@@ -14,27 +14,27 @@
     :id="id"
   >
     <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
-    <!-- <i class="iconfont icon-chahao" v-if="is_show==true" @click="remove_component"></i> -->
+    <i class="iconfont icon-chahao" v-if="is_show==true" @click="remove_component"></i>
     <button :style="stylevalue">
       <div
         class="left_top_circle"
         id="left_top_circle"
         v-if="(is_show==true)"
-        @mouseenter="show_Mouse_left_top($event.currentTarget)"
+        @mouseenter="show_Mouse_left_top($event.currentTarget,id)"
         @mouseleave="unshow_Mouse_left_top($event.currentTarget)"
       ></div>
       <div
         class="left_bottom_circle"
         id="left_bottom_circle"
         v-if="(is_show==true)"
-        @mouseenter="show_Mouse_left_bottom($event.currentTarget)"
+        @mouseenter="show_Mouse_left_bottom($event.currentTarget,id)"
         @mouseleave="unshow_Mouse_left_bottom($event.currentTarget)"
       ></div>
       <div
         class="right_top_circle"
         id="right_top_circle"
         v-if="(is_show==true)"
-        @mouseenter="show_Mouse_right_top($event.currentTarget)"
+        @mouseenter="show_Mouse_right_top($event.currentTarget,id)"
         @mouseleave="unshow_Mouse_right_top($event.currentTarget)"
       ></div>
       <div
@@ -399,7 +399,7 @@ export default {
       this.$store.commit("IFSHOWYESNO", 1);
       this.$store.commit("DELETECOMPONENT", this.$el);
     },
-    show_Mouse_left_top(event) {
+    show_Mouse_left_top(event, id) {
       event.style.cursor = "nw-resize";
       function Move_left_top() {
         this.initialize.apply(this, arguments);
@@ -451,22 +451,24 @@ export default {
         },
         moveDrag: function (event) {
           var event = event || window.event;
-
-          console.log(this.move.parentNode);
-          console.log("old",this.old_left);
-          let a = this._width + event.clientX - this.nowX;
-          let b = this._height + event.clientY - this.nowY;
+          let cur = document.getElementById(id);
+          let left = event.clientX;
+          let top = event.clientY;
+          let a = this._width + this.nowX - event.clientX;
+          let b = this._height + this.nowY - event.clientY;
           if (a > this.maxContainer.clientWidth) {
             a = this.maxContainer.clientWidth;
           }
           if (b > this.maxContainer.clientHeight) {
             b = this.maxContainer.clientHeight;
           }
-          // let new_left_num = this.old_left - a;
-          // this.move.parentNode.style.left = new_left_num + 'px';
-          // console.log("new",this.move.parentNode.style.left)
-          this.move.parentNode.style.width = a + "px";
-          this.move.parentNode.style.height = b + "px";
+          // console.log(left,top)
+          if (this.move.parentNode != null) {
+            cur.style.left = left + "px";
+            cur.style.top = top + "px";
+            this.move.parentNode.style.width = a + "px";
+            this.move.parentNode.style.height = b + "px";
+          }
         },
         stopDrag: function () {
           this.removeHandler(document, "mousemove", this._moveDrag);
@@ -517,7 +519,7 @@ export default {
     unshow_Mouse_left_top(event) {
       event.style.cursor = "move";
     },
-    show_Mouse_left_bottom(event) {
+    show_Mouse_left_bottom(event, id) {
       event.style.cursor = "sw-resize";
       function Move_left_bottom() {
         this.initialize.apply(this, arguments);
@@ -568,7 +570,8 @@ export default {
         },
         moveDrag: function (event) {
           var event = event || window.event;
-          let a = this._width + event.clientX - this.nowX;
+          let cur = document.getElementById(id);
+          let a = this._width + this.nowX - event.clientX;
           let b = this._height + event.clientY - this.nowY;
           if (a > this.maxContainer.clientWidth) {
             a = this.maxContainer.clientWidth;
@@ -576,8 +579,11 @@ export default {
           if (b > this.maxContainer.clientHeight) {
             b = this.maxContainer.clientHeight;
           }
-          this.move.parentNode.style.width = a + "px";
-          this.move.parentNode.style.height = b + "px";
+          if (this.move.parentNode != null) {
+            cur.style.left = event.clientX + "px";
+            this.move.parentNode.style.width = a + "px";
+            this.move.parentNode.style.height = b + "px";
+          }
         },
         stopDrag: function () {
           this.removeHandler(document, "mousemove", this._moveDrag);
@@ -628,7 +634,7 @@ export default {
     unshow_Mouse_left_bottom(event) {
       event.style.cursor = "move";
     },
-    show_Mouse_right_top(event) {
+    show_Mouse_right_top(event, id) {
       event.style.cursor = "ne-resize";
       function Move_right_top() {
         this.initialize.apply(this, arguments);
@@ -679,23 +685,20 @@ export default {
         },
         moveDrag: function (event) {
           var event = event || window.event;
+          let cur = document.getElementById(id);
           let a = this._width + event.clientX - this.nowX;
-          let b = this._height + event.clientY - this.nowY;
-          console.log(this._width, event.clientX, this.nowX);
-          console.log(this._height, event.clientY, this.nowY);
-          console.log(
-            "window",
-            this.maxContainer.clientWidth,
-            this.maxContainer.clientHeight
-          );
+          let b = this._height + this.nowY - event.clientY;
           if (a > this.maxContainer.clientWidth) {
             a = this.maxContainer.clientWidth;
           }
           if (b > this.maxContainer.clientHeight) {
             b = this.maxContainer.clientHeight;
           }
-          this.move.parentNode.style.width = a + "px";
-          this.move.parentNode.style.height = b + "px";
+          if (this.move.parentNode != null) {
+            cur.style.top = event.clientY + "px";
+            this.move.parentNode.style.width = a + "px";
+            this.move.parentNode.style.height = b + "px";
+          }
         },
         stopDrag: function () {
           this.removeHandler(document, "mousemove", this._moveDrag);
@@ -805,6 +808,10 @@ export default {
           }
           if (b > window.clientHeight) {
             b = window.clientHeight;
+          }
+          if (this.move.parentNode != null) {
+            this.move.parentNode.style.width = a + "px";
+            this.move.parentNode.style.height = b + "px";
           }
           this.move.parentNode.style.width = a + "px";
           this.move.parentNode.style.height = b + "px";
