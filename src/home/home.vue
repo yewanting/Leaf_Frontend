@@ -1,5 +1,29 @@
 <template>
   <div class="home_total">
+    <div v-for="(com,index) in curComList" :key="index">
+      <button_test v-if="com.type=='button2'" :id="index" :left="com.attr.left" :top="com.attr.top"></button_test>
+
+      <my_button
+        v-if="com.type=='button'"
+        :id="index"
+        :left="com.attr.left"
+        :top="com.attr.top"
+        :index="index"
+        :position="com.attr.position"
+        :title="com.attr.title"
+        :background_color="com.attr.background_color"
+        :border_color="com.attr.border_color"
+        :text_color="com.attr.text_color"
+        :text_size="com.attr.text_size"
+        :width="com.attr.width"
+        :height="com.attr.height"
+        :line_height="com.attr.line_height"
+        :border_radius="com.attr.border_radius"
+        :padding_top="com.attr.padding_top"
+        :padding_left="com.attr.padding_left"
+        :margin_top="com.attr.margin_top"
+      ></my_button>
+    </div>
     <header>
       <div class="main_view_saved">
         <abbr title="电脑端">
@@ -33,7 +57,6 @@
               v-for="(component_item,index) in component_content"
               :key="index"
               class="main_view_component_list"
-              @click="choose_component(component_item.content)"
             >
               <div>
                 <i class="iconfont" :class="component_item.icon_class"></i>
@@ -46,6 +69,7 @@
                   :key="ind"
                   @mouseenter="get_left($event.currentTarget,src['src'])"
                   @mouseleave="unshow_getleft"
+                  @click="choose_component(src['title'],$event.currentTarget)"
                 >
                   <img :src="src['src']" />
                   {{src['title']}}
@@ -56,13 +80,14 @@
         </div>
       </div>
       <!-- 中间部分 -->
-      <article :style="is_show_phone==true?phone_form:''">
+      <article>
         <div class="main_view_mid" id="mainview">
           <my_toast></my_toast>
           <div v-for="(com,index) in curComList" :key="index">
             <!-- 按钮 -->
-            <my_button
+            <!-- <my_button
               v-if="com.type=='button'"
+              :id="index"
               :index="index"
               :position="com.attr.position"
               :title="com.attr.title"
@@ -77,7 +102,7 @@
               :padding_top="com.attr.padding_top"
               :padding_left="com.attr.padding_left"
               :margin_top="com.attr.margin_top"
-            ></my_button>
+            ></my_button> -->
 
             <!-- 轮播图 -->
             <my_banner
@@ -248,6 +273,9 @@ import my_title_change from "../components/title_change.vue";
 import my_separator from "../components/separator.vue";
 import my_separator_change from "../components/separator_change.vue";
 
+// 测试随意拖动
+import button_test from "../components/button_test.vue";
+
 //下载依赖
 // npm i axios, JSZip, FileSaver -s
 import axios from "axios";
@@ -282,16 +310,16 @@ export default {
           content: "轮播图",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/lunbo2.png",
+              title: "轮播图1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "轮播图2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "轮播图3",
             },
           ],
         },
@@ -299,17 +327,17 @@ export default {
           icon_class: "icon-shipin",
           content: "视频",
           imgsrc: [
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "视频1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "视频2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "视频3",
             },
           ],
         },
@@ -318,34 +346,34 @@ export default {
           content: "分类导航",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/lunbo2.png",
+              title: "分类导航1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "分类导航2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "分类导航3",
             },
           ],
         },
         {
           icon_class: "icon-sousuo",
-          content: "搜索",
+          content: "搜索框",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/sousuo1.png",
+              title: "搜索框1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "搜索框2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "搜索框3",
             },
           ],
         },
@@ -354,16 +382,16 @@ export default {
           content: "地址",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/lunbo2.png",
+              title: "地址1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "地址2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "地址3",
             },
           ],
         },
@@ -372,16 +400,16 @@ export default {
           content: "通知公告",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/lunbo2.png",
+              title: "通知公告1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "通知公告2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "通知公告3",
             },
           ],
         },
@@ -390,16 +418,16 @@ export default {
           content: "标题",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/lunbo2.png",
+              title: "标题1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "标题2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "标题3",
             },
           ],
         },
@@ -407,17 +435,17 @@ export default {
           icon_class: "icon-tupian",
           content: "图片",
           imgsrc: [
-           {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "图片1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "图片2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "图片3",
             },
           ],
         },
@@ -425,17 +453,17 @@ export default {
           icon_class: "icon-chuangkouwindow33",
           content: "橱窗",
           imgsrc: [
-           {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "橱窗1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "橱窗2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "橱窗3",
             },
           ],
         },
@@ -443,17 +471,17 @@ export default {
           icon_class: "icon-anniu",
           content: "按钮",
           imgsrc: [
-           {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "按钮1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "按钮2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "按钮3",
             },
           ],
         },
@@ -462,16 +490,16 @@ export default {
           content: "分割线",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/lunbo2.png",
+              title: "分割线1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "分割线2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "分割线3",
             },
           ],
         },
@@ -480,16 +508,16 @@ export default {
           content: "图文列表",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/lunbo2.png",
+              title: "图文列表1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "图文列表2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "图文列表3",
             },
           ],
         },
@@ -498,16 +526,16 @@ export default {
           content: "广告位",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/lunbo2.png",
+              title: "广告位1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "广告位2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "广告位3",
             },
           ],
         },
@@ -516,16 +544,20 @@ export default {
           content: "课程列表",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/kecheng1.png",
+              title: "课程列表1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/kecheng2.png",
+              title: "课程列表2",
+            },
+            {
+              src: "../../static/images/left/kecheng3.png",
+              title: "课程列表3",
+            },
+            {
+              src: "../../static/images/left/kecheng4.png",
+              title: "课程列表3",
             },
           ],
         },
@@ -533,17 +565,17 @@ export default {
           icon_class: "icon-liebiao",
           content: "经典语录",
           imgsrc: [
-           {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "经典语录1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "经典语录2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "经典语录3",
             },
           ],
         },
@@ -552,16 +584,16 @@ export default {
           content: "推荐列表",
           imgsrc: [
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+              src: "../../static/images/left/lunbo2.png",
+              title: "推荐列表1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "推荐列表2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "推荐列表3",
             },
           ],
         },
@@ -569,17 +601,17 @@ export default {
           icon_class: "icon-liebiao",
           content: "讲师列表",
           imgsrc: [
-           {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图1"
-            },
-             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图2"
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "讲师列表1",
             },
             {
-              "src":"../../static/images/left/lunbo2.png",
-              "title":"轮播图3"
+              src: "../../static/images/left/lunbo2.png",
+              title: "讲师列表2",
+            },
+            {
+              src: "../../static/images/left/lunbo2.png",
+              title: "讲师列表3",
             },
           ],
         },
@@ -611,9 +643,9 @@ export default {
     course_form() {
       return this.$store.state.course_form;
     },
-    phone_form() {
-      return 'background-image:  url("../../static/images/shouji_background.png");background-size: 520px 1000px; background-repeat: no-repeat;background-position-x: center;';
-    },
+    // phone_form() {
+    //   return 'background-image:  url("../../static/images/shouji_background.png");background-size: 520px 1000px; background-repeat: no-repeat;background-position-x: center;';
+    // },
   },
 
   components: {
@@ -634,15 +666,17 @@ export default {
     my_title_change,
     my_separator,
     my_separator_change,
+
+    button_test,
   },
   mounted() {
     this.mp = new Map();
   },
   methods: {
-    choose_component(component) {
+    choose_component(component, event) {
       var curlist = this.curComList;
 
-      if (component == "轮播") {
+      if (component == "轮播图1") {
         curlist.push({
           type: "banner",
           attr: {
@@ -662,7 +696,7 @@ export default {
         });
       }
 
-      if (component == "按钮") {
+      if (component == "按钮1") {
         curlist.push({
           type: "button",
           attr: {
@@ -678,10 +712,21 @@ export default {
             padding_top: "0",
             padding_left: "0",
             margin_top: "0",
+            left: event.getBoundingClientRect().right - 100,
+            top: event.getBoundingClientRect().top + 50,
           },
         });
       }
-      if (component == "课程列表") {
+      if (component == "按钮2") {
+        curlist.push({
+          type: "button2",
+          attr: {
+            left: event.getBoundingClientRect().right - 100,
+            top: event.getBoundingClientRect().top + 50,
+          },
+        });
+      }
+      if (component == "课程列表1") {
         curlist.push({
           type: "courselist",
           attr: {
@@ -736,7 +781,7 @@ export default {
         });
       }
 
-      if (component == "搜索") {
+      if (component == "搜索框1") {
         curlist.push({
           type: "find",
           attr: {
@@ -754,7 +799,7 @@ export default {
         });
       }
 
-      if (component == "经典语录") {
+      if (component == "经典语录1") {
         curlist.push({
           type: "talk",
           attr: {
@@ -795,7 +840,7 @@ export default {
         });
       }
 
-      if (component == "标题") {
+      if (component == "标题1") {
         curlist.push({
           type: "title",
           attr: {
@@ -809,7 +854,7 @@ export default {
         });
       }
 
-      if (component == "分割线") {
+      if (component == "分割线1") {
         curlist.push({
           type: "separator",
           attr: {
@@ -930,8 +975,8 @@ export default {
     },
     change_into_phone() {
       let main_view = document.querySelector("#mainview");
-      main_view.style.width = "450px";
-      main_view.style.height = "750px";
+      main_view.style.width = "30%";
+      main_view.style.height = "80%";
       this.is_show_phone = true;
     },
     show_nav() {
@@ -940,13 +985,14 @@ export default {
     unshow_nav() {
       document.querySelector("#nav_block").style.left = "-100%";
     },
-    get_left(event,src) {
+    get_left(event, src) {
       document.querySelector("#toast_kuang").style.left =
         event.getBoundingClientRect().right + "px";
       document.querySelector("#toast_kuang").style.top =
         event.getBoundingClientRect().top - 80 + "px";
       this.is_show_xiaoxi = true;
-       document.querySelector("#toast_kuang").style.backgroundImage =  'url("'+src+'")';
+      document.querySelector("#toast_kuang").style.backgroundImage =
+        'url("' + src + '")';
     },
     unshow_getleft() {
       this.is_show_xiaoxi = false;
@@ -988,7 +1034,7 @@ export default {
   height: 100px;
   border: 1px solid #028c6a;
 }
-.icon-kuang2{
+.icon-kuang2 {
   position: absolute;
   font-size: 300px;
   color: #9c9797;
@@ -996,6 +1042,5 @@ export default {
   background-size: 90% 80%;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url("../../static/images/left/lunbo2.png");
 }
 </style>
