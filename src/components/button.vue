@@ -381,11 +381,14 @@ export default {
       }
     },
     show_border() {
-      // this.$el.style.width = this.$el.offsetWidth;
-      // this.$el.style.height = this.$el.offsetHeight;
+      this.$el.style.width = this.$el.offsetWidth;
+      this.$el.style.height = this.$el.offsetHeight;
+
+      // this.$el.style.border = "1px solid #028c6a";
       this.is_show = true;
     },
     unshow_border() {
+      this.$el.style.border = "none";
       this.is_show = false;
     },
     remove_component() {

@@ -1,29 +1,5 @@
 <template>
   <div class="home_total">
-    <div v-for="(com,index) in curComList" :key="index">
-      <button_test v-if="com.type=='button2'" :id="index" :left="com.attr.left" :top="com.attr.top"></button_test>
-
-      <my_button
-        v-if="com.type=='button'"
-        :id="index"
-        :left="com.attr.left"
-        :top="com.attr.top"
-        :index="index"
-        :position="com.attr.position"
-        :title="com.attr.title"
-        :background_color="com.attr.background_color"
-        :border_color="com.attr.border_color"
-        :text_color="com.attr.text_color"
-        :text_size="com.attr.text_size"
-        :width="com.attr.width"
-        :height="com.attr.height"
-        :line_height="com.attr.line_height"
-        :border_radius="com.attr.border_radius"
-        :padding_top="com.attr.padding_top"
-        :padding_left="com.attr.padding_left"
-        :margin_top="com.attr.margin_top"
-      ></my_button>
-    </div>
     <header>
       <div class="main_view_saved">
         <abbr title="电脑端">
@@ -81,6 +57,36 @@
       </div>
       <!-- 中间部分 -->
       <article>
+        <div v-for="(com,index) in curComList" :key="index">
+          <button_test
+            v-if="com.type=='button2'"
+            :id="index"
+            :left="com.attr.left"
+            :top="com.attr.top"
+          ></button_test>
+
+          <my_button
+            v-if="com.type=='button'"
+            :id="index"
+            :left="com.attr.left"
+            :top="com.attr.top"
+            :index="index"
+            :position="com.attr.position"
+            :title="com.attr.title"
+            :background_color="com.attr.background_color"
+            :border_color="com.attr.border_color"
+            :text_color="com.attr.text_color"
+            :text_size="com.attr.text_size"
+            :width="com.attr.width"
+            :height="com.attr.height"
+            :line_height="com.attr.line_height"
+            :border_radius="com.attr.border_radius"
+            :padding_top="com.attr.padding_top"
+            :padding_left="com.attr.padding_left"
+            :margin_top="com.attr.margin_top"
+          ></my_button>
+        </div>
+        <canvas id="canvas" width="3000" height="2000" @mouseenter="show_ruler" @mouseleave="unshow_ruler"></canvas>
         <div class="main_view_mid" id="mainview">
           <my_toast></my_toast>
           <div v-for="(com,index) in curComList" :key="index">
@@ -102,7 +108,7 @@
               :padding_top="com.attr.padding_top"
               :padding_left="com.attr.padding_left"
               :margin_top="com.attr.margin_top"
-            ></my_button> -->
+            ></my_button>-->
 
             <!-- 轮播图 -->
             <my_banner
@@ -671,6 +677,102 @@ export default {
   },
   mounted() {
     this.mp = new Map();
+    var canvas = document.getElementById("canvas"),
+      context = canvas.getContext("2d"),
+      AXIS_MARGIN = 0, //axis_magin,
+      AXIS_ORIGIN = { x: AXIS_MARGIN, y: canvas.height - AXIS_MARGIN }, //axis_origin = {x:axis_margin,y:canvas.height-axis_margin},
+      AXIS_TOP = AXIS_MARGIN, //axis_top = axis_margin,
+      AXIS_RIGHT = canvas.width - AXIS_MARGIN, //axis_right = canvas.width-axis_margin,
+      HORIZONTAL_TICK_SPACING = 10, //horizontal_tick_spacing = 10,
+      VERTICAL_TICK_SPACING = 10, //vertical_tick_spacing = 10,
+      AXIS_WIDTH = AXIS_RIGHT - AXIS_ORIGIN.x, //axis_width = axis_right - axis_origin.x,
+      AXIS_HEIGHT = AXIS_ORIGIN.y - AXIS_TOP, //axis_height = axis_origin.y - axis_top,
+      NUM_VERTICAL_TICKS = AXIS_HEIGHT / VERTICAL_TICK_SPACING, //num_vertical_ticks = axis_height/vertical_tick_spacing,
+      NUM_HORIZONTAL_TICKS = AXIS_WIDTH / HORIZONTAL_TICK_SPACING, //num_horizontal_ticks = axis_width/horizontal_tick_spacing,
+      TICK_WIDTH = 20, //tick_width = 20,
+      TICKS_LINEWIDTH = 0.5, //ticks_linewidth = 0.5,
+      TICKS_COLOR = "navy", //ticks_color = 'navy',
+      AXIS_LINEWIDTH = 1.0, //axis_linewidth = 1.0,
+      AXIS_COLOR = "blue"; //axis_color = 'blue';
+    function drawAxes() {
+      context.save();
+      context.strokeStyle = AXIS_COLOR;
+      context.lineWidth = AXIS_LINEWIDTH;
+      drawHorizontalAxis();
+      drawVerticalAxis();
+      context.lineWidth = 0.5;
+      context.lineWidth = TICKS_LINEWIDTH;
+      context.strokeStyle = TICKS_COLOR;
+      drawVerticalAxisTicks();
+      drawHorizontalAxisTicks();
+      context.restore();
+    }
+    function drawHorizontalAxis() {
+      context.beginPath();
+      context.moveTo(AXIS_ORIGIN.x, AXIS_MARGIN);
+      context.lineTo(AXIS_RIGHT, AXIS_MARGIN);
+      context.closePath();
+      context.stroke();
+    }
+    function drawVerticalAxis() {
+      context.beginPath();
+      context.moveTo(AXIS_ORIGIN.x, AXIS_MARGIN);
+      context.lineTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+      context.closePath();
+      context.stroke();
+    }
+    function drawVerticalAxisTicks() {
+      var deltaX;
+      for (var i = 1; i < NUM_VERTICAL_TICKS; ++i) {
+        context.beginPath();
+        if (i % 10 === 0) {
+          deltaX = TICK_WIDTH;
+          context.moveTo(0, 0 + HORIZONTAL_TICK_SPACING * i);
+          context.lineTo(20, 0 + HORIZONTAL_TICK_SPACING * i);
+          context.textAlign = "left";
+          context.fillText(
+            i * HORIZONTAL_TICK_SPACING-100,
+            30,
+            0 + HORIZONTAL_TICK_SPACING * i
+          );
+        } else {
+          deltaX = TICK_WIDTH / 2;
+        }
+        context.moveTo(AXIS_ORIGIN.x, i * VERTICAL_TICK_SPACING);
+        context.lineTo(AXIS_ORIGIN.x + deltaX, i * VERTICAL_TICK_SPACING);
+        context.stroke();
+      }
+    }
+    function drawHorizontalAxisTicks() {
+      var deltaY;
+      for (var i = 1; i < NUM_HORIZONTAL_TICKS; ++i) {
+        context.beginPath();
+        if (i % 10 === 0) {
+          deltaY = TICK_WIDTH;
+          context.moveTo(0 + VERTICAL_TICK_SPACING * i, 0);
+          context.lineTo(VERTICAL_TICK_SPACING * i, 20);
+          context.textAlign = "left";
+          context.fillText(
+            i * VERTICAL_TICK_SPACING-500,
+            0 + VERTICAL_TICK_SPACING * i,
+            30
+          );
+        } else {
+          deltaY = TICK_WIDTH / 2;
+        }
+        context.moveTo(
+          AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING,
+          AXIS_MARGIN
+        );
+        context.lineTo(
+          AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING,
+          AXIS_MARGIN + deltaY
+        );
+        context.stroke();
+      }
+    }
+    drawAxes();
+    // document.getElementsByTagName("article")[0].scrollLeft= 500;
   },
   methods: {
     choose_component(component, event) {
@@ -881,13 +983,13 @@ export default {
       // curs += document.querySelector("#mainview").outerHTML;
       // return curs.replace(/..\/..\/static\//g, "");
       let mainview = document.querySelector("#mainview");
-      console.log(mainview.getBoundingClientRect().top,
-      mainview.getBoundingClientRect().bottom,
-      mainview.getBoundingClientRect().left,
-      mainview.getBoundingClientRect().right
-      )
+      console.log(
+        mainview.getBoundingClientRect().top,
+        mainview.getBoundingClientRect().bottom,
+        mainview.getBoundingClientRect().left,
+        mainview.getBoundingClientRect().right
+      );
     },
-
 
     loadNode(node) {
       // 遍历所有的子节点
@@ -1006,6 +1108,12 @@ export default {
     unshow_getleft() {
       this.is_show_xiaoxi = false;
     },
+    show_ruler(event){
+      // console.log(event.x-500);
+    },
+    unshow_ruler(){
+
+    }
   },
 };
 </script>
@@ -1047,9 +1155,15 @@ export default {
   position: absolute;
   font-size: 300px;
   color: #9c9797;
-  z-index: 100;
+  z-index: 101;
   background-size: 90% 80%;
   background-repeat: no-repeat;
   background-position: center;
+}
+#canvas {
+  background: #ffffff;
+  cursor: pointer;
+  position: absolute;
+  
 }
 </style>
