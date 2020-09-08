@@ -35,7 +35,7 @@
         <div @click="download_code">
           <span>下载源码</span>
         </div>
-        <div>
+        <div @click="get_code">
           <span>保存</span>
         </div>
       </div>
@@ -872,14 +872,23 @@ export default {
     clicktitle(item_title) {
       this.$store.commit("TITLECHOICE", item_title);
     },
+    // 获取特定屏幕上的代码
     get_code() {
-      var curs =
-        '<head><link rel="stylesheet" type="text/css" href="index.css">' +
-        '<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">' +
-        '<meta charset = "utf-8"></head>';
-      curs += document.querySelector("#mainview").outerHTML;
-      return curs.replace(/..\/..\/static\//g, "");
+      // var curs =
+      //   '<head><link rel="stylesheet" type="text/css" href="index.css">' +
+      //   '<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">' +
+      //   '<meta charset = "utf-8"></head>';
+      // curs += document.querySelector("#mainview").outerHTML;
+      // return curs.replace(/..\/..\/static\//g, "");
+      let mainview = document.querySelector("#mainview");
+      console.log(mainview.getBoundingClientRect().top,
+      mainview.getBoundingClientRect().bottom,
+      mainview.getBoundingClientRect().left,
+      mainview.getBoundingClientRect().right
+      )
     },
+
+
     loadNode(node) {
       // 遍历所有的子节点
       for (var i = 0; i < node.childNodes.length; i++) {
@@ -975,8 +984,8 @@ export default {
     },
     change_into_phone() {
       let main_view = document.querySelector("#mainview");
-      main_view.style.width = "30%";
-      main_view.style.height = "80%";
+      main_view.style.width = "375px";
+      main_view.style.height = "667px";
       this.is_show_phone = true;
     },
     show_nav() {

@@ -13,7 +13,7 @@
     :style="form_value"
     :id="id"
   >
-    <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i>
+    <!-- <i class="iconfont icon-jurassic_gongbao" v-if="is_show==true"></i> -->
     <i class="iconfont icon-chahao" v-if="is_show==true" @click="remove_component"></i>
     <button :style="stylevalue">
       <div
@@ -71,6 +71,8 @@ export default {
       },
       is_show: false,
       lastenter: null,
+      cur_width:this.width,
+      cur_height:this.height,
     };
   },
   computed: {
@@ -305,22 +307,18 @@ export default {
 
   methods: {
     click_com_change() {
-      // this.attr.position = this.position;
       this.attr.title = this.title;
       this.attr.background_color = this.background_color;
       this.attr.border_color = this.border_color;
       this.attr.text_color = this.text_color;
       this.attr.text_size = this.text_size;
-      this.attr.width = this.width;
-      this.attr.height = this.height;
+      this.attr.width = this.cur_width;
+      this.attr.height = this.cur_height;
       this.attr.line_height = this.line_height;
       this.attr.border_radius = this.border_radius;
       this.attr.padding_top = this.padding_top;
       this.attr.padding_left = this.padding_left;
-      this.attr.width = this.width;
       this.attr.margin_top = this.margin_top;
-
-      // console.log(this.stylevalue)
       this.$store.commit("CURCOMTYPE", "button");
       this.$store.commit("CURCOMATTR", this.attr);
       this.$store.commit("CURCOMID", this.index);
@@ -383,16 +381,11 @@ export default {
       }
     },
     show_border() {
-      this.$el.style.width = this.$el.offsetWidth;
-      this.$el.style.height = this.$el.offsetHeight;
-
-      this.$el.style.border = "1px dotted rgb(241, 15, 15)";
-      this.$el.style.cursor = "move";
+      // this.$el.style.width = this.$el.offsetWidth;
+      // this.$el.style.height = this.$el.offsetHeight;
       this.is_show = true;
     },
     unshow_border() {
-      this.$el.style.border = "none";
-      this.$el.style.cursor = "none";
       this.is_show = false;
     },
     remove_component() {
@@ -400,6 +393,7 @@ export default {
       this.$store.commit("DELETECOMPONENT", this.$el);
     },
     show_Mouse_left_top(event, id) {
+      var _this = this;
       event.style.cursor = "nw-resize";
       function Move_left_top() {
         this.initialize.apply(this, arguments);
@@ -468,6 +462,9 @@ export default {
             cur.style.top = top + "px";
             this.move.parentNode.style.width = a + "px";
             this.move.parentNode.style.height = b + "px";
+            _this.cur_width = a;
+            _this.cur_height = b;
+            _this.click_com_change();
           }
         },
         stopDrag: function () {
@@ -520,6 +517,7 @@ export default {
       event.style.cursor = "move";
     },
     show_Mouse_left_bottom(event, id) {
+      var _this = this;
       event.style.cursor = "sw-resize";
       function Move_left_bottom() {
         this.initialize.apply(this, arguments);
@@ -583,6 +581,9 @@ export default {
             cur.style.left = event.clientX + "px";
             this.move.parentNode.style.width = a + "px";
             this.move.parentNode.style.height = b + "px";
+            _this.cur_width = a;
+            _this.cur_height = b;
+            _this.click_com_change();
           }
         },
         stopDrag: function () {
@@ -635,6 +636,7 @@ export default {
       event.style.cursor = "move";
     },
     show_Mouse_right_top(event, id) {
+      var _this = this;
       event.style.cursor = "ne-resize";
       function Move_right_top() {
         this.initialize.apply(this, arguments);
@@ -698,6 +700,9 @@ export default {
             cur.style.top = event.clientY + "px";
             this.move.parentNode.style.width = a + "px";
             this.move.parentNode.style.height = b + "px";
+            _this.cur_width = a;
+            _this.cur_height = b;
+            _this.click_com_change();
           }
         },
         stopDrag: function () {
@@ -750,6 +755,7 @@ export default {
       event.style.cursor = "move";
     },
     show_Mouse_right_bottom(event) {
+      var _this = this;
       event.style.cursor = "se-resize";
       function Move_right_bottom() {
         this.initialize.apply(this, arguments);
@@ -767,16 +773,6 @@ export default {
           this.handle = this.$(this.options.handle);
           this.maxContainer = this.$(this.options.maxContainer);
 
-          // this.maxTop =
-          //   Math.max(
-          //     this.maxContainer.clientHeight,
-          //     this.maxContainer.scrollHeight
-          //   ) - this.move.parentNode.offsetHeight;
-          // this.maxLeft =
-          //   Math.max(
-          //     this.maxContainer.clientWidth,
-          //     this.maxContainer.scrollWidth
-          //   ) - this.move.parentNode.offsetWidth;
 
           this.addHandler(
             this.handle,
@@ -812,9 +808,10 @@ export default {
           if (this.move.parentNode != null) {
             this.move.parentNode.style.width = a + "px";
             this.move.parentNode.style.height = b + "px";
+            _this.cur_width = a;
+            _this.cur_height = b;
+            _this.click_com_change();
           }
-          this.move.parentNode.style.width = a + "px";
-          this.move.parentNode.style.height = b + "px";
         },
         stopDrag: function () {
           this.removeHandler(document, "mousemove", this._moveDrag);
