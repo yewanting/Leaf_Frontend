@@ -86,7 +86,20 @@
             :margin_top="com.attr.margin_top"
           ></my_button>
         </div>
-        <canvas id="canvas" width="3000" height="2000" @mouseenter="show_ruler" @mouseleave="unshow_ruler"></canvas>
+        <canvas
+          id="canvas_x"
+          width="3000"
+          height="30"
+          @mousemove="show_ruler_x"
+          @mouseleave="unshow_ruler_x"
+        ></canvas>
+        <canvas
+          id="canvas_y"
+          width="50"
+          height="2000"
+          @mousemove="show_ruler_y"
+          @mouseleave="unshow_ruler_y"
+        ></canvas>
         <div class="main_view_mid" id="mainview">
           <my_toast></my_toast>
           <div v-for="(com,index) in curComList" :key="index">
@@ -677,12 +690,14 @@ export default {
   },
   mounted() {
     this.mp = new Map();
-    var canvas = document.getElementById("canvas"),
-      context = canvas.getContext("2d"),
+    var canvas_x = document.getElementById("canvas_x"),
+      canvas_y = document.getElementById("canvas_y"),
+      context_x = canvas_x.getContext("2d"),
+      context_y = canvas_y.getContext("2d"),
       AXIS_MARGIN = 0, //axis_magin,
-      AXIS_ORIGIN = { x: AXIS_MARGIN, y: canvas.height - AXIS_MARGIN }, //axis_origin = {x:axis_margin,y:canvas.height-axis_margin},
+      AXIS_ORIGIN = { x: AXIS_MARGIN, y: canvas_y.height - AXIS_MARGIN }, //axis_origin = {x:axis_margin,y:canvas.height-axis_margin},
       AXIS_TOP = AXIS_MARGIN, //axis_top = axis_margin,
-      AXIS_RIGHT = canvas.width - AXIS_MARGIN, //axis_right = canvas.width-axis_margin,
+      AXIS_RIGHT = canvas_x.width - AXIS_MARGIN, //axis_right = canvas.width-axis_margin,
       HORIZONTAL_TICK_SPACING = 10, //horizontal_tick_spacing = 10,
       VERTICAL_TICK_SPACING = 10, //vertical_tick_spacing = 10,
       AXIS_WIDTH = AXIS_RIGHT - AXIS_ORIGIN.x, //axis_width = axis_right - axis_origin.x,
@@ -694,84 +709,95 @@ export default {
       TICKS_COLOR = "navy", //ticks_color = 'navy',
       AXIS_LINEWIDTH = 1.0, //axis_linewidth = 1.0,
       AXIS_COLOR = "blue"; //axis_color = 'blue';
-    function drawAxes() {
-      context.save();
-      context.strokeStyle = AXIS_COLOR;
-      context.lineWidth = AXIS_LINEWIDTH;
-      drawHorizontalAxis();
-      drawVerticalAxis();
-      context.lineWidth = 0.5;
-      context.lineWidth = TICKS_LINEWIDTH;
-      context.strokeStyle = TICKS_COLOR;
-      drawVerticalAxisTicks();
-      drawHorizontalAxisTicks();
-      context.restore();
+    function drawAxes_x() {
+      context_x.save();
+      context_x.strokeStyle = AXIS_COLOR;
+      context_x.lineWidth = AXIS_LINEWIDTH;
+      drawHorizontalAxis(context_x);
+      // drawVerticalAxis();
+      context_x.lineWidth = 0.5;
+      context_x.lineWidth = TICKS_LINEWIDTH;
+      context_x.strokeStyle = TICKS_COLOR;
+      // drawVerticalAxisTicks();
+      drawHorizontalAxisTicks(context_x);
+      context_x.restore();
     }
-    function drawHorizontalAxis() {
-      context.beginPath();
-      context.moveTo(AXIS_ORIGIN.x, AXIS_MARGIN);
-      context.lineTo(AXIS_RIGHT, AXIS_MARGIN);
-      context.closePath();
-      context.stroke();
+    function drawAxes_y() {
+      context_y.save();
+      context_y.strokeStyle = AXIS_COLOR;
+      context_y.lineWidth = AXIS_LINEWIDTH;
+      // drawHorizontalAxis();
+      drawVerticalAxis(context_y);
+      context_y.lineWidth = 0.5;
+      context_y.lineWidth = TICKS_LINEWIDTH;
+      context_y.strokeStyle = TICKS_COLOR;
+      drawVerticalAxisTicks(context_y);
+      // drawHorizontalAxisTicks();
+      context_y.restore();
     }
-    function drawVerticalAxis() {
-      context.beginPath();
-      context.moveTo(AXIS_ORIGIN.x, AXIS_MARGIN);
-      context.lineTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
-      context.closePath();
-      context.stroke();
+    function drawHorizontalAxis(target) {
+      target.beginPath();
+      target.moveTo(AXIS_ORIGIN.x, AXIS_MARGIN);
+      target.lineTo(AXIS_RIGHT, AXIS_MARGIN);
+      target.closePath();
+      target.stroke();
     }
-    function drawVerticalAxisTicks() {
+    function drawVerticalAxis(target) {
+      target.beginPath();
+      target.moveTo(AXIS_ORIGIN.x, AXIS_MARGIN);
+      target.lineTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+      target.closePath();
+      target.stroke();
+    }
+    function drawVerticalAxisTicks(target) {
       var deltaX;
       for (var i = 1; i < NUM_VERTICAL_TICKS; ++i) {
-        context.beginPath();
+        target.beginPath();
         if (i % 10 === 0) {
           deltaX = TICK_WIDTH;
-          context.moveTo(0, 0 + HORIZONTAL_TICK_SPACING * i);
-          context.lineTo(20, 0 + HORIZONTAL_TICK_SPACING * i);
-          context.textAlign = "left";
-          context.fillText(
-            i * HORIZONTAL_TICK_SPACING-100,
+          target.moveTo(0, 0 + HORIZONTAL_TICK_SPACING * i);
+          target.lineTo(20, 0 + HORIZONTAL_TICK_SPACING * i);
+          target.textAlign = "left";
+          target.fillText(
+            i * HORIZONTAL_TICK_SPACING - 100,
             30,
             0 + HORIZONTAL_TICK_SPACING * i
           );
         } else {
           deltaX = TICK_WIDTH / 2;
         }
-        context.moveTo(AXIS_ORIGIN.x, i * VERTICAL_TICK_SPACING);
-        context.lineTo(AXIS_ORIGIN.x + deltaX, i * VERTICAL_TICK_SPACING);
-        context.stroke();
+        target.moveTo(AXIS_ORIGIN.x, i * VERTICAL_TICK_SPACING);
+        target.lineTo(AXIS_ORIGIN.x + deltaX, i * VERTICAL_TICK_SPACING);
+        target.stroke();
       }
     }
-    function drawHorizontalAxisTicks() {
+    function drawHorizontalAxisTicks(target) {
       var deltaY;
       for (var i = 1; i < NUM_HORIZONTAL_TICKS; ++i) {
-        context.beginPath();
+        target.beginPath();
         if (i % 10 === 0) {
           deltaY = TICK_WIDTH;
-          context.moveTo(0 + VERTICAL_TICK_SPACING * i, 0);
-          context.lineTo(VERTICAL_TICK_SPACING * i, 20);
-          context.textAlign = "left";
-          context.fillText(
-            i * VERTICAL_TICK_SPACING-500,
+          target.moveTo(0 + VERTICAL_TICK_SPACING * i, 0);
+          target.lineTo(VERTICAL_TICK_SPACING * i, 20);
+          target.textAlign = "left";
+          target.fillText(
+            i * VERTICAL_TICK_SPACING - 500,
             0 + VERTICAL_TICK_SPACING * i,
             30
           );
         } else {
           deltaY = TICK_WIDTH / 2;
         }
-        context.moveTo(
-          AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING,
-          AXIS_MARGIN
-        );
-        context.lineTo(
+        target.moveTo(AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING, AXIS_MARGIN);
+        target.lineTo(
           AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING,
           AXIS_MARGIN + deltaY
         );
-        context.stroke();
+        target.stroke();
       }
     }
-    drawAxes();
+    drawAxes_x();
+    drawAxes_y();
     // document.getElementsByTagName("article")[0].scrollLeft= 500;
   },
   methods: {
@@ -1108,12 +1134,79 @@ export default {
     unshow_getleft() {
       this.is_show_xiaoxi = false;
     },
-    show_ruler(event){
-      // console.log(event.x-500);
+    show_ruler_x(event) {
+      let remove = document.getElementById("show_num");
+      let renum = document.getElementById("num");
+      if (remove != null) {
+        document.getElementsByTagName("article")[0].removeChild(remove);
+        document.getElementsByTagName("article")[0].removeChild(renum);
+      }
+      var div = document.createElement("div");
+      div.style.position = "absolute";
+      div.style.left = event.layerX + "px";
+      div.style.top = "0px";
+      div.style.width = "2px";
+      div.style.height = "100vh";
+      div.style.backgroundColor = "red";
+      div.style.zIndex = 101;
+      div.id = "show_num";
+      var div_text = document.createElement("div");
+      div_text.style.position = "absolute";
+      div_text.style.left = event.layerX -60 + "px";
+      div_text.style.top = "25px";
+      div_text.style.width = "50px";
+      div_text.style.height = "20px";
+      div_text.style.backgroundColor = "#028c6a";
+      div_text.style.color = "#ffffff";
+      div_text.innerText = event.layerX - 500;
+      div_text.id = "num";
+      document.getElementsByTagName("article")[0].appendChild(div);
+      document.getElementsByTagName("article")[0].appendChild(div_text);
     },
-    unshow_ruler(){
 
-    }
+    unshow_ruler_x() {
+      // let remove = document.getElementById("show_num")
+      // if(remove!=null)
+      // {
+      //   document.getElementsByTagName("article")[0].removeChild(remove)
+      // }
+    },
+    show_ruler_y(event) {
+      let remove = document.getElementById("show_num");
+      let renum = document.getElementById("num");
+      if (remove != null) {
+        document.getElementsByTagName("article")[0].removeChild(remove);
+        document.getElementsByTagName("article")[0].removeChild(renum);
+      }
+      var div = document.createElement("div");
+      div.style.position = "absolute";
+      div.style.left = "0px";
+      div.style.top = event.layerY + "px";
+      div.style.width = "100vw";
+      div.style.height = "2px";
+      div.style.backgroundColor = "red";
+      div.style.zIndex = 101;
+      div.id = "show_num";
+      var div_text = document.createElement("div");
+      div_text.style.position = "absolute";
+      div_text.style.left = "25px";
+      div_text.style.top = event.layerY - 50 + "px";
+      div_text.style.width = "50px";
+      div_text.style.height = "20px";
+      div_text.style.backgroundColor = "#028c6a";
+      div_text.style.color = "#ffffff";
+      div_text.innerText = event.layerY - 100;
+      div_text.id = "num";
+      document.getElementsByTagName("article")[0].appendChild(div);
+      document.getElementsByTagName("article")[0].appendChild(div_text);
+    },
+    unshow_ruler_y() {
+      //  let remove = document.getElementById("show_num")
+      // if(remove!=null)
+      // {
+      //   document.getElementsByTagName("article")[0].removeChild(remove)
+      // }
+    },
   },
 };
 </script>
@@ -1132,6 +1225,7 @@ export default {
   height: 96vh;
   overflow-y: scroll;
   overflow-x: hidden;
+  color:#dad8d8;
 }
 
 .main_view_top_content,
@@ -1160,10 +1254,10 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
 }
-#canvas {
+#canvas_x,
+#canvas_y {
   background: #ffffff;
   cursor: pointer;
   position: absolute;
-  
 }
 </style>
