@@ -166,6 +166,7 @@ export default {
     console.log("成功创建一个按钮");
   },
   mounted() {
+    let _this = this;
     // 让物体移动
     function Drag() {
       this.initialize.apply(this, arguments);
@@ -176,7 +177,7 @@ export default {
         this._x = this._y = 0;
         this._moveDrag = this.bind(this, this.moveDrag);
         this._stopDrag = this.bind(this, this.stopDrag);
-
+        this._width = this._height = 0;
         this.setOptions(options);
 
         this.handle = this.$(this.options.handle);
@@ -220,7 +221,8 @@ export default {
       },
       startDrag: function (event) {
         var event = event || window.event;
-
+        this._width = this.drag.offsetWidth;
+        this._height = this.drag.offsetHeight;
         this._x = event.clientX - this.drag.offsetLeft;
         this._y = event.clientY - this.drag.offsetTop;
 
@@ -231,15 +233,26 @@ export default {
         this.handle.setCapture && this.handle.setCapture();
 
         this.onStart();
+        _this.$emit("unshow_coordinate")
       },
       moveDrag: function (event) {
         var event = event || window.event;
-
+        let coordinate_left = this.drag.offsetLeft;
+        let coordinate_right = this.drag.offsetLeft+this.drag.offsetWidth;
+        let coordinate_top = this.drag.offsetTop;
+        let coordinate_bottom = this.drag.offsetTop+this.drag.offsetHeight;
+        let coordinate = {
+          "left":coordinate_left,
+          "right":coordinate_right,
+          "top":coordinate_top,
+          "bottom":coordinate_bottom
+        }
+        _this.$emit("coordinate",_this.id,coordinate)
         var iTop = event.clientY - this._y;
         var iLeft = event.clientX - this._x;
 
         if (this.lock) return;
-
+        
         this.limit &&
           (iTop < 0 && (iTop = 0),
           iLeft < 0 && (iLeft = 0),
@@ -258,7 +271,7 @@ export default {
         this.removeHandler(document, "mouseup", this._stopDrag);
 
         this.handle.releaseCapture && this.handle.releaseCapture();
-
+        _this.$emit("unshow_coordinate")
         this.onStop();
       },
       //参数设置

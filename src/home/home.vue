@@ -1,6 +1,6 @@
 <template>
   <div class="home_total">
-    <header>
+    <header @mouseenter="unshow_ruler">
       <div class="main_view_saved">
         <abbr title="电脑端">
           <i class="iconfont icon-icon-test" @click="change_into_computer"></i>
@@ -84,6 +84,8 @@
             :padding_top="com.attr.padding_top"
             :padding_left="com.attr.padding_left"
             :margin_top="com.attr.margin_top"
+            @coordinate ="get_coordinate"
+            @unshow_coordinate ="unget_coordinate"
           ></my_button>
         </div>
         <canvas
@@ -91,16 +93,14 @@
           width="3000"
           height="30"
           @mousemove="show_ruler_x"
-          @mouseleave="unshow_ruler_x"
         ></canvas>
         <canvas
           id="canvas_y"
           width="50"
           height="2000"
           @mousemove="show_ruler_y"
-          @mouseleave="unshow_ruler_y"
         ></canvas>
-        <div style="width:100%;height:100%" @mouseenter="unshow_ruler">
+        <div style="width:100%;height:100%;" @mouseenter="unshow_ruler">
           <div class="main_view_mid" id="mainview">
             <my_toast></my_toast>
             <div v-for="(com,index) in curComList" :key="index">
@@ -219,7 +219,7 @@
           </div>
         </div>
       </article>
-      <aside>
+      <aside @mouseenter="unshow_ruler">
         <div class="main_view_right_title">
           <ul>
             <li v-for="(item_title,index) in titlelist" :key="index">
@@ -642,6 +642,7 @@ export default {
       mp: "",
       is_show_phone: true,
       is_show_xiaoxi: false,
+      id_array:"",
     };
   },
 
@@ -692,6 +693,7 @@ export default {
   },
   mounted() {
     this.mp = new Map();
+    this.id_map = new Map();
     var canvas_x = document.getElementById("canvas_x"),
       canvas_y = document.getElementById("canvas_y"),
       context_x = canvas_x.getContext("2d"),
@@ -1120,6 +1122,12 @@ export default {
     },
     show_nav() {
       document.querySelector("#nav_block").style.left = "28px";
+       let remove = document.getElementById("show_num");
+      let renum = document.getElementById("num");
+      if (remove != null) {
+        document.getElementsByTagName("article")[0].removeChild(remove);
+        document.getElementsByTagName("article")[0].removeChild(renum);
+      }
     },
     unshow_nav() {
       document.querySelector("#nav_block").style.left = "-100%";
@@ -1162,6 +1170,7 @@ export default {
       div_text.style.color = "#ffffff";
       div_text.innerText = event.layerX - 500;
       div_text.id = "num";
+      div_text.style.textAlign = "center";
       document.getElementsByTagName("article")[0].appendChild(div);
       document.getElementsByTagName("article")[0].appendChild(div_text);
     },
@@ -1173,13 +1182,7 @@ export default {
         document.getElementsByTagName("article")[0].removeChild(num);
       }
     },
-    unshow_ruler_x() {
-      // let remove = document.getElementById("show_num")
-      // if(remove!=null)
-      // {
-      //   document.getElementsByTagName("article")[0].removeChild(remove)
-      // }
-    },
+
     show_ruler_y(event) {
       let remove = document.getElementById("show_num");
       let renum = document.getElementById("num");
@@ -1205,17 +1208,92 @@ export default {
       div_text.style.backgroundColor = "#028c6a";
       div_text.style.color = "#ffffff";
       div_text.innerText = event.layerY - 100;
+      div_text.style.textAlign = "center";
       div_text.id = "num";
       document.getElementsByTagName("article")[0].appendChild(div);
       document.getElementsByTagName("article")[0].appendChild(div_text);
     },
-    unshow_ruler_y() {
-      //  let remove = document.getElementById("show_num")
-      // if(remove!=null)
-      // {
-      //   document.getElementsByTagName("article")[0].removeChild(remove)
-      // }
+    unget_coordinate(){
+      let pre_line_1 = document.getElementById("tmp1");
+      let pre_line_2 = document.getElementById("tmp2");
+      let pre_line_3 = document.getElementById("tmp3");
+      let pre_line_4 = document.getElementById("tmp4");
+      if(pre_line_1!=null)
+      {
+        document.getElementsByTagName("article")[0].removeChild(pre_line_1);
+      }
+      if(pre_line_2!=null)
+      {
+        document.getElementsByTagName("article")[0].removeChild(pre_line_2);
+      }
+      if(pre_line_3!=null)
+      {
+        document.getElementsByTagName("article")[0].removeChild(pre_line_4);
+      }
+      if(pre_line_4!=null)
+      {
+        document.getElementsByTagName("article")[0].removeChild(pre_line_4);
+      }
     },
+    get_coordinate(id,data){
+      this.id_map.set(id,data);
+      this.unget_coordinate();
+      var line_div_1 = document.createElement("div");
+      line_div_1.style.position = "absolute";
+      line_div_1.style.zIndex = 101;
+      line_div_1.style.backgroundColor= "red";
+      line_div_1.id = "tmp1";
+      line_div_1.style.top = "0px";
+      line_div_1.style.left = "0px";
+      var line_div_2 = line_div_1;
+      line_div_2.id = "tmp2";
+      var line_div_3 = line_div_1;
+      line_div_3.id = "tmp3";
+      var line_div_4 = line_div_1;
+      line_div_4.id = "tmp4";
+      for(let [key,value] of this.id_map)
+      {
+          if(key!=id)
+          {
+             if(Math.abs(data.top-value.top)<=5||Math.abs(data.bottom-value.top)<=5)
+             {
+               line_div_1.style.left = "0px";
+               line_div_1.style.top = value.top +"px";
+               line_div_1.style.width = "100vw";
+               line_div_1.style.height = "2px";
+               document.getElementsByTagName("article")[0].appendChild(line_div_1);
+             }    
+             if(Math.abs(data.top-value.bottom)<=5||Math.abs(data.bottom-value.bottom)<=5)
+             {
+               line_div_2.style.left = "0px";
+               line_div_2.style.top = value.bottom+"px";
+               line_div_2.style.width = "100vw";
+               line_div_2.style.height = "2px";
+               document.getElementsByTagName("article")[0].appendChild(line_div_2);               
+             }
+             if(Math.abs(data.left-value.left)<=5||Math.abs(data.right-value.left)<=5)
+             {
+               line_div_3.style.top = "0px";
+               line_div_3.style.left = value.left +"px";
+               line_div_3.style.width = "2px";
+               line_div_3.style.height = "100vh";
+               document.getElementsByTagName("article")[0].appendChild(line_div_3); 
+             }
+             if(Math.abs(data.left-value.right)<=5||Math.abs(data.right-value.right)<=5)
+             {
+               line_div_4.style.top = "0px";
+               line_div_4.style.left = value.right +"px";
+               line_div_4.style.width = "2px";
+               line_div_4.style.height = "100vh";
+               document.getElementsByTagName("article")[0].appendChild(line_div_4); 
+             }
+            //  console.log(data.top,data.bottom);
+            //  console.log(value.top,value.bottom);
+            //  console.log(line_div.style.top);
+          }
+      }
+
+    }
   },
 };
 </script>
