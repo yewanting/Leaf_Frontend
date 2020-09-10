@@ -1241,7 +1241,7 @@ export default {
       var line_div_1 = document.createElement("div");
       line_div_1.style.position = "absolute";
       line_div_1.style.zIndex = 101;
-      line_div_1.style.backgroundColor= "red";
+      line_div_1.style.backgroundColor= "#028c6a";
       line_div_1.id = "tmp1";
       line_div_1.style.top = "0px";
       line_div_1.style.left = "0px";
@@ -1261,7 +1261,7 @@ export default {
                line_div_1.style.top = value.top +"px";
                line_div_1.style.width = "100vw";
                line_div_1.style.height = "2px";
-               document.getElementsByTagName("article")[0].appendChild(line_div_1);
+               document.getElementsByTagName("article")[0].appendChild(line_div_1);              
              }    
              if(Math.abs(data.top-value.bottom)<=5||Math.abs(data.bottom-value.bottom)<=5)
              {
@@ -1269,7 +1269,7 @@ export default {
                line_div_2.style.top = value.bottom+"px";
                line_div_2.style.width = "100vw";
                line_div_2.style.height = "2px";
-               document.getElementsByTagName("article")[0].appendChild(line_div_2);               
+               document.getElementsByTagName("article")[0].appendChild(line_div_2);                             
              }
              if(Math.abs(data.left-value.left)<=5||Math.abs(data.right-value.left)<=5)
              {
