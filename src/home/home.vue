@@ -1228,7 +1228,7 @@ export default {
       }
       if(pre_line_3!=null)
       {
-        document.getElementsByTagName("article")[0].removeChild(pre_line_4);
+        document.getElementsByTagName("article")[0].removeChild(pre_line_3);
       }
       if(pre_line_4!=null)
       {
@@ -1245,51 +1245,73 @@ export default {
       line_div_1.id = "tmp1";
       line_div_1.style.top = "0px";
       line_div_1.style.left = "0px";
-      var line_div_2 = line_div_1;
+
+
+      var line_div_2 = document.createElement("div");
+      line_div_2.style.position = "absolute";
+      line_div_2.style.zIndex = 101;
+      line_div_2.style.backgroundColor= "#028c6a";
       line_div_2.id = "tmp2";
-      var line_div_3 = line_div_1;
+      line_div_2.style.top = "0px";
+      line_div_2.style.left = "0px";
+      
+      var line_div_3 = document.createElement("div");
+      line_div_3.style.position = "absolute";
+      line_div_3.style.zIndex = 101;
+      line_div_3.style.backgroundColor= "#028c6a";
       line_div_3.id = "tmp3";
-      var line_div_4 = line_div_1;
+      line_div_3.style.top = "0px";
+      line_div_3.style.left = "0px";
+
+
+      var line_div_4 = document.createElement("div");
+      line_div_4.style.position = "absolute";
+      line_div_4.style.zIndex = 101;
+      line_div_4.style.backgroundColor= "#028c6a";
       line_div_4.id = "tmp4";
+      line_div_4.style.top = "0px";
+      line_div_4.style.left = "0px";
+
       for(let [key,value] of this.id_map)
       {
           if(key!=id)
           {
              if(Math.abs(data.top-value.top)<=5||Math.abs(data.bottom-value.top)<=5)
              {
+               line_div_1.id = "tmp1";
                line_div_1.style.left = "0px";
                line_div_1.style.top = value.top +"px";
                line_div_1.style.width = "100vw";
-               line_div_1.style.height = "2px";
-               document.getElementsByTagName("article")[0].appendChild(line_div_1);              
+               line_div_1.style.height = "1px";
+               document.getElementsByTagName("article")[0].appendChild(line_div_1);             
              }    
              if(Math.abs(data.top-value.bottom)<=5||Math.abs(data.bottom-value.bottom)<=5)
              {
+               line_div_2.id = "tmp2";
                line_div_2.style.left = "0px";
                line_div_2.style.top = value.bottom+"px";
                line_div_2.style.width = "100vw";
-               line_div_2.style.height = "2px";
-               document.getElementsByTagName("article")[0].appendChild(line_div_2);                             
+               line_div_2.style.height = "1px";
+               document.getElementsByTagName("article")[0].appendChild(line_div_2);                           
              }
              if(Math.abs(data.left-value.left)<=5||Math.abs(data.right-value.left)<=5)
              {
+               line_div_3.id = "tmp3";
                line_div_3.style.top = "0px";
                line_div_3.style.left = value.left +"px";
-               line_div_3.style.width = "2px";
+               line_div_3.style.width = "1px";
                line_div_3.style.height = "100vh";
                document.getElementsByTagName("article")[0].appendChild(line_div_3); 
              }
              if(Math.abs(data.left-value.right)<=5||Math.abs(data.right-value.right)<=5)
              {
+               line_div_4.id = "tmp4";
                line_div_4.style.top = "0px";
                line_div_4.style.left = value.right +"px";
-               line_div_4.style.width = "2px";
+               line_div_4.style.width = "1px";
                line_div_4.style.height = "100vh";
                document.getElementsByTagName("article")[0].appendChild(line_div_4); 
              }
-            //  console.log(data.top,data.bottom);
-            //  console.log(value.top,value.bottom);
-            //  console.log(line_div.style.top);
           }
       }
 
