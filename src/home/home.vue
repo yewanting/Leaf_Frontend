@@ -1283,7 +1283,35 @@ export default {
                line_div_1.style.top = value.top +"px";
                line_div_1.style.width = "100vw";
                line_div_1.style.height = "1px";
-               document.getElementsByTagName("article")[0].appendChild(line_div_1);             
+               document.getElementsByTagName("article")[0].appendChild(line_div_1);
+               
+               let pre_div = document.getElementById("new_div");
+              if(pre_div!=null)
+              {
+                document.getElementsByTagName("article")[0].removeChild(pre_div);
+              }
+
+               let new_div = document.createElement("div");
+               let new_left = Math.min(data.right,value.right);
+               let new_right = Math.max(data.left,value.left);
+               new_div.style.position = "absolute";
+               new_div.style.zIndex = 101;
+               new_div.style.backgroundColor = 'red';
+               new_div.style.top = value.top + "px";
+               if(data.right<=value.left)
+               {
+                 new_div.style.left = data.right +"px";
+               }
+               if(value.right<=data.left)
+               {
+                 new_div.style.left = value.right+"px";
+               }
+               new_div.style.width = (new_right-new_left) +"px";
+               new_div.style.height = "2px";
+               new_div.innerText = (new_right-new_left);
+               new_div.style.textAlign = "center";
+               new_div.id = "new_div";
+               document.getElementsByTagName("article")[0].appendChild(new_div);
              }    
              if(Math.abs(data.top-value.bottom)<=5||Math.abs(data.bottom-value.bottom)<=5)
              {
