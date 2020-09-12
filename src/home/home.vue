@@ -1234,6 +1234,31 @@ export default {
       {
         document.getElementsByTagName("article")[0].removeChild(pre_line_4);
       }
+
+      
+      let pre_min_right = document.getElementById("min_right");
+      if(pre_min_right!=null)
+      {
+        document.getElementsByTagName("article")[0].removeChild(pre_min_right);
+      }   
+      
+      let pre_min_left = document.getElementById("min_left");
+      if(pre_min_left!=null)
+      {
+        document.getElementsByTagName("article")[0].removeChild(pre_min_left);
+      } 
+
+      let pre_min_bottom = document.getElementById("min_bottom");
+      if(pre_min_bottom!=null)
+      {
+        document.getElementsByTagName("article")[0].removeChild(pre_min_bottom);
+      } 
+
+      let pre_min_top = document.getElementById("min_top");
+      if(pre_min_top!=null)
+      {
+        document.getElementsByTagName("article")[0].removeChild(pre_min_top);
+      } 
     },
     get_coordinate(id,data){
       this.id_map.set(id,data);
@@ -1272,11 +1297,30 @@ export default {
       line_div_4.style.top = "0px";
       line_div_4.style.left = "0px";
 
+      let min_top = {
+        "dist":2000,
+        "id":-1
+      }
+      let min_bottom = {
+        "dist":2000,
+        "id":-1
+      }
+      let min_left = {
+        "dist":2000,
+        "id":-1,
+        "top":0
+      }
+      let min_right = {
+        "dist":2000,
+        "id":-1,
+        "top":0
+      }
+
       for(let [key,value] of this.id_map)
       {
           if(key!=id)
           {
-             if(Math.abs(data.top-value.top)<=5||Math.abs(data.bottom-value.top)<=5)
+             if(Math.abs(data.top-value.top)<=3||Math.abs(data.bottom-value.top)<=3)
              {
                line_div_1.id = "tmp1";
                line_div_1.style.left = "0px";
@@ -1285,44 +1329,63 @@ export default {
                line_div_1.style.height = "1px";
                document.getElementsByTagName("article")[0].appendChild(line_div_1);
                
-               let pre_div = document.getElementById("new_div");
-              if(pre_div!=null)
-              {
-                document.getElementsByTagName("article")[0].removeChild(pre_div);
-              }
 
-               let new_div = document.createElement("div");
-               let new_left = Math.min(data.right,value.right);
-               let new_right = Math.max(data.left,value.left);
-               new_div.style.position = "absolute";
-               new_div.style.zIndex = 101;
-               new_div.style.backgroundColor = 'red';
-               new_div.style.top = value.top + "px";
-               if(data.right<=value.left)
-               {
-                 new_div.style.left = data.right +"px";
-               }
-               if(value.right<=data.left)
-               {
-                 new_div.style.left = value.right+"px";
-               }
-               new_div.style.width = (new_right-new_left) +"px";
-               new_div.style.height = "2px";
-               new_div.innerText = (new_right-new_left);
-               new_div.style.textAlign = "center";
-               new_div.id = "new_div";
-               document.getElementsByTagName("article")[0].appendChild(new_div);
+                if(data.right<=value.left)
+                {
+                  let dist = value.left-data.right;
+                  if(dist<=min_right.dist)
+                  {
+                    min_right.dist = dist;
+                    min_right.id = key;
+                    min_right.top = value.top;
+                  }
+                }
+
+                if(value.right<=data.left)
+                {
+                  let dist =  data.left - value.right;
+                  if(dist<=min_left.dist)
+                  {
+                    min_left.dist = dist;
+                    min_left.id = key;
+                    min_left.top = value.top;
+                  }
+                }
+               
              }    
-             if(Math.abs(data.top-value.bottom)<=5||Math.abs(data.bottom-value.bottom)<=5)
+             if(Math.abs(data.top-value.bottom)<=3||Math.abs(data.bottom-value.bottom)<=3)
              {
                line_div_2.id = "tmp2";
                line_div_2.style.left = "0px";
                line_div_2.style.top = value.bottom+"px";
                line_div_2.style.width = "100vw";
                line_div_2.style.height = "1px";
-               document.getElementsByTagName("article")[0].appendChild(line_div_2);                           
+               document.getElementsByTagName("article")[0].appendChild(line_div_2);  
+
+                if(data.right<=value.left)
+                {
+                  let dist = value.left-data.right;
+                  if(dist<=min_right.dist)
+                  {
+                    min_right.dist = dist;
+                    min_right.id = key;
+                    min_right.top = value.bottom;
+                  }
+                }
+
+                if(value.right<=data.left)
+                {
+                  let dist =  data.left - value.right;
+                  if(dist<=min_left.dist)
+                  {
+                    min_left.dist = dist;
+                    min_left.id = key;
+                    min_left.top = value.bottom;
+                  }
+                }
+
              }
-             if(Math.abs(data.left-value.left)<=5||Math.abs(data.right-value.left)<=5)
+             if(Math.abs(data.left-value.left)<=3||Math.abs(data.right-value.left)<=3)
              {
                line_div_3.id = "tmp3";
                line_div_3.style.top = "0px";
@@ -1330,8 +1393,32 @@ export default {
                line_div_3.style.width = "1px";
                line_div_3.style.height = "100vh";
                document.getElementsByTagName("article")[0].appendChild(line_div_3); 
+
+
+
+               if(data.bottom<=value.top)
+                {
+                  let dist = value.top-data.bottom;
+                  if(dist<=min_bottom.dist)
+                  {
+                    min_bottom.dist = dist;
+                    min_bottom.id = key;
+                    min_bottom.left = value.left;
+                  }
+                }
+
+                if(value.bottom<=data.top)
+                {
+                  let dist =  data.top - value.bottom;
+                  if(dist<=min_top.dist)
+                  {
+                    min_top.dist = dist;
+                    min_top.id = key;
+                    min_top.left = value.left;
+                  }
+                }
              }
-             if(Math.abs(data.left-value.right)<=5||Math.abs(data.right-value.right)<=5)
+             if(Math.abs(data.left-value.right)<=3||Math.abs(data.right-value.right)<=3)
              {
                line_div_4.id = "tmp4";
                line_div_4.style.top = "0px";
@@ -1339,9 +1426,93 @@ export default {
                line_div_4.style.width = "1px";
                line_div_4.style.height = "100vh";
                document.getElementsByTagName("article")[0].appendChild(line_div_4); 
+               if(data.bottom<=value.top)
+                {
+                  let dist = value.top-data.bottom;
+                  if(dist<=min_bottom.dist)
+                  {
+                    min_bottom.dist = dist;
+                    min_bottom.id = key;
+                    min_bottom.left = value.right;
+                  }
+                }
+
+                if(value.bottom<=data.top)
+                {
+                  let dist =  data.top - value.bottom;
+                  if(dist<=min_top.dist)
+                  {
+                    min_top.dist = dist;
+                    min_top.id = key;
+                    min_top.left = value.right;
+                  }
+                }
              }
           }
       }
+      if(min_right.id!=-1)
+      {
+        let min_right_div = document.createElement("div");
+        min_right_div.style.position = "absolute";
+        min_right_div.style.zIndex = 101;
+        min_right_div.style.top = min_right.top + "px"
+        min_right_div.style.left = data.right+ "px";
+        min_right_div.style.width = min_right.dist + "px";
+        min_right_div.style.height = "2px";
+        min_right_div.style.backgroundColor = '#003e19';
+        min_right_div.innerText = min_right.dist;
+        min_right_div.style.textAlign = "center";
+        min_right_div.id = "min_right";
+        document.getElementsByTagName("article")[0].appendChild(min_right_div); 
+      }
+      if(min_left.id!=-1)
+      {
+        let min_left_div = document.createElement("div");
+        min_left_div.style.position = "absolute";
+        min_left_div.style.zIndex = 101;
+        min_left_div.style.top =  min_left.top + "px"
+        min_left_div.style.left = this.id_map.get(min_left.id).right + "px";
+        min_left_div.style.width = min_left.dist + "px";
+        min_left_div.style.height = "2px";
+        min_left_div.style.backgroundColor = '#003e19';
+        min_left_div.innerText =  min_left.dist;
+        min_left_div.style.textAlign = "center";
+        min_left_div.id = "min_left"
+        document.getElementsByTagName("article")[0].appendChild(min_left_div);         
+      }
+
+      if(min_bottom.id!=-1)
+      {
+        let min_bottom_div = document.createElement("div");
+        min_bottom_div.style.position = "absolute";
+        min_bottom_div.style.zIndex = 101;
+        min_bottom_div.style.left =  min_bottom.left + "px"
+        min_bottom_div.style.top = data.bottom + "px";
+        min_bottom_div.style.height = min_bottom.dist + "px";
+        min_bottom_div.style.width = "2px";
+        min_bottom_div.style.backgroundColor = '#003e19';
+        min_bottom_div.innerText =  min_bottom.dist;
+        min_bottom_div.style.textAlign = "center";
+        min_bottom_div.id = "min_bottom"
+        document.getElementsByTagName("article")[0].appendChild(min_bottom_div);  
+      }
+
+       if(min_top.id!=-1)
+      {
+        let min_top_div = document.createElement("div");
+        min_top_div.style.position = "absolute";
+        min_top_div.style.zIndex = 101;
+        min_top_div.style.left =  min_top.left + "px"
+        min_top_div.style.top = this.id_map.get(min_top.id).bottom+ "px";
+        min_top_div.style.height = min_top.dist + "px";
+        min_top_div.style.width = "2px";
+        min_top_div.style.backgroundColor = '#003e19';
+        min_top_div.innerText =  min_top.dist;
+        min_top_div.style.textAlign = "center";
+        min_top_div.id = "min_top"
+        document.getElementsByTagName("article")[0].appendChild(min_top_div);  
+      }
+
 
     }
   },
