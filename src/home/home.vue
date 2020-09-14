@@ -11,7 +11,7 @@
         <div @click="download_code">
           <span>下载源码</span>
         </div>
-        <div @click="get_code">
+        <div>
           <span>保存</span>
         </div>
       </div>
@@ -57,7 +57,7 @@
       </div>
       <!-- 中间部分 -->
       <article>
-        <div v-for="(com,index) in curComList" :key="index">
+        <div v-for="(com,index) in curComList" :key="index" id ="component_set">
           <button_test
             v-if="com.type=='button2'"
             :id="index"
@@ -86,6 +86,7 @@
             :margin_top="com.attr.margin_top"
             @coordinate ="get_coordinate"
             @unshow_coordinate ="unget_coordinate"
+            @attach ="get_attach"
           ></my_button>
         </div>
         <canvas
@@ -1006,19 +1007,33 @@ export default {
     },
     // 获取特定屏幕上的代码
     get_code() {
-      // var curs =
-      //   '<head><link rel="stylesheet" type="text/css" href="index.css">' +
-      //   '<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">' +
-      //   '<meta charset = "utf-8"></head>';
-      // curs += document.querySelector("#mainview").outerHTML;
-      // return curs.replace(/..\/..\/static\//g, "");
+      var cur_code =
+        '<head><link rel="stylesheet" type="text/css" href="index.css">' +
+        '<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">' +
+        '<meta charset = "utf-8"></head>';
+      
+     
       let mainview = document.querySelector("#mainview");
-      console.log(
-        mainview.getBoundingClientRect().top,
-        mainview.getBoundingClientRect().bottom,
-        mainview.getBoundingClientRect().left,
-        mainview.getBoundingClientRect().right
-      );
+      for(let i = 0 ; i < this.curComList.length ;i++)
+      {
+        let cur = document.getElementById(i);
+        let tmp_top = cur.getBoundingClientRect().top;
+        let tmp_bottom = cur.getBoundingClientRect().bottom;
+        let tmp_left = cur.getBoundingClientRect().left;
+        let tmp_right = cur.getBoundingClientRect().right;
+        if(tmp_top>=(mainview.getBoundingClientRect().top)
+        &&tmp_bottom<=(mainview.getBoundingClientRect().bottom)
+        &&tmp_left>=(mainview.getBoundingClientRect().left)
+        &&tmp_right<=(mainview.getBoundingClientRect().right)
+        )
+        {
+           cur_code += cur.outerHTML;
+        }        
+      }
+
+      return cur_code.replace(/..\/..\/static\//g, "");
+
+      
     },
 
     loadNode(node) {
@@ -1320,7 +1335,7 @@ export default {
       {
           if(key!=id)
           {
-             if(Math.abs(data.top-value.top)<=3||Math.abs(data.bottom-value.top)<=3)
+             if(Math.abs(data.top-value.top)<=5||Math.abs(data.bottom-value.top)<=5)
              {
                line_div_1.id = "tmp1";
                line_div_1.style.left = "0px";
@@ -1353,7 +1368,7 @@ export default {
                 }
                
              }    
-             if(Math.abs(data.top-value.bottom)<=3||Math.abs(data.bottom-value.bottom)<=3)
+             if(Math.abs(data.top-value.bottom)<=5||Math.abs(data.bottom-value.bottom)<=5)
              {
                line_div_2.id = "tmp2";
                line_div_2.style.left = "0px";
@@ -1385,7 +1400,7 @@ export default {
                 }
 
              }
-             if(Math.abs(data.left-value.left)<=3||Math.abs(data.right-value.left)<=3)
+             if(Math.abs(data.left-value.left)<=5||Math.abs(data.right-value.left)<=5)
              {
                line_div_3.id = "tmp3";
                line_div_3.style.top = "0px";
@@ -1418,7 +1433,7 @@ export default {
                   }
                 }
              }
-             if(Math.abs(data.left-value.right)<=3||Math.abs(data.right-value.right)<=3)
+             if(Math.abs(data.left-value.right)<=5||Math.abs(data.right-value.right)<=5)
              {
                line_div_4.id = "tmp4";
                line_div_4.style.top = "0px";
@@ -1514,7 +1529,74 @@ export default {
       }
 
 
-    }
+
+    },
+    get_attach(id,data){
+      let cur = document.getElementById(id);
+      let cur_width = this.curComAttr.width;
+      let cur_height = this.curComAttr.height;
+      // console.log(cur_width);
+      // console.log(cur_height);
+      for(let [key,value] of this.id_map)
+      {
+          if(key!=id)
+          {
+               if(Math.abs(data.top-value.top)<=10)  
+               {
+                 cur.style.top = value.top+"px";
+                 cur.style.width = cur_width +"px";
+                 cur.style.height = cur_height+"px";
+               }       
+               if(Math.abs(data.bottom-value.top)<=10)
+               {
+                 cur.style.bottom = value.top+"px";
+                 cur.style.width = cur_width +"px";
+                 cur.style.height = cur_height+"px";
+               }    
+
+                if(Math.abs(data.top-value.bottom)<=10)  
+               {
+                 cur.style.top = value.bottom+"px";
+                 cur.style.width = cur_width +"px";
+                 cur.style.height = cur_height+"px";
+               }       
+               if(Math.abs(data.bottom-value.bottom)<=10)
+               {
+                 cur.style.bottom = value.bottom+"px";
+                 cur.style.width = cur_width +"px";
+                 cur.style.height = cur_height+"px";
+               } 
+
+              if(Math.abs(data.left-value.left)<=10)  
+               {
+                 cur.style.left = value.left+"px";
+                 cur.style.width = cur_width +"px";
+                 cur.style.height = cur_height+"px";
+               }       
+               if(Math.abs(data.right-value.left)<=10)
+               {
+                 cur.style.right = value.left+"px";
+                 cur.style.width = cur_width +"px";
+                 cur.style.height = cur_height+"px";
+               }
+
+               if(Math.abs(data.left-value.right)<=10)  
+               {
+                 cur.style.left = value.right+"px";
+                 cur.style.width = cur_width +"px";
+                 cur.style.height = cur_height+"px";
+               }       
+               if(Math.abs(data.right-value.right)<=10)
+               {
+                 cur.style.right = value.right+"px";
+                 cur.style.width = cur_width +"px";
+                 cur.style.height = cur_height+"px";
+               }          
+             
+          }
+      }
+   }
+
   },
 };
 </script>

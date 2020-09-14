@@ -271,6 +271,19 @@ export default {
         this.removeHandler(document, "mouseup", this._stopDrag);
 
         this.handle.releaseCapture && this.handle.releaseCapture();
+        
+        
+        let coordinate_left = this.drag.offsetLeft;
+        let coordinate_right = this.drag.offsetLeft+this.drag.offsetWidth;
+        let coordinate_top = this.drag.offsetTop;
+        let coordinate_bottom = this.drag.offsetTop+this.drag.offsetHeight;
+        let coordinate = {
+          "left":coordinate_left,
+          "right":coordinate_right,
+          "top":coordinate_top,
+          "bottom":coordinate_bottom
+        }
+        _this.$emit("attach",_this.id,coordinate)
         _this.$emit("unshow_coordinate")
         this.onStop();
       },
@@ -462,8 +475,6 @@ export default {
         moveDrag: function (event) {
           var event = event || window.event;
           let cur = document.getElementById(id);
-          let left = event.clientX;
-          let top = event.clientY;
           let a = this._width + this.nowX - event.clientX;
           let b = this._height + this.nowY - event.clientY;
           if (a > this.maxContainer.clientWidth) {
@@ -472,10 +483,9 @@ export default {
           if (b > this.maxContainer.clientHeight) {
             b = this.maxContainer.clientHeight;
           }
-          // console.log(left,top)
           if (this.move.parentNode != null) {
-            cur.style.left = left + "px";
-            cur.style.top = top + "px";
+            cur.style.left = event.clientX-28 + "px";
+            cur.style.top = event.clientY-33 + "px";
             this.move.parentNode.style.width = a + "px";
             this.move.parentNode.style.height = b + "px";
             _this.cur_width = a;
@@ -528,6 +538,7 @@ export default {
       let oMove_left_top_circle = new Move_left_top(left_top_circle, {
         handle: left_top_circle,
       });
+
     },
     unshow_Mouse_left_top(event) {
       event.style.cursor = "move";
@@ -594,9 +605,10 @@ export default {
             b = this.maxContainer.clientHeight;
           }
           if (this.move.parentNode != null) {
-            cur.style.left = event.clientX + "px";
+            cur.style.left = event.clientX-28 + "px";
             this.move.parentNode.style.width = a + "px";
             this.move.parentNode.style.height = b + "px";
+
             _this.cur_width = a;
             _this.cur_height = b;
             _this.click_com_change();
@@ -713,7 +725,7 @@ export default {
             b = this.maxContainer.clientHeight;
           }
           if (this.move.parentNode != null) {
-            cur.style.top = event.clientY + "px";
+            cur.style.top = event.clientY-33 + "px";
             this.move.parentNode.style.width = a + "px";
             this.move.parentNode.style.height = b + "px";
             _this.cur_width = a;
