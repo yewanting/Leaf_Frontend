@@ -63,7 +63,7 @@
             :id="index"
             :index="index"
             :left="com.attr.left"
-            :top="com.attr.top"  
+            :top="com.attr.top"
             :position="com.attr.position"
             :title="com.attr.title"
             :background_color="com.attr.background_color"
@@ -87,7 +87,7 @@
             :id="index"
             :index="index"
             :left="com.attr.left"
-            :top="com.attr.top"  
+            :top="com.attr.top"
             :text="com.attr.text"
             :border_color="com.attr.border_color"
             :text_color="com.attr.text_color"
@@ -102,6 +102,25 @@
             @coordinate="get_coordinate"
             @unshow_coordinate="unget_coordinate"
           ></my_find>
+
+          <!-- 标题 -->
+          <my_title
+            v-if="com.type=='title'"
+            :id ="index"
+            :index="index"
+            :left="com.attr.left"
+            :top="com.attr.top"
+            :content="com.attr.content"
+            :background_color="com.attr.background_color"
+            :color="com.attr.color"
+            :font_size="com.attr.font_size"
+            :height="com.attr.height"
+            :width="com.attr.width"
+            :position="com.attr.position"
+            :margin_top="com.attr.margin_top"
+            @coordinate="get_coordinate"
+            @unshow_coordinate="unget_coordinate"
+          ></my_title>
         </div>
         <canvas id="canvas_x" width="3000" height="30" @mousemove="show_ruler_x"></canvas>
         <canvas id="canvas_y" width="50" height="2000" @mousemove="show_ruler_y"></canvas>
@@ -180,7 +199,7 @@
                 :border_radius="com.attr.border_radius"
                 :find_icon_size="com.attr.find_icon_size"
                 :margin_top="com.attr.margin_top"
-              ></my_find> -->
+              ></my_find>-->
 
               <!-- 经典语录 -->
               <my_talk
@@ -200,7 +219,7 @@
               <!-- <my_map></my_map> -->
 
               <!-- 标题 -->
-              <my_title
+              <!-- <my_title
                 v-if="com.type=='title'"
                 :index="index"
                 :content="com.attr.content"
@@ -209,7 +228,7 @@
                 :font_size="com.attr.font_size"
                 :position="com.attr.position"
                 :margin_top="com.attr.margin_top"
-              ></my_title>
+              ></my_title>-->
 
               <!-- 分割线 -->
               <my_separator
@@ -922,7 +941,7 @@ export default {
             text_color: "#000000",
             text_size: "15",
             big_height: "40",
-            big_width:"300",
+            big_width: "300",
             border_radius: "50",
             find_icon_size: "20",
             margin_top: "0",
@@ -981,8 +1000,12 @@ export default {
             background_color: "#ffffff",
             color: "#000000",
             font_size: "18",
-            position: "left",
+            position: "center",
             margin_top: "0",
+            width:"300",
+            height:"30",
+            left: event.getBoundingClientRect().right - 100,
+            top: event.getBoundingClientRect().top + 50,
           },
         });
       }

@@ -412,9 +412,10 @@ abbr {
 
 /****** 标题页面*******/
 .title_total {
-  margin: 0;
-  position: relative;
-  width: 100%;
+  position: absolute;
   font-weight: bold;
-  height: 50px;
+  z-index:100;
+}
+.title_total #inner{
+  position: relative;
 }

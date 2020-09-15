@@ -5,8 +5,7 @@
         <span class="chang_title">标题文本位置：</span>
         居左：
         <input
-          type="radio"
-          checked
+          type="radio"    
           value="left"
           name="title_position"
           @change="onChange('position',$event.target.value)"
@@ -14,6 +13,7 @@
         居中：
         <input
           type="radio"
+          checked
           value="center"
           name="title_position"
           @change="onChange('position',$event.target.value)"

@@ -1,11 +1,14 @@
 <template>
   <div
+    @dragstart="onDragStart"
+    @dragover="onDragOver"
+    @drop="onDrop"
     @click="click_com_change"
     @mouseenter="show_border"
     @mouseleave="unshow_border"
     :draggable="true"
     class="find_total"
-    :style="big_div_form"
+    :style="form_value"
     :id="id"
   >
     <i class="iconfont icon-chahao" v-if="is_show==true" @click="remove_component"></i>
@@ -67,7 +70,7 @@ export default {
     };
   },
   computed: {
-    big_div_form() {
+    form_value() {
       let big_div_form_s =
         "height:" +
         this.big_height +

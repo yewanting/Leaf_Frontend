@@ -76,6 +76,20 @@ export default {
     };
   },
   computed: {
+    form_value() {
+      let form_value_s =
+        "left:" +
+        this.left +
+        "px;" +
+        "top:" +
+        this.top +
+        "px;" +
+        "margin-top:" +
+        this.margin_top +
+        "px;";
+
+      return form_value_s;
+    },
     stylevalue() {
       let s =
         "height:" +
@@ -127,20 +141,7 @@ export default {
     curComAttr() {
       return this.$store.state.cur_com_attr;
     },
-    form_value() {
-      let form_value_s =
-        "left:" +
-        this.left +
-        "px;" +
-        "top:" +
-        this.top +
-        "px;" +
-        "margin-top:" +
-        this.margin_top +
-        "px;";
-
-      return form_value_s;
-    },
+    
   },
   props: [
     "id",
@@ -409,8 +410,6 @@ export default {
     show_border() {
       this.$el.style.width = this.$el.offsetWidth;
       this.$el.style.height = this.$el.offsetHeight;
-
-      // this.$el.style.border = "1px solid #028c6a";
       this.is_show = true;
     },
     unshow_border() {
