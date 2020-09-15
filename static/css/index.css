@@ -70,6 +70,33 @@ ul {
   list-style: none;
 }
 
+.left_top_circle,
+.left_bottom_circle,
+.right_top_circle,
+.right_bottom_circle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: #a2c9ec;
+}
+.left_top_circle {
+  left: -5px;
+  top: -5px;
+}
+.left_bottom_circle {
+  left: -5px;
+  bottom: -5px;
+}
+.right_top_circle {
+  right: -5px;
+  top: -5px;
+}
+.right_bottom_circle {
+  right: -5px;
+  bottom: -5px;
+}
+
 /* 左端组件库 */
 
 .main_view_left_top {
@@ -315,17 +342,12 @@ abbr {
 /****** 搜索框页面*******/
 .find_total {
   margin: 0;
-  position: relative;
-  width: 100%;
+  position: absolute;
+  z-index: 100;
 }
 
 .find_div {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  position: relative;
   border: 1px solid rgb(168, 161, 161);
 }
 

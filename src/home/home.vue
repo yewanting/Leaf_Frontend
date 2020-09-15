@@ -57,20 +57,13 @@
       </div>
       <!-- 中间部分 -->
       <article>
-        <div v-for="(com,index) in curComList" :key="index" id ="component_set">
-          <button_test
-            v-if="com.type=='button2'"
-            :id="index"
-            :left="com.attr.left"
-            :top="com.attr.top"
-          ></button_test>
-
+        <div v-for="(com,index) in curComList" :key="index" id="component_set">
           <my_button
             v-if="com.type=='button'"
             :id="index"
-            :left="com.attr.left"
-            :top="com.attr.top"
             :index="index"
+            :left="com.attr.left"
+            :top="com.attr.top"  
             :position="com.attr.position"
             :title="com.attr.title"
             :background_color="com.attr.background_color"
@@ -84,23 +77,34 @@
             :padding_top="com.attr.padding_top"
             :padding_left="com.attr.padding_left"
             :margin_top="com.attr.margin_top"
-            @coordinate ="get_coordinate"
-            @unshow_coordinate ="unget_coordinate"
-            @attach ="get_attach"
+            @coordinate="get_coordinate"
+            @unshow_coordinate="unget_coordinate"
           ></my_button>
+
+          <!-- 搜索框 -->
+          <my_find
+            v-if="com.type=='find'"
+            :id="index"
+            :index="index"
+            :left="com.attr.left"
+            :top="com.attr.top"  
+            :text="com.attr.text"
+            :border_color="com.attr.border_color"
+            :text_color="com.attr.text_color"
+            :text_size="com.attr.text_size"
+            :big_height="com.attr.big_height"
+            :big_width="com.attr.big_width"
+            :width="com.attr.width"
+            :height="com.attr.height"
+            :border_radius="com.attr.border_radius"
+            :find_icon_size="com.attr.find_icon_size"
+            :margin_top="com.attr.margin_top"
+            @coordinate="get_coordinate"
+            @unshow_coordinate="unget_coordinate"
+          ></my_find>
         </div>
-        <canvas
-          id="canvas_x"
-          width="3000"
-          height="30"
-          @mousemove="show_ruler_x"
-        ></canvas>
-        <canvas
-          id="canvas_y"
-          width="50"
-          height="2000"
-          @mousemove="show_ruler_y"
-        ></canvas>
+        <canvas id="canvas_x" width="3000" height="30" @mousemove="show_ruler_x"></canvas>
+        <canvas id="canvas_y" width="50" height="2000" @mousemove="show_ruler_y"></canvas>
         <div style="width:100%;height:100%;" @mouseenter="unshow_ruler">
           <div class="main_view_mid" id="mainview">
             <my_toast></my_toast>
@@ -163,7 +167,7 @@
               ></my_courselist>
 
               <!-- 搜索框 -->
-              <my_find
+              <!-- <my_find
                 v-if="com.type=='find'"
                 :index="index"
                 :text="com.attr.text"
@@ -176,7 +180,7 @@
                 :border_radius="com.attr.border_radius"
                 :find_icon_size="com.attr.find_icon_size"
                 :margin_top="com.attr.margin_top"
-              ></my_find>
+              ></my_find> -->
 
               <!-- 经典语录 -->
               <my_talk
@@ -294,9 +298,6 @@ import my_title_change from "../components/title_change.vue";
 // 分割线
 import my_separator from "../components/separator.vue";
 import my_separator_change from "../components/separator_change.vue";
-
-// 测试随意拖动
-import button_test from "../components/button_test.vue";
 
 //下载依赖
 // npm i axios, JSZip, FileSaver -s
@@ -643,7 +644,7 @@ export default {
       mp: "",
       is_show_phone: true,
       is_show_xiaoxi: false,
-      id_array:"",
+      id_array: "",
     };
   },
 
@@ -689,8 +690,6 @@ export default {
     my_title_change,
     my_separator,
     my_separator_change,
-
-    button_test,
   },
   mounted() {
     this.mp = new Map();
@@ -922,12 +921,13 @@ export default {
             border_color: "#b8b5b5",
             text_color: "#000000",
             text_size: "15",
-            big_height: "50",
-            width: "70",
-            height: "30",
+            big_height: "40",
+            big_width:"300",
             border_radius: "50",
             find_icon_size: "20",
             margin_top: "0",
+            left: event.getBoundingClientRect().right - 100,
+            top: event.getBoundingClientRect().top + 50,
           },
         });
       }
@@ -1011,29 +1011,25 @@ export default {
         '<head><link rel="stylesheet" type="text/css" href="index.css">' +
         '<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">' +
         '<meta charset = "utf-8"></head>';
-      
-     
+
       let mainview = document.querySelector("#mainview");
-      for(let i = 0 ; i < this.curComList.length ;i++)
-      {
+      for (let i = 0; i < this.curComList.length; i++) {
         let cur = document.getElementById(i);
         let tmp_top = cur.getBoundingClientRect().top;
         let tmp_bottom = cur.getBoundingClientRect().bottom;
         let tmp_left = cur.getBoundingClientRect().left;
         let tmp_right = cur.getBoundingClientRect().right;
-        if(tmp_top>=(mainview.getBoundingClientRect().top)
-        &&tmp_bottom<=(mainview.getBoundingClientRect().bottom)
-        &&tmp_left>=(mainview.getBoundingClientRect().left)
-        &&tmp_right<=(mainview.getBoundingClientRect().right)
-        )
-        {
-           cur_code += cur.outerHTML;
-        }        
+        if (
+          tmp_top >= mainview.getBoundingClientRect().top &&
+          tmp_bottom <= mainview.getBoundingClientRect().bottom &&
+          tmp_left >= mainview.getBoundingClientRect().left &&
+          tmp_right <= mainview.getBoundingClientRect().right
+        ) {
+          cur_code += cur.outerHTML;
+        }
       }
 
       return cur_code.replace(/..\/..\/static\//g, "");
-
-      
     },
 
     loadNode(node) {
@@ -1137,7 +1133,7 @@ export default {
     },
     show_nav() {
       document.querySelector("#nav_block").style.left = "28px";
-       let remove = document.getElementById("show_num");
+      let remove = document.getElementById("show_num");
       let renum = document.getElementById("num");
       if (remove != null) {
         document.getElementsByTagName("article")[0].removeChild(remove);
@@ -1228,375 +1224,341 @@ export default {
       document.getElementsByTagName("article")[0].appendChild(div);
       document.getElementsByTagName("article")[0].appendChild(div_text);
     },
-    unget_coordinate(){
+    unget_coordinate() {
       let pre_line_1 = document.getElementById("tmp1");
       let pre_line_2 = document.getElementById("tmp2");
       let pre_line_3 = document.getElementById("tmp3");
       let pre_line_4 = document.getElementById("tmp4");
-      if(pre_line_1!=null)
-      {
+      if (pre_line_1 != null) {
         document.getElementsByTagName("article")[0].removeChild(pre_line_1);
       }
-      if(pre_line_2!=null)
-      {
+      if (pre_line_2 != null) {
         document.getElementsByTagName("article")[0].removeChild(pre_line_2);
       }
-      if(pre_line_3!=null)
-      {
+      if (pre_line_3 != null) {
         document.getElementsByTagName("article")[0].removeChild(pre_line_3);
       }
-      if(pre_line_4!=null)
-      {
+      if (pre_line_4 != null) {
         document.getElementsByTagName("article")[0].removeChild(pre_line_4);
       }
 
-      
       let pre_min_right = document.getElementById("min_right");
-      if(pre_min_right!=null)
-      {
+      if (pre_min_right != null) {
         document.getElementsByTagName("article")[0].removeChild(pre_min_right);
-      }   
-      
+      }
+
       let pre_min_left = document.getElementById("min_left");
-      if(pre_min_left!=null)
-      {
+      if (pre_min_left != null) {
         document.getElementsByTagName("article")[0].removeChild(pre_min_left);
-      } 
+      }
 
       let pre_min_bottom = document.getElementById("min_bottom");
-      if(pre_min_bottom!=null)
-      {
+      if (pre_min_bottom != null) {
         document.getElementsByTagName("article")[0].removeChild(pre_min_bottom);
-      } 
+      }
 
       let pre_min_top = document.getElementById("min_top");
-      if(pre_min_top!=null)
-      {
+      if (pre_min_top != null) {
         document.getElementsByTagName("article")[0].removeChild(pre_min_top);
-      } 
+      }
     },
-    get_coordinate(id,data){
-      this.id_map.set(id,data);
+    get_coordinate(id, data) {
+      this.id_map.set(id, data);
       this.unget_coordinate();
       var line_div_1 = document.createElement("div");
       line_div_1.style.position = "absolute";
       line_div_1.style.zIndex = 101;
-      line_div_1.style.backgroundColor= "#028c6a";
+      line_div_1.style.backgroundColor = "#028c6a";
       line_div_1.id = "tmp1";
       line_div_1.style.top = "0px";
       line_div_1.style.left = "0px";
 
-
       var line_div_2 = document.createElement("div");
       line_div_2.style.position = "absolute";
       line_div_2.style.zIndex = 101;
-      line_div_2.style.backgroundColor= "#028c6a";
+      line_div_2.style.backgroundColor = "#028c6a";
       line_div_2.id = "tmp2";
       line_div_2.style.top = "0px";
       line_div_2.style.left = "0px";
-      
+
       var line_div_3 = document.createElement("div");
       line_div_3.style.position = "absolute";
       line_div_3.style.zIndex = 101;
-      line_div_3.style.backgroundColor= "#028c6a";
+      line_div_3.style.backgroundColor = "#028c6a";
       line_div_3.id = "tmp3";
       line_div_3.style.top = "0px";
       line_div_3.style.left = "0px";
 
-
       var line_div_4 = document.createElement("div");
       line_div_4.style.position = "absolute";
       line_div_4.style.zIndex = 101;
-      line_div_4.style.backgroundColor= "#028c6a";
+      line_div_4.style.backgroundColor = "#028c6a";
       line_div_4.id = "tmp4";
       line_div_4.style.top = "0px";
       line_div_4.style.left = "0px";
 
       let min_top = {
-        "dist":2000,
-        "id":-1
-      }
+        dist: 2000,
+        id: -1,
+      };
       let min_bottom = {
-        "dist":2000,
-        "id":-1
-      }
+        dist: 2000,
+        id: -1,
+      };
       let min_left = {
-        "dist":2000,
-        "id":-1,
-        "top":0
-      }
+        dist: 2000,
+        id: -1,
+        top: 0,
+      };
       let min_right = {
-        "dist":2000,
-        "id":-1,
-        "top":0
-      }
+        dist: 2000,
+        id: -1,
+        top: 0,
+      };
 
-      for(let [key,value] of this.id_map)
-      {
-          if(key!=id)
-          {
-             if(Math.abs(data.top-value.top)<=5||Math.abs(data.bottom-value.top)<=5)
-             {
-               line_div_1.id = "tmp1";
-               line_div_1.style.left = "0px";
-               line_div_1.style.top = value.top +"px";
-               line_div_1.style.width = "100vw";
-               line_div_1.style.height = "1px";
-               document.getElementsByTagName("article")[0].appendChild(line_div_1);
-               
+      for (let [key, value] of this.id_map) {
+        if (key != id) {
+          if (
+            Math.abs(data.top - value.top) <= 5 ||
+            Math.abs(data.bottom - value.top) <= 5
+          ) {
+            line_div_1.id = "tmp1";
+            line_div_1.style.left = "0px";
+            line_div_1.style.top = value.top + "px";
+            line_div_1.style.width = "100vw";
+            line_div_1.style.height = "1px";
+            document.getElementsByTagName("article")[0].appendChild(line_div_1);
 
-                if(data.right<=value.left)
-                {
-                  let dist = value.left-data.right;
-                  if(dist<=min_right.dist)
-                  {
-                    min_right.dist = dist;
-                    min_right.id = key;
-                    min_right.top = value.top;
-                  }
-                }
+            if (data.right <= value.left) {
+              let dist = value.left - data.right;
+              if (dist <= min_right.dist) {
+                min_right.dist = dist;
+                min_right.id = key;
+                min_right.top = value.top;
+              }
+            }
 
-                if(value.right<=data.left)
-                {
-                  let dist =  data.left - value.right;
-                  if(dist<=min_left.dist)
-                  {
-                    min_left.dist = dist;
-                    min_left.id = key;
-                    min_left.top = value.top;
-                  }
-                }
-               
-             }    
-             if(Math.abs(data.top-value.bottom)<=5||Math.abs(data.bottom-value.bottom)<=5)
-             {
-               line_div_2.id = "tmp2";
-               line_div_2.style.left = "0px";
-               line_div_2.style.top = value.bottom+"px";
-               line_div_2.style.width = "100vw";
-               line_div_2.style.height = "1px";
-               document.getElementsByTagName("article")[0].appendChild(line_div_2);  
-
-                if(data.right<=value.left)
-                {
-                  let dist = value.left-data.right;
-                  if(dist<=min_right.dist)
-                  {
-                    min_right.dist = dist;
-                    min_right.id = key;
-                    min_right.top = value.bottom;
-                  }
-                }
-
-                if(value.right<=data.left)
-                {
-                  let dist =  data.left - value.right;
-                  if(dist<=min_left.dist)
-                  {
-                    min_left.dist = dist;
-                    min_left.id = key;
-                    min_left.top = value.bottom;
-                  }
-                }
-
-             }
-             if(Math.abs(data.left-value.left)<=5||Math.abs(data.right-value.left)<=5)
-             {
-               line_div_3.id = "tmp3";
-               line_div_3.style.top = "0px";
-               line_div_3.style.left = value.left +"px";
-               line_div_3.style.width = "1px";
-               line_div_3.style.height = "100vh";
-               document.getElementsByTagName("article")[0].appendChild(line_div_3); 
-
-
-
-               if(data.bottom<=value.top)
-                {
-                  let dist = value.top-data.bottom;
-                  if(dist<=min_bottom.dist)
-                  {
-                    min_bottom.dist = dist;
-                    min_bottom.id = key;
-                    min_bottom.left = value.left;
-                  }
-                }
-
-                if(value.bottom<=data.top)
-                {
-                  let dist =  data.top - value.bottom;
-                  if(dist<=min_top.dist)
-                  {
-                    min_top.dist = dist;
-                    min_top.id = key;
-                    min_top.left = value.left;
-                  }
-                }
-             }
-             if(Math.abs(data.left-value.right)<=5||Math.abs(data.right-value.right)<=5)
-             {
-               line_div_4.id = "tmp4";
-               line_div_4.style.top = "0px";
-               line_div_4.style.left = value.right +"px";
-               line_div_4.style.width = "1px";
-               line_div_4.style.height = "100vh";
-               document.getElementsByTagName("article")[0].appendChild(line_div_4); 
-               if(data.bottom<=value.top)
-                {
-                  let dist = value.top-data.bottom;
-                  if(dist<=min_bottom.dist)
-                  {
-                    min_bottom.dist = dist;
-                    min_bottom.id = key;
-                    min_bottom.left = value.right;
-                  }
-                }
-
-                if(value.bottom<=data.top)
-                {
-                  let dist =  data.top - value.bottom;
-                  if(dist<=min_top.dist)
-                  {
-                    min_top.dist = dist;
-                    min_top.id = key;
-                    min_top.left = value.right;
-                  }
-                }
-             }
+            if (value.right <= data.left) {
+              let dist = data.left - value.right;
+              if (dist <= min_left.dist) {
+                min_left.dist = dist;
+                min_left.id = key;
+                min_left.top = value.top;
+              }
+            }
           }
+          if (
+            Math.abs(data.top - value.bottom) <= 5 ||
+            Math.abs(data.bottom - value.bottom) <= 5
+          ) {
+            line_div_2.id = "tmp2";
+            line_div_2.style.left = "0px";
+            line_div_2.style.top = value.bottom + "px";
+            line_div_2.style.width = "100vw";
+            line_div_2.style.height = "1px";
+            document.getElementsByTagName("article")[0].appendChild(line_div_2);
+
+            if (data.right <= value.left) {
+              let dist = value.left - data.right;
+              if (dist <= min_right.dist) {
+                min_right.dist = dist;
+                min_right.id = key;
+                min_right.top = value.bottom;
+              }
+            }
+
+            if (value.right <= data.left) {
+              let dist = data.left - value.right;
+              if (dist <= min_left.dist) {
+                min_left.dist = dist;
+                min_left.id = key;
+                min_left.top = value.bottom;
+              }
+            }
+          }
+          if (
+            Math.abs(data.left - value.left) <= 5 ||
+            Math.abs(data.right - value.left) <= 5
+          ) {
+            line_div_3.id = "tmp3";
+            line_div_3.style.top = "0px";
+            line_div_3.style.left = value.left + "px";
+            line_div_3.style.width = "1px";
+            line_div_3.style.height = "100vh";
+            document.getElementsByTagName("article")[0].appendChild(line_div_3);
+
+            if (data.bottom <= value.top) {
+              let dist = value.top - data.bottom;
+              if (dist <= min_bottom.dist) {
+                min_bottom.dist = dist;
+                min_bottom.id = key;
+                min_bottom.left = value.left;
+              }
+            }
+
+            if (value.bottom <= data.top) {
+              let dist = data.top - value.bottom;
+              if (dist <= min_top.dist) {
+                min_top.dist = dist;
+                min_top.id = key;
+                min_top.left = value.left;
+              }
+            }
+          }
+          if (
+            Math.abs(data.left - value.right) <= 5 ||
+            Math.abs(data.right - value.right) <= 5
+          ) {
+            line_div_4.id = "tmp4";
+            line_div_4.style.top = "0px";
+            line_div_4.style.left = value.right + "px";
+            line_div_4.style.width = "1px";
+            line_div_4.style.height = "100vh";
+            document.getElementsByTagName("article")[0].appendChild(line_div_4);
+            if (data.bottom <= value.top) {
+              let dist = value.top - data.bottom;
+              if (dist <= min_bottom.dist) {
+                min_bottom.dist = dist;
+                min_bottom.id = key;
+                min_bottom.left = value.right;
+              }
+            }
+
+            if (value.bottom <= data.top) {
+              let dist = data.top - value.bottom;
+              if (dist <= min_top.dist) {
+                min_top.dist = dist;
+                min_top.id = key;
+                min_top.left = value.right;
+              }
+            }
+          }
+        }
       }
-      if(min_right.id!=-1)
-      {
+      if (min_right.id != -1) {
         let min_right_div = document.createElement("div");
         min_right_div.style.position = "absolute";
         min_right_div.style.zIndex = 101;
-        min_right_div.style.top = min_right.top + "px"
-        min_right_div.style.left = data.right+ "px";
+        min_right_div.style.top = min_right.top + "px";
+        min_right_div.style.left = data.right + "px";
         min_right_div.style.width = min_right.dist + "px";
         min_right_div.style.height = "2px";
-        min_right_div.style.backgroundColor = '#003e19';
+        min_right_div.style.backgroundColor = "#003e19";
         min_right_div.innerText = min_right.dist;
         min_right_div.style.textAlign = "center";
         min_right_div.id = "min_right";
-        document.getElementsByTagName("article")[0].appendChild(min_right_div); 
+        document.getElementsByTagName("article")[0].appendChild(min_right_div);
       }
-      if(min_left.id!=-1)
-      {
+      if (min_left.id != -1) {
         let min_left_div = document.createElement("div");
         min_left_div.style.position = "absolute";
         min_left_div.style.zIndex = 101;
-        min_left_div.style.top =  min_left.top + "px"
+        min_left_div.style.top = min_left.top + "px";
         min_left_div.style.left = this.id_map.get(min_left.id).right + "px";
         min_left_div.style.width = min_left.dist + "px";
         min_left_div.style.height = "2px";
-        min_left_div.style.backgroundColor = '#003e19';
-        min_left_div.innerText =  min_left.dist;
+        min_left_div.style.backgroundColor = "#003e19";
+        min_left_div.innerText = min_left.dist;
         min_left_div.style.textAlign = "center";
-        min_left_div.id = "min_left"
-        document.getElementsByTagName("article")[0].appendChild(min_left_div);         
+        min_left_div.id = "min_left";
+        document.getElementsByTagName("article")[0].appendChild(min_left_div);
       }
 
-      if(min_bottom.id!=-1)
-      {
+      if (min_bottom.id != -1) {
         let min_bottom_div = document.createElement("div");
         min_bottom_div.style.position = "absolute";
         min_bottom_div.style.zIndex = 101;
-        min_bottom_div.style.left =  min_bottom.left + "px"
+        min_bottom_div.style.left = min_bottom.left + "px";
         min_bottom_div.style.top = data.bottom + "px";
         min_bottom_div.style.height = min_bottom.dist + "px";
         min_bottom_div.style.width = "2px";
-        min_bottom_div.style.backgroundColor = '#003e19';
-        min_bottom_div.innerText =  min_bottom.dist;
+        min_bottom_div.style.backgroundColor = "#003e19";
+        min_bottom_div.innerText = min_bottom.dist;
         min_bottom_div.style.textAlign = "center";
-        min_bottom_div.id = "min_bottom"
-        document.getElementsByTagName("article")[0].appendChild(min_bottom_div);  
+        min_bottom_div.id = "min_bottom";
+        document.getElementsByTagName("article")[0].appendChild(min_bottom_div);
       }
 
-       if(min_top.id!=-1)
-      {
+      if (min_top.id != -1) {
         let min_top_div = document.createElement("div");
         min_top_div.style.position = "absolute";
         min_top_div.style.zIndex = 101;
-        min_top_div.style.left =  min_top.left + "px"
-        min_top_div.style.top = this.id_map.get(min_top.id).bottom+ "px";
+        min_top_div.style.left = min_top.left + "px";
+        min_top_div.style.top = this.id_map.get(min_top.id).bottom + "px";
         min_top_div.style.height = min_top.dist + "px";
         min_top_div.style.width = "2px";
-        min_top_div.style.backgroundColor = '#003e19';
-        min_top_div.innerText =  min_top.dist;
+        min_top_div.style.backgroundColor = "#003e19";
+        min_top_div.innerText = min_top.dist;
         min_top_div.style.textAlign = "center";
-        min_top_div.id = "min_top"
-        document.getElementsByTagName("article")[0].appendChild(min_top_div);  
+        min_top_div.id = "min_top";
+        document.getElementsByTagName("article")[0].appendChild(min_top_div);
       }
-
-
-
     },
-    get_attach(id,data){
-      let cur = document.getElementById(id);
-      let cur_width = this.curComAttr.width;
-      let cur_height = this.curComAttr.height;
-      // console.log(cur_width);
-      // console.log(cur_height);
-      for(let [key,value] of this.id_map)
-      {
-          if(key!=id)
-          {
-               if(Math.abs(data.top-value.top)<=10)  
-               {
-                 cur.style.top = value.top+"px";
-                 cur.style.width = cur_width +"px";
-                 cur.style.height = cur_height+"px";
-               }       
-               if(Math.abs(data.bottom-value.top)<=10)
-               {
-                 cur.style.bottom = value.top+"px";
-                 cur.style.width = cur_width +"px";
-                 cur.style.height = cur_height+"px";
-               }    
+    //   get_attach(id,data){
+    //     let cur = document.getElementById(id);
+    //     let cur_width = this.curComAttr.width;
+    //     let cur_height = this.curComAttr.height;
+    //     // console.log(cur_width);
+    //     // console.log(cur_height);
+    //     for(let [key,value] of this.id_map)
+    //     {
+    //         if(key!=id)
+    //         {
+    //              if(Math.abs(data.top-value.top)<=10)
+    //              {
+    //                cur.style.top = value.top+"px";
+    //                cur.style.width = cur_width +"px";
+    //                cur.style.height = cur_height+"px";
+    //              }
+    //              if(Math.abs(data.bottom-value.top)<=10)
+    //              {
+    //                cur.style.bottom = value.top+"px";
+    //                cur.style.width = cur_width +"px";
+    //                cur.style.height = cur_height+"px";
+    //              }
 
-                if(Math.abs(data.top-value.bottom)<=10)  
-               {
-                 cur.style.top = value.bottom+"px";
-                 cur.style.width = cur_width +"px";
-                 cur.style.height = cur_height+"px";
-               }       
-               if(Math.abs(data.bottom-value.bottom)<=10)
-               {
-                 cur.style.bottom = value.bottom+"px";
-                 cur.style.width = cur_width +"px";
-                 cur.style.height = cur_height+"px";
-               } 
+    //               if(Math.abs(data.top-value.bottom)<=10)
+    //              {
+    //                cur.style.top = value.bottom+"px";
+    //                cur.style.width = cur_width +"px";
+    //                cur.style.height = cur_height+"px";
+    //              }
+    //              if(Math.abs(data.bottom-value.bottom)<=10)
+    //              {
+    //                cur.style.bottom = value.bottom+"px";
+    //                cur.style.width = cur_width +"px";
+    //                cur.style.height = cur_height+"px";
+    //              }
 
-              if(Math.abs(data.left-value.left)<=10)  
-               {
-                 cur.style.left = value.left+"px";
-                 cur.style.width = cur_width +"px";
-                 cur.style.height = cur_height+"px";
-               }       
-               if(Math.abs(data.right-value.left)<=10)
-               {
-                 cur.style.right = value.left+"px";
-                 cur.style.width = cur_width +"px";
-                 cur.style.height = cur_height+"px";
-               }
+    //             if(Math.abs(data.left-value.left)<=10)
+    //              {
+    //                cur.style.left = value.left+"px";
+    //                cur.style.width = cur_width +"px";
+    //                cur.style.height = cur_height+"px";
+    //              }
+    //              if(Math.abs(data.right-value.left)<=10)
+    //              {
+    //                cur.style.right = value.left+"px";
+    //                cur.style.width = cur_width +"px";
+    //                cur.style.height = cur_height+"px";
+    //              }
 
-               if(Math.abs(data.left-value.right)<=10)  
-               {
-                 cur.style.left = value.right+"px";
-                 cur.style.width = cur_width +"px";
-                 cur.style.height = cur_height+"px";
-               }       
-               if(Math.abs(data.right-value.right)<=10)
-               {
-                 cur.style.right = value.right+"px";
-                 cur.style.width = cur_width +"px";
-                 cur.style.height = cur_height+"px";
-               }          
-             
-          }
-      }
-   }
+    //              if(Math.abs(data.left-value.right)<=10)
+    //              {
+    //                cur.style.left = value.right+"px";
+    //                cur.style.width = cur_width +"px";
+    //                cur.style.height = cur_height+"px";
+    //              }
+    //              if(Math.abs(data.right-value.right)<=10)
+    //              {
+    //                cur.style.right = value.right+"px";
+    //                cur.style.width = cur_width +"px";
+    //                cur.style.height = cur_height+"px";
+    //              }
 
+    //         }
+    //     }
+    //  }
   },
 };
 </script>

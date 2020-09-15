@@ -23,15 +23,15 @@
 
 
 
-      <div v-show="k=='height'">
+      <div v-show="k=='big_height'">
         <span class="chang_title">搜索框高度：</span>
-        <input type="text" :value="v" @change="onChange('height',$event.target.value)" />
+        <input type="text" :value="v" @change="onChange('big_height',$event.target.value)" />
       </div>
 
 
-      <div v-show="k=='width'">
+      <div v-show="k=='big_width'">
         <span class="chang_title">搜索框宽度：</span>
-        <input type="text" :value="v" @change="onChange('width',$event.target.value)" />
+        <input type="text" :value="v" @change="onChange('big_width',$event.target.value)" />
       </div>
 
       <div v-show="k=='border_radius'">
@@ -44,11 +44,7 @@
         <input type="text" :value="v" @change="onChange('find_icon_size',$event.target.value)" />
       </div>
 
-      <div v-show="k=='big_height'">
-        <span class="chang_title">整个框的高度：</span>
-        <input type="text" :value="v" @change="onChange('big_height',$event.target.value)" />
-      </div>
-
+    
     
     </div>
   </div>
@@ -65,9 +61,8 @@ export default {
         border_color: "#b8b5b5",
         text_color: "#000000",
         text_size: "15",
-        big_height: "50",
-        width: "70",
-        height: "30",
+        big_height: "40",
+        big_width:"300",
         border_radius: "50",
         find_icon_size: "20",
       },

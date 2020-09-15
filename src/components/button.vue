@@ -283,7 +283,7 @@ export default {
           "top":coordinate_top,
           "bottom":coordinate_bottom
         }
-        _this.$emit("attach",_this.id,coordinate)
+        // _this.$emit("attach",_this.id,coordinate)
         _this.$emit("unshow_coordinate")
         this.onStop();
       },
@@ -899,30 +899,5 @@ export default {
 
 
 <style scoped>
-.left_top_circle,
-.left_bottom_circle,
-.right_top_circle,
-.right_bottom_circle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
-  background-color: #a2c9ec;
-}
-.left_top_circle {
-  left: -5px;
-  top: -5px;
-}
-.left_bottom_circle {
-  left: -5px;
-  bottom: -5px;
-}
-.right_top_circle {
-  right: -5px;
-  top: -5px;
-}
-.right_bottom_circle {
-  right: -5px;
-  bottom: -5px;
-}
+
 </style>
