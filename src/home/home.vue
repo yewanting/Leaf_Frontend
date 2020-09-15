@@ -106,7 +106,7 @@
           <!-- 标题 -->
           <my_title
             v-if="com.type=='title'"
-            :id ="index"
+            :id="index"
             :index="index"
             :left="com.attr.left"
             :top="com.attr.top"
@@ -121,6 +121,21 @@
             @coordinate="get_coordinate"
             @unshow_coordinate="unget_coordinate"
           ></my_title>
+
+          <!-- 分割线 -->
+          <my_separator
+            v-if="com.type=='separator'"
+            :id ="index"
+            :index="index"
+            :background_color="com.attr.background_color"
+            :margin_top="com.attr.margin_top"
+            :left="com.attr.left"
+            :top="com.attr.top"
+            :width="com.attr.width"
+            :height="com.attr.height"
+            @coordinate="get_coordinate"
+            @unshow_coordinate="unget_coordinate"
+          ></my_separator>
         </div>
         <canvas id="canvas_x" width="3000" height="30" @mousemove="show_ruler_x"></canvas>
         <canvas id="canvas_y" width="50" height="2000" @mousemove="show_ruler_y"></canvas>
@@ -231,14 +246,14 @@
               ></my_title>-->
 
               <!-- 分割线 -->
-              <my_separator
+              <!-- <my_separator
                 v-if="com.type=='separator'"
                 :index="index"
                 :border_wide="com.attr.border_wide"
                 :border_form="com.attr.border_form"
                 :border_color="com.attr.border_color"
                 :margin_top="com.attr.margin_top"
-              ></my_separator>
+              ></my_separator>-->
             </div>
           </div>
         </div>
@@ -1002,8 +1017,8 @@ export default {
             font_size: "18",
             position: "center",
             margin_top: "0",
-            width:"300",
-            height:"30",
+            width: "300",
+            height: "30",
             left: event.getBoundingClientRect().right - 100,
             top: event.getBoundingClientRect().top + 50,
           },
@@ -1014,10 +1029,11 @@ export default {
         curlist.push({
           type: "separator",
           attr: {
-            border_color: "#000000",
-            border_form: "solid",
-            border_wide: "1",
-            margin_top: "10",
+            background_color:"#000000",
+            width:"300",
+            height:"20",
+            left: event.getBoundingClientRect().right - 100,
+            top: event.getBoundingClientRect().top + 50,
           },
         });
       }

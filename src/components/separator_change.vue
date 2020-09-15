@@ -2,17 +2,21 @@
   <div>
     <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
 
-      <div v-show="k=='border_color'">
+      <div v-show="k=='background_color'">
         <span class="chang_title">分割线颜色：</span>
-        <input type="color" :value="v" @change="onChange('border_color',$event.target.value)" />
+        <input type="color" :value="v" @change="onChange('background_color',$event.target.value)" />
       </div>
 
-      <div v-show="k=='border_wide'">
+      <div v-show="k=='width'">
+        <span class="chang_title">分割线长度：</span>
+        <input type="text" :value="v" @change="onChange('width',$event.target.value)" />
+      </div>
+      <div v-show="k=='height'">
         <span class="chang_title">分割线粗度：</span>
-        <input type="text" :value="v" @change="onChange('border_wide',$event.target.value)" />
+        <input type="text" :value="v" @change="onChange('height',$event.target.value)" />
       </div>
 
-     <div v-if="k=='border_form'">
+     <!-- <div v-if="k=='border_form'">
         <span class="chang_title">分割线样式：</span>
         实线：
         <input
@@ -29,7 +33,7 @@
           name="border"
           @change="onChange('border_form',$event.target.value)"
         />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
