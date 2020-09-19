@@ -376,11 +376,12 @@ abbr {
 
 /****** 经典语录页面*******/
 .talk_total {
-  margin: 0;
-  position: relative;
-  width: 100%;
+  position:absolute;
+  z-index:100;
 }
-
+.single_talk{
+  position: relative;
+}
 .total_talk_form {
   padding-bottom: 2%;
   border-bottom: 1px solid rgb(240, 221, 221);
