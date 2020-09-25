@@ -125,7 +125,7 @@
           <!-- 分割线 -->
           <my_separator
             v-if="com.type=='separator'"
-            :id ="index"
+            :id="index"
             :index="index"
             :background_color="com.attr.background_color"
             :margin_top="com.attr.margin_top"
@@ -136,6 +136,26 @@
             @coordinate="get_coordinate"
             @unshow_coordinate="unget_coordinate"
           ></my_separator>
+
+          <!-- 经典语录 -->
+          <my_talk
+            v-if="com.type=='talk'"
+            :id="index"
+            :index="index"
+            :width="com.attr.width"
+            :text_background_color="com.attr.text_background_color"
+            :text_color="com.attr.text_color"
+            :text_font_size="com.attr.text_font_size"
+            :course_img_width="com.attr.course_img_width"
+            :course_img_height="com.attr.course_img_height"
+            :course_img_border_radius="com.attr.course_img_border_radius"
+            :margin_top="com.attr.margin_top"
+            :left="com.attr.left"
+            :top="com.attr.top"
+            :talk="com.content"
+            @coordinate="get_coordinate"
+            @unshow_coordinate="unget_coordinate"
+          ></my_talk>
         </div>
         <canvas id="canvas_x" width="3000" height="30" @mousemove="show_ruler_x"></canvas>
         <canvas id="canvas_y" width="50" height="2000" @mousemove="show_ruler_y"></canvas>
@@ -217,7 +237,7 @@
               ></my_find>-->
 
               <!-- 经典语录 -->
-              <my_talk
+              <!-- <my_talk
                 v-if="com.type=='talk'"
                 :index="index"
                 :text_background_color="com.attr.text_background_color"
@@ -228,7 +248,7 @@
                 :course_img_border_radius="com.attr.course_img_border_radius"
                 :margin_top="com.attr.margin_top"
                 :talk="com.content"
-              ></my_talk>
+              ></my_talk>-->
 
               <!-- 地图 -->
               <!-- <my_map></my_map> -->
@@ -970,6 +990,7 @@ export default {
         curlist.push({
           type: "talk",
           attr: {
+            width:"400",
             text_background_color: "#ffffff",
             text_color: "#000000",
             text_font_size: "20",
@@ -977,6 +998,8 @@ export default {
             course_img_height: "150",
             course_img_border_radius: "0",
             margin_top: "0",
+            left: event.getBoundingClientRect().right - 100,
+            top: event.getBoundingClientRect().top + 50,
           },
           content: [
             {
@@ -1029,9 +1052,9 @@ export default {
         curlist.push({
           type: "separator",
           attr: {
-            background_color:"#000000",
-            width:"300",
-            height:"20",
+            background_color: "#000000",
+            width: "300",
+            height: "20",
             left: event.getBoundingClientRect().right - 100,
             top: event.getBoundingClientRect().top + 50,
           },

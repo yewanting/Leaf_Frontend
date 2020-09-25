@@ -154,6 +154,13 @@ ul {
   position: absolute;
   top: 100px;
   left: 500px;
+  /*
+  安卓全面屏：360×770
+  普通iphone：375×667
+  iphone Plus：414 x 736
+  iphoneX：375 X 812
+  */
+  /* 现在用的是iphone屏幕 */
   height: 667px;
   width: 375px;
   overflow-y: scroll;
@@ -376,11 +383,12 @@ abbr {
 
 /****** 经典语录页面*******/
 .talk_total {
-  margin: 0;
-  position: relative;
-  width: 100%;
+  position:absolute;
+  z-index:100;
 }
-
+.single_talk{
+  position: relative;
+}
 .total_talk_form {
   padding-bottom: 2%;
   border-bottom: 1px solid rgb(240, 221, 221);
