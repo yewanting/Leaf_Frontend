@@ -1,51 +1,49 @@
 <template>
-  <div>
-    <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
-      <div v-show="k=='text'">
-        <span class="chang_title">搜索框的文本：</span>
-        <input type="text" :value="v" @change="onChange('text',$event.target.value)" />
-      </div>
+  <div>  
+    <div v-show="(titleChoice=='组件样式')" class="form_class" >
+      <v-row dense>
+        <v-col cols="12" sm="5" class="text_form">圆弧颜色:</v-col>
+         <v-col cols="12" sm="6"> 
+           <input type="color" :value="curComAttr.border_color"  @change="onChange('border_color',$event.target.value)" />
+        </v-col>
 
-      <div v-show="k=='border_color'">
-        <span class="chang_title">圆弧颜色：</span>
-        <input type="color" :value="v" @change="onChange('border_color',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">字体颜色：</v-col>
+         <v-col cols="12" sm="6"> 
+           <input type="color" :value="curComAttr.text_color"  @change="onChange('text_color',$event.target.value)" />
+        </v-col>
 
-      <div v-show="k=='text_color'">
-        <span class="chang_title">字体颜色：</span>
-        <input type="color" :value="v" @change="onChange('text_color',$event.target.value)" />
-      </div>
-
-      <div v-show="k=='text_size'">
-        <span class="chang_title">字体大小：</span>
-        <input type="text" :value="v" @change="onChange('text_size',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">搜索框的文本:</v-col>
+        <v-col cols="12" sm="6"> 
+          <v-text-field  dense :value="curComAttr.text" @change="onChange('text',$event)"></v-text-field>
+        </v-col>
 
 
-
-      <div v-show="k=='big_height'">
-        <span class="chang_title">搜索框高度：</span>
-        <input type="text" :value="v" @change="onChange('big_height',$event.target.value)" />
-      </div>
-
-
-      <div v-show="k=='big_width'">
-        <span class="chang_title">搜索框宽度：</span>
-        <input type="text" :value="v" @change="onChange('big_width',$event.target.value)" />
-      </div>
-
-      <div v-show="k=='border_radius'">
-        <span class="chang_title">圆弧大小：</span>
-        <input type="text" :value="v" @change="onChange('border_radius',$event.target.value)" />
-      </div>
-
-      <div v-show="k=='find_icon_size'">
-        <span class="chang_title">搜索图标大小：</span>
-        <input type="text" :value="v" @change="onChange('find_icon_size',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">字体大小：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field  dense :value="curComAttr.text_size" @change="onChange('text_size',$event)"></v-text-field>
+        </v-col>
 
     
-    
+        <v-col cols="12" sm="5" class="text_form">搜索框高度：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field  dense :value="curComAttr.big_height" @change="onChange('big_height',$event)"></v-text-field>
+        </v-col>
+
+        <v-col cols="12" sm="5" class="text_form">搜索框宽度：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field dense :value="curComAttr.big_width" @change="onChange('big_width',$event)"></v-text-field>
+        </v-col>
+
+         <v-col cols="12" sm="5" class="text_form">圆弧大小：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field  dense :value="curComAttr.border_radius" @change="onChange('border_radius',$event)"></v-text-field>
+        </v-col>
+
+        <v-col cols="12" sm="5" class="text_form">搜索图标大小：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field dense :value="curComAttr.find_icon_size" @change="onChange('find_icon_size',$event)"></v-text-field>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -89,7 +87,7 @@ export default {
   created() {},
   methods: {
     onChange(attr, value) {
-      // console.log(attr,value)
+      console.log(attr,value)
       var curlist = this.curComList;
       curlist[this.curComID]["attr"][attr] = value;
       var curattr = this.curComAttr;
@@ -112,5 +110,8 @@ export default {
 .form_class .chang_title{
   display: inline-block;
   width: 130px;
+}
+.text_form{
+  align-self:center;
 }
 </style>

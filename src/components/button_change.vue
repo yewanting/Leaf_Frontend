@@ -1,61 +1,64 @@
 <template>
   <div>
-    <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
+      <div v-show="(titleChoice=='组件样式')" class="form_class" >
+      <v-row dense>
+        <v-col cols="12" sm="5" class="text_form">按钮背景颜色：</v-col>
+         <v-col cols="12" sm="6"> 
+           <input type="color" :value="curComAttr.background_color"  @change="onChange('background_color',$event.target.value)" />
+        </v-col>
 
-      <div v-show="k=='title'">
-        <span class="chang_title">按钮文本：</span>
-        <input type="text" :value="v" @change="onChange('title',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">按钮边框颜色：</v-col>
+         <v-col cols="12" sm="6"> 
+           <input type="color" :value="curComAttr.border_color"  @change="onChange('border_color',$event.target.value)" />
+        </v-col>
 
-      <div v-show="k=='background_color'">
-        <span class="chang_title">按钮背景颜色：</span>
-        <input type="color" :value="v" @change="onChange('background_color',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">文字颜色：</v-col>
+         <v-col cols="12" sm="6"> 
+           <input type="color" :value="curComAttr.text_color"  @change="onChange('text_color',$event.target.value)" />
+        </v-col>
 
-      <div v-show="k=='border_color'">
-        <span class="chang_title">按钮边框颜色：</span>
-        <input type="color" :value="v" @change="onChange('border_color',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">按钮文本：</v-col>
+        <v-col cols="12" sm="6"> 
+          <v-text-field  dense :value="curComAttr.title" @change="onChange('title',$event)"></v-text-field>
+        </v-col>
 
-      <div v-show="k=='text_color'">
-        <span class="chang_title">文字颜色：</span>
-        <input type="color" :value="v" @change="onChange('text_color',$event.target.value)" />
-      </div>
 
-      <div v-show="k=='text_size'">
-        <span class="chang_title">文字大小：</span>
-        <input type="text" :value="v" @change="onChange('text_size',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">字体大小：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field  dense :value="curComAttr.text_size" @change="onChange('text_size',$event)"></v-text-field>
+        </v-col>
 
-      <div v-show="k=='width'">
-        <span class="chang_title">按钮宽度：</span>
-        <input type="text" :value="v" @change="onChange('width',$event.target.value)" />
-      </div>
+    
+        <v-col cols="12" sm="5" class="text_form">按钮宽度：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field  dense :value="curComAttr.width" @change="onChange('width',$event)"></v-text-field>
+        </v-col>
 
-      <div v-show="k=='height'">
-        <span class="chang_title">按钮高度：</span>
-        <input type="text" :value="v" @change="onChange('height',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">按钮高度：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field dense :value="curComAttr.height" @change="onChange('height',$event)"></v-text-field>
+        </v-col>
 
-      <div v-show="k=='line_height'">
-        <span class="chang_title">按钮行高：</span>
-        <input type="text" :value="v" @change="onChange('line_height',$event.target.value)" />
-      </div>
+         <v-col cols="12" sm="5" class="text_form">按钮行高：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field  dense :value="curComAttr.line_height" @change="onChange('line_height',$event)"></v-text-field>
+        </v-col>
 
-      <div v-show="k=='border_radius'">
-        <span class="chang_title">按钮圆角：</span>
-        <input type="text" :value="v" @change="onChange('border_radius',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">按钮圆角：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field dense :value="curComAttr.border_radius" @change="onChange('border_radius',$event)"></v-text-field>
+        </v-col>
 
-      <div v-show="k=='padding_top'">
-        <span class="chang_title">上内边距：</span>
-        <input type="text" :value="v" @change="onChange('padding_top',$event.target.value)" />
-      </div>
+         <v-col cols="12" sm="5" class="text_form">上内边距：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field  dense :value="curComAttr.padding_top" @change="onChange('padding_top',$event)"></v-text-field>
+        </v-col>
 
-      <div v-show="k=='padding_left'">
-        <span class="chang_title">左内边距：</span>
-        <input type="text" :value="v" @change="onChange('padding_left',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">左内边距：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field dense :value="curComAttr.padding_left" @change="onChange('padding_left',$event)"></v-text-field>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -102,7 +105,7 @@ export default {
   created() {},
   methods: {
     onChange(attr, value) {
-      // console.log(attr,value);
+      console.log(attr,value);
       var curlist = this.curComList;
 
       curlist[this.curComID]["attr"][attr] = value;
@@ -126,5 +129,8 @@ export default {
 .form_class .chang_title{
   display: inline-block;
   width: 130px;
+}
+.text_form{
+  align-self:center;
 }
 </style>

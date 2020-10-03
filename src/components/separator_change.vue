@@ -1,39 +1,34 @@
 <template>
   <div>
-    <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
+    <div v-show="titleChoice == '组件样式'" class="form_class">
+      <v-row dense>
+        <v-col cols="12" sm="5" class="text_form">分割线颜色：</v-col>
+        <v-col cols="12" sm="6">
+          <input
+            type="color"
+            :value="curComAttr.background_color"
+            @change="onChange('background_color', $event.target.value)"
+          />
+        </v-col>
 
-      <div v-show="k=='background_color'">
-        <span class="chang_title">分割线颜色：</span>
-        <input type="color" :value="v" @change="onChange('background_color',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">分割线长度：</v-col>
+        <v-col cols="12" sm="6">
+          <v-text-field
+            dense
+            :value="curComAttr.width"
+            @change="onChange('width', $event)"
+          ></v-text-field>
+        </v-col>
 
-      <div v-show="k=='width'">
-        <span class="chang_title">分割线长度：</span>
-        <input type="text" :value="v" @change="onChange('width',$event.target.value)" />
-      </div>
-      <div v-show="k=='height'">
-        <span class="chang_title">分割线粗度：</span>
-        <input type="text" :value="v" @change="onChange('height',$event.target.value)" />
-      </div>
-
-     <!-- <div v-if="k=='border_form'">
-        <span class="chang_title">分割线样式：</span>
-        实线：
-        <input
-          type="radio"
-          checked
-          value="solid"
-          name="border"
-          @change="onChange('border_form',$event.target.value)"
-        />
-        虚线：
-        <input
-          type="radio"
-          value="dotted"
-          name="border"
-          @change="onChange('border_form',$event.target.value)"
-        />
-      </div> -->
+        <v-col cols="12" sm="5" class="text_form">分割线粗度：</v-col>
+        <v-col cols="12" sm="6">
+          <v-text-field
+            dense
+            :value="curComAttr.height"
+            @change="onChange('height', $event)"
+          ></v-text-field>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -43,9 +38,7 @@
 <script>
 export default {
   data() {
-    return {
-   
-    };
+    return {};
   },
   computed: {
     curComList() {
@@ -60,15 +53,14 @@ export default {
     curComID() {
       return this.$store.state.cur_com_id;
     },
-    titleChoice(){
-       return this.$store.state.title_choice;
-    }
+    titleChoice() {
+      return this.$store.state.title_choice;
+    },
   },
 
   created() {},
   methods: {
     onChange(attr, value) {
-      
       var curlist = this.curComList;
       curlist[this.curComID]["attr"][attr] = value;
       var curattr = this.curComAttr;
@@ -83,12 +75,12 @@ export default {
 
 
 <style scoped>
-.form_class{
-  color:rgb(80, 71, 71);
+.form_class {
+  color: rgb(80, 71, 71);
   padding-top: 20px;
   padding-left: 20px;
 }
-.form_class .chang_title{
+.form_class .chang_title {
   display: inline-block;
   width: 130px;
 }

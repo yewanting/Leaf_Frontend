@@ -387,15 +387,15 @@ export default {
           content: "轮播图",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "轮播图1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "轮播图2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "轮播图3",
             },
           ],
@@ -405,15 +405,15 @@ export default {
           content: "视频",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "视频1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "视频2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "视频3",
             },
           ],
@@ -423,15 +423,15 @@ export default {
           content: "分类导航",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "分类导航1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "分类导航2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "分类导航3",
             },
           ],
@@ -441,15 +441,15 @@ export default {
           content: "搜索框",
           imgsrc: [
             {
-              src: "../../static/images/left/sousuo1.png",
+              src: require('../../static/images/left/sousuo1.png'),
               title: "搜索框1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "搜索框2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "搜索框3",
             },
           ],
@@ -459,15 +459,15 @@ export default {
           content: "地址",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "地址1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "地址2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "地址3",
             },
           ],
@@ -477,15 +477,15 @@ export default {
           content: "通知公告",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "通知公告1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "通知公告2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "通知公告3",
             },
           ],
@@ -495,15 +495,15 @@ export default {
           content: "标题",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src:require('../../static/images/left/lunbo2.png'),
               title: "标题1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src:require('../../static/images/left/lunbo2.png'),
               title: "标题2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "标题3",
             },
           ],
@@ -513,15 +513,15 @@ export default {
           content: "图片",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "图片1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "图片2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "图片3",
             },
           ],
@@ -531,15 +531,15 @@ export default {
           content: "橱窗",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "橱窗1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "橱窗2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "橱窗3",
             },
           ],
@@ -549,15 +549,15 @@ export default {
           content: "按钮",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "按钮1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "按钮2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "按钮3",
             },
           ],
@@ -567,15 +567,15 @@ export default {
           content: "分割线",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "分割线1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "分割线2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "分割线3",
             },
           ],
@@ -585,15 +585,15 @@ export default {
           content: "图文列表",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "图文列表1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "图文列表2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "图文列表3",
             },
           ],
@@ -603,15 +603,15 @@ export default {
           content: "广告位",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "广告位1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "广告位2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "广告位3",
             },
           ],
@@ -621,19 +621,19 @@ export default {
           content: "课程列表",
           imgsrc: [
             {
-              src: "../../static/images/left/kecheng1.png",
+              src: require('../../static/images/left/kecheng1.png'),
               title: "课程列表1",
             },
             {
-              src: "../../static/images/left/kecheng2.png",
+              src: require('../../static/images/left/kecheng2.png'),
               title: "课程列表2",
             },
             {
-              src: "../../static/images/left/kecheng3.png",
+              src: require('../../static/images/left/kecheng3.png'),
               title: "课程列表3",
             },
             {
-              src: "../../static/images/left/kecheng4.png",
+              src: require('../../static/images/left/kecheng4.png'),
               title: "课程列表3",
             },
           ],
@@ -643,15 +643,15 @@ export default {
           content: "经典语录",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "经典语录1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "经典语录2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "经典语录3",
             },
           ],
@@ -661,15 +661,15 @@ export default {
           content: "推荐列表",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "推荐列表1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "推荐列表2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "推荐列表3",
             },
           ],
@@ -679,15 +679,15 @@ export default {
           content: "讲师列表",
           imgsrc: [
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "讲师列表1",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "讲师列表2",
             },
             {
-              src: "../../static/images/left/lunbo2.png",
+              src: require('../../static/images/left/lunbo2.png'),
               title: "讲师列表3",
             },
           ],
@@ -867,11 +867,11 @@ export default {
           type: "banner",
           attr: {
             imgsrc: [
-              "../../static/images/lunbo1.png",
-              "../../static/images/lunbo2.png",
-              "../../static/images/lunbo3.png",
-              "../../static/images/lunbo4.png",
-              "../../static/images/lunbo1.png",
+              require('../../static/images/lunbo1.png'),
+              require('../../static/images/lunbo2.png'),
+              require('../../static/images/lunbo3.png'),
+              require('../../static/images/lunbo4.png'),
+              require('../../static/images/lunbo1.png'),
             ],
             width: "500",
             height: "200",
@@ -940,28 +940,28 @@ export default {
               descripe: "课程简介",
               price: "￥" + 99,
               label: "课程标签",
-              course_img: "../../static/images/good_pic.png",
+              course_img: require('../../static/images/good_pic.png'),
             },
             {
               title: "课程标题",
               descripe: "课程简介",
               price: "￥" + 99,
               label: "课程标签",
-              course_img: "../../static/images/good_pic.png",
+              course_img: require('../../static/images/good_pic.png'),
             },
             {
               title: "课程标题",
               descripe: "课程简介",
               price: "￥" + 99,
               label: "课程标签",
-              course_img: "../../static/images/good_pic.png",
+              course_img: require('../../static/images/good_pic.png'),
             },
             {
               title: "课程标题",
               descripe: "课程简介",
               price: "￥" + 99,
               label: "课程标签",
-              course_img: "../../static/images/good_pic.png",
+              course_img: require('../../static/images/good_pic.png'),
             },
           ],
         });
@@ -1004,25 +1004,25 @@ export default {
           content: [
             {
               descripe: "经典语录经典语录经典语录经典语录经典语录",
-              course_img: "../../static/images/talk_pic.png",
+              course_img: require('../../static/images/talk_pic.png'),
               love_count: "666",
               comment_count: "666",
             },
             {
               descripe: "经典语录经典语录经典语录经典语录经典语录",
-              course_img: "../../static/images/talk_pic.png",
+              course_img: require('../../static/images/talk_pic.png'),
               love_count: "666",
               comment_count: "666",
             },
             {
               descripe: "经典语录经典语录经典语录经典语录经典语录",
-              course_img: "../../static/images/talk_pic.png",
+              course_img: require('../../static/images/talk_pic.png'),
               love_count: "666",
               comment_count: "666",
             },
             {
               descripe: "经典语录经典语录经典语录经典语录经典语录",
-              course_img: "../../static/images/talk_pic.png",
+              course_img: require('../../static/images/talk_pic.png'),
               love_count: "666",
               comment_count: "666",
             },

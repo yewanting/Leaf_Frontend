@@ -1,44 +1,42 @@
 <template>
   <div>
-    <div v-for="(v,k) in curComAttr" :key="k" class="form_class" v-show="(titleChoice=='组件样式')">
-      <div v-if="k=='text_background_color'">
-        <span class="chang_title">语录背景颜色：</span>
-        <input
-          type="color"
-          :value="v"
-          @change="onChange('text_background_color',$event.target.value)"
-        />
-      </div>
+    
+      <div v-show="(titleChoice=='组件样式')" class="form_class" >
+      <v-row dense>
+        <v-col cols="12" sm="5" class="text_form">语录背景颜色：</v-col>
+         <v-col cols="12" sm="6"> 
+           <input type="color" :value="curComAttr.text_background_color"  @change="onChange('text_background_color',$event.target.value)" />
+        </v-col>
 
-      <div v-if="k=='text_color'">
-        <span class="chang_title">语录文字颜色：</span>
-        <input type="color" :value="v" @change="onChange('text_color',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">语录文字颜色：</v-col>
+         <v-col cols="12" sm="6"> 
+           <input type="color" :value="curComAttr.text_color"  @change="onChange('text_color',$event.target.value)" />
+        </v-col>
 
-      <div v-if="k=='text_font_size'">
-        <span class="chang_title">语录文字大小：</span>
-        <input type="text" :value="v" @change="onChange('text_font_size',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">语录文字大小：</v-col>
+        <v-col cols="12" sm="6"> 
+          <v-text-field  dense :value="curComAttr.text_font_size" @change="onChange('text_font_size',$event)"></v-text-field>
+        </v-col>
 
 
-      <div v-if="k=='course_img_width'">
-        <span class="chang_title">语录图片宽度：</span>
-        <input type="text" :value="v" @change="onChange('course_img_width',$event.target.value)" />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">语录图片宽度：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field  dense :value="curComAttr.course_img_width" @change="onChange('course_img_width',$event)"></v-text-field>
+        </v-col>
 
-      <div v-if="k=='course_img_height'">
-        <span class="chang_title">语录图片高度：</span>
-        <input type="text" :value="v" @change="onChange('course_img_height',$event.target.value)" />
-      </div>
+    
+        <v-col cols="12" sm="5" class="text_form">语录图片高度：</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field  dense :value="curComAttr.course_img_height" @change="onChange('course_img_height',$event)"></v-text-field>
+        </v-col>
 
-      <div v-if="k=='course_img_border_radius'">
-        <span class="chang_title">语录图片圆角：</span>
-        <input
-          type="text"
-          :value="v"
-          @change="onChange('course_img_border_radius',$event.target.value)"
-        />
-      </div>
+        <v-col cols="12" sm="5" class="text_form">语录图片圆角</v-col>
+         <v-col cols="12" sm="6"> 
+           <v-text-field dense :value="curComAttr.course_img_border_radius" @change="onChange('course_img_border_radius',$event)"></v-text-field>
+        </v-col>
+
+      
+      </v-row>
     </div>
   </div>
 </template>
