@@ -150,7 +150,7 @@ ul {
 }
 
 /* 中间手机端 */
-.main_view_mid {
+#mainview {
   position: absolute;
   top: 100px;
   left: 500px;
@@ -161,10 +161,8 @@ ul {
   iphoneX：375 X 812
   */
   /* 现在用的是iphone屏幕 */
-  height: 667px;
-  width: 375px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
   border: 1px solid grey;
   margin: auto;
   /* box-shadow: 0px 10px 30px rgb(226, 225, 224); */

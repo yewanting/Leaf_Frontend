@@ -5,7 +5,7 @@
         <v-list dense nav class="py-0">
           <v-list-item two-line>
             <v-list-item-avatar>
-              <img src="../../static/images/logo.jpg" />
+              <img src="../../public/images/logo.jpg" />
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>竹子姐姐</v-list-item-title>
@@ -197,7 +197,35 @@ export default {
     },
     gotoDesign() {
       if (this.projectName != "") {
-        this.$router.push('/home')
+        let index = 0;
+        for (let i = this.final_resolution.length - 2; i >= 0; i--) {
+          if (this.final_resolution[i] == "(") {
+            index = i;
+            break;
+          }
+        }
+
+        let main_view_width = 0;
+        let main_view_height = 0;
+        let cur = "";
+        for (let i = index + 1; i < this.final_resolution.length - 1; i++) {
+          if (this.final_resolution[i] == "×") {
+            main_view_width = cur ;
+            // console.log(cur);
+            cur = "";
+            i++;
+          }
+          cur += this.final_resolution[i];
+        }
+        // console.log(cur);
+        main_view_height = cur;
+
+        let main_view = {
+          main_view_width: main_view_width,
+          main_view_height: main_view_height,
+        };
+        this.$store.commit("MAINVIEW", main_view);
+        this.$router.push("/home");
       } else {
         this.dialog = true;
       }

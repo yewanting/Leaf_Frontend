@@ -44,8 +44,8 @@
         <img :src="imgsrc[index]" />
       </li>
     </ul>
-    <img src="../../static/images/nexImg.png" class="next" />
-    <img src="../../static/images/preImg.png" class="pre" @click="get_pre" />
+    <img src="../../public/images/nexImg.png" class="next" />
+    <img src="../../public/images/preImg.png" class="pre" @click="get_pre" />
   </div>
 </template>
 

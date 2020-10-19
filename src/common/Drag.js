@@ -96,7 +96,6 @@ Drag.prototype = {
     this.lockX || (this.drag.style.left = iLeft + "px");
 
     event.preventDefault && event.preventDefault();
-
     this.onMove();
   },
   stopDrag: function () {

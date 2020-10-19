@@ -18,6 +18,7 @@ const state = {
     delete_component:null,
     course_form:"详细列表",
     cur_move_id:-1,
+    main_view:{}
     
 
 

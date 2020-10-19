@@ -188,7 +188,7 @@ export default {
         descripe: "课程简介",
         price: "￥" + 99,
         lable: "课程标签",
-        course_img: "../../static/images/good_pic.png",
+        course_img: "../../public/images/good_pic.png",
       }),
         this.$store.commit("CURCOMLIST", curlist);
     },

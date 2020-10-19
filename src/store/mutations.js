@@ -9,6 +9,7 @@ const IFSHOWYESNO = 'IFSHOWYESNO'
 const DELETECOMPONENT = 'DELETECOMPONENT'
 const COURSERFORM = 'COURSERFORM'
 const CURMOVEID = 'CURMOVEID'
+const MAINVIEW = 'MAINVIEW'
 
 export default {
     [CURRENTELEM](state,res){
@@ -48,5 +49,8 @@ export default {
     [CURMOVEID](state,res){
         state.cur_move_id = res
     },
+    [MAINVIEW](state,res){
+        state.main_view = res
+    }
 
 }
