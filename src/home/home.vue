@@ -1089,7 +1089,7 @@ export default {
         '<meta charset = "utf-8"></head>';
 
       let mainview = document.querySelector("#mainview");
-      cur_code += mainview.outerHTML;
+      let mainview_move_height = mainview.style.height;
       // console.log(mainview.outerHTML)
       // console.log(mainview);
       for (let i = 0; i < this.curComList.length; i++) {     
@@ -1111,11 +1111,16 @@ export default {
           cur.style.left = new_left +"px";
           let new_top =  cur.offsetTop-mainview.offsetTop;
           cur.style.top= new_top +"px";
-          cur_code += cur.outerHTML;
+          // cur_code += cur.outerHTML;
           
         }
       }
-
+      
+       mainview.style.height = this.main_view_form.main_view_height +"px";
+       mainview.style.overflowY = "scroll";
+       cur_code += mainview.outerHTML;
+       mainview.style.height = mainview_move_height;
+       mainview.style.overflow  = "hidden";
       return cur_code.replace(/..\/..\/public\//g, "");
     },
 
