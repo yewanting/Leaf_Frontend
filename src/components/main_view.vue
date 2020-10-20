@@ -4,7 +4,7 @@
     @mouseenter="show_Mouse_bottom($event.currentTarget)"
     @mouseleave="unshow_Mouse_bottom($event.currentTarget)"  
   >
-   <hr size=1 id="dottedline">
+   <!-- <hr size=1 id="dottedline"> -->
   </div>
  
 <!-- </div>  -->
@@ -20,8 +20,8 @@ export default {
     }
   },
   mounted(){
-        let dottedtop = parseInt(this.main_view_form.main_view_height);
-        document.querySelector("#dottedline").style.top= dottedtop+"px";
+        // let dottedtop = parseInt(this.main_view_form.main_view_height);
+        // document.querySelector("#dottedline").style.top= dottedtop+"px";
  },
   methods: {
     show_Mouse_bottom(event) {
@@ -126,11 +126,11 @@ export default {
 
 
 <style scoped>
-#dottedline{
+/* #dottedline{
     color: blue;
     border-style:dotted;
     position: absolute;
     left:-50px;
     width: 500px;
-}
+} */
 </style>

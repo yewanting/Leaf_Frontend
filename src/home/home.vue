@@ -161,8 +161,8 @@
         <canvas id="canvas_y" width="50" height="2000" @mousemove="show_ruler_y"></canvas>
         <div style="width:100%;height:100%;" @mouseenter="unshow_ruler">
           <my_main_view id="mainview">
-            <my_toast></my_toast>
-            <div v-for="(com,index) in curComList" :key="index">
+            <!-- <my_toast></my_toast> -->
+            <!-- <div v-for="(com,index) in curComList" :key="index"> -->
               <!-- 按钮 -->
               <!-- <my_button
               v-if="com.type=='button'"
@@ -184,7 +184,7 @@
               ></my_button>-->
 
               <!-- 轮播图 -->
-              <my_banner
+              <!-- <my_banner
                 v-if="com.type=='banner'"
                 :index="index"
                 :imgsrc="com.attr.imgsrc"
@@ -193,11 +193,11 @@
                 :border_radius="com.attr.border_radius"
                 :banner_seconds="com.attr.banner_seconds"
                 :margin_top="com.attr.margin_top"
-              ></my_banner>
+              ></my_banner> -->
 
               <!-- 课程列表 -->
 
-              <my_courselist
+              <!-- <my_courselist
                 v-if="com.type=='courselist'"
                 :index="index"
                 :title_background_color="com.attr.title_background_color"
@@ -218,7 +218,7 @@
                 :course_img_border_radius="com.attr.course_img_border_radius"
                 :margin_top="com.attr.margin_top"
                 :goods="com.content"
-              ></my_courselist>
+              ></my_courselist> -->
 
               <!-- 搜索框 -->
               <!-- <my_find
@@ -274,8 +274,9 @@
                 :border_color="com.attr.border_color"
                 :margin_top="com.attr.margin_top"
               ></my_separator>-->
-            </div>
+            <!-- </div> -->
           </my_main_view>
+          <hr size=1 id="dottedline">
         </div>
       </article>
       <aside @mouseenter="unshow_ruler">
@@ -865,11 +866,16 @@ export default {
     }
     drawAxes_x();
     drawAxes_y();
-    // document.getElementsByTagName("article")[0].scrollLeft= 500;
+
 
     let main_view = document.querySelector("#mainview");
     main_view.style.width = this.main_view_form.main_view_width +"px";
     main_view.style.height = this.main_view_form.main_view_height+"px";
+
+    let dottedline = document.querySelector("#dottedline");
+    let dottedtop = parseInt(this.main_view_form.main_view_height)+100;
+    dottedline.style.top= dottedtop+"px";
+    
     
  },
   methods: {
@@ -1092,6 +1098,7 @@ export default {
       let mainview_move_height = mainview.style.height;
       // console.log(mainview.outerHTML)
       // console.log(mainview);
+      let refresh = new Array();
       for (let i = 0; i < this.curComList.length; i++) {     
         let cur = document.getElementById(i);
         // console.log(cur);
@@ -1106,12 +1113,18 @@ export default {
           tmp_left >= mainview.getBoundingClientRect().left &&
           tmp_right <= mainview.getBoundingClientRect().right
         ) {
-          mainview.appendChild(cur);
+          refresh.push({
+            "id":i,
+            "left":cur.offsetLeft,
+            "top":cur.offsetTop
+          })
           let new_left = cur.offsetLeft - mainview.offsetLeft;
           cur.style.left = new_left +"px";
           let new_top =  cur.offsetTop-mainview.offsetTop;
           cur.style.top= new_top +"px";
+           mainview.appendChild(cur);
           // cur_code += cur.outerHTML;
+
           
         }
       }
@@ -1121,6 +1134,14 @@ export default {
        cur_code += mainview.outerHTML;
        mainview.style.height = mainview_move_height;
        mainview.style.overflow  = "hidden";
+       let component_set = document.querySelector("#component_set");
+       for(let i = 0 ; i < refresh.length;i++)
+       {
+         let refresh_cur = document.getElementById(refresh[i].id);
+         component_set.appendChild(refresh_cur);
+         refresh_cur.style.left = refresh[i].left+"px";
+         refresh_cur.style.top = refresh[i].top+"px"
+       }
       return cur_code.replace(/..\/..\/public\//g, "");
     },
 
@@ -1587,71 +1608,7 @@ export default {
         document.getElementsByTagName("article")[0].appendChild(min_top_div);
       }
     },
-    //   get_attach(id,data){
-    //     let cur = document.getElementById(id);
-    //     let cur_width = this.curComAttr.width;
-    //     let cur_height = this.curComAttr.height;
-    //     // console.log(cur_width);
-    //     // console.log(cur_height);
-    //     for(let [key,value] of this.id_map)
-    //     {
-    //         if(key!=id)
-    //         {
-    //              if(Math.abs(data.top-value.top)<=10)
-    //              {
-    //                cur.style.top = value.top+"px";
-    //                cur.style.width = cur_width +"px";
-    //                cur.style.height = cur_height+"px";
-    //              }
-    //              if(Math.abs(data.bottom-value.top)<=10)
-    //              {
-    //                cur.style.bottom = value.top+"px";
-    //                cur.style.width = cur_width +"px";
-    //                cur.style.height = cur_height+"px";
-    //              }
 
-    //               if(Math.abs(data.top-value.bottom)<=10)
-    //              {
-    //                cur.style.top = value.bottom+"px";
-    //                cur.style.width = cur_width +"px";
-    //                cur.style.height = cur_height+"px";
-    //              }
-    //              if(Math.abs(data.bottom-value.bottom)<=10)
-    //              {
-    //                cur.style.bottom = value.bottom+"px";
-    //                cur.style.width = cur_width +"px";
-    //                cur.style.height = cur_height+"px";
-    //              }
-
-    //             if(Math.abs(data.left-value.left)<=10)
-    //              {
-    //                cur.style.left = value.left+"px";
-    //                cur.style.width = cur_width +"px";
-    //                cur.style.height = cur_height+"px";
-    //              }
-    //              if(Math.abs(data.right-value.left)<=10)
-    //              {
-    //                cur.style.right = value.left+"px";
-    //                cur.style.width = cur_width +"px";
-    //                cur.style.height = cur_height+"px";
-    //              }
-
-    //              if(Math.abs(data.left-value.right)<=10)
-    //              {
-    //                cur.style.left = value.right+"px";
-    //                cur.style.width = cur_width +"px";
-    //                cur.style.height = cur_height+"px";
-    //              }
-    //              if(Math.abs(data.right-value.right)<=10)
-    //              {
-    //                cur.style.right = value.right+"px";
-    //                cur.style.width = cur_width +"px";
-    //                cur.style.height = cur_height+"px";
-    //              }
-
-    //         }
-    //     }
-    //  }
   },
 };
 </script>
@@ -1704,5 +1661,12 @@ export default {
   background: #ffffff;
   cursor: pointer;
   position: absolute;
+}
+#dottedline{
+    color: blue;
+    border-style:dotted;
+    position: absolute;
+    left:450px;
+    width: 500px;
 }
 </style>
