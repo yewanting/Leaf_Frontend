@@ -45,7 +45,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 >拖动
 
-![计划](https://github.com/yewanting/Leaf_Frontend/blob/master/imgdrag.png)
+![拖动](https://github.com/yewanting/Leaf_Frontend/blob/master/img/drag.png)
 
 >组件间
 
