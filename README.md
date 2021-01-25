@@ -25,7 +25,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 >工作区
 
-![工作区](https://raw.githubusercontent.com/yewanting/Leaf_Frontend/blob/master/img/workHome.png)
+![工作区](https://github.com/yewanting/Leaf_Frontend/blob/master/img/workHome.png)
 
 >初始页
 
