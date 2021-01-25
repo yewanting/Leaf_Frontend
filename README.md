@@ -64,11 +64,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ![删除组件](https://raw.githubusercontent.com/yewanting/Leaf_Frontend/img/delete.png)
 
 
-
 >改变屏幕长度
 
-![改变]https://raw.githubusercontent.com/yewanting/Leaf_Frontend/img/long.png)
+![改变](https://raw.githubusercontent.com/yewanting/Leaf_Frontend/img/long.png)
 
 >导出
 
-![导出]https://raw.githubusercontent.com/yewanting/Leaf_Frontend/img/zip.png)
+![导出](https://raw.githubusercontent.com/yewanting/Leaf_Frontend/img/zip.png)
