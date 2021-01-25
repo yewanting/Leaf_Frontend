@@ -49,15 +49,7 @@ export default {
         'px;' +
         'border-radius:' +
         this.border_radius +
-        'px;' +
-        'padding-top:' +
-        this.padding_top +
-        'px;' +
-        'padding-left:' +
-        this.padding_left +
         'px;'
-        // 'float:'+
-        // this.position
         return s;
   },
     if_yes(){
@@ -78,8 +70,6 @@ export default {
     "height",
     "line_height",
     "border_radius",
-    "padding_top",
-    "padding_left",
   ],
 
   created() {
@@ -113,4 +103,5 @@ button:hover{
     cursor: pointer;
     /* color: #e28080; */
 }
+
 </style>

@@ -85,7 +85,6 @@ Drag.prototype = {
     var iLeft = event.clientX - this._x;
 
     if (this.lock) return;
-    
     this.limit &&
       (iTop < 0 && (iTop = 0),
       iLeft < 0 && (iLeft = 0),

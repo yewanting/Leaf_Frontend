@@ -1,7 +1,8 @@
 <template>
     <div class="toast_total" v-if="if_show_yes_no==1">
         <div class="text">是否删除该组件？</div>
-            <my_button v-for="(value,k) in btn" :key="k"
+        <div id = "myBtn">
+            <my_button v-for="(value,k) in btn" :key="k" 
             :title="btn[k].title"
             :background_color=btn[k].background_color
             :width="btn[k].width"
@@ -9,6 +10,7 @@
             :border_radius=btn[k].border_radius
              class="btn"
             ></my_button>
+        </div>
     </div>
 </template>
 
@@ -62,11 +64,16 @@ export default {
     right: 0;
     margin:auto;
     width: 50%;
-    height: 20%;
+    height: 40%;
     z-index :101;
     border: 1px solid #838383;
     box-shadow: 0px 10px 30px #fae3e3;
     background-color: #ffffff;
+}
+#myBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .text{
     text-align: center;

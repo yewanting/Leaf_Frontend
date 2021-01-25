@@ -56,8 +56,8 @@
         </div>
       </div>
       <!-- 中间部分 -->
-      <article>
-        <div v-for="(com,index) in curComList" :key="index" id="component_set">
+      <article id="component_set">
+        <div v-for="(com,index) in curComList" :key="index" >
           <my_button
             v-if="com.type=='button'"
             :id="index"
@@ -159,6 +159,7 @@
         </div>
         <canvas id="canvas_x" width="3000" height="30" @mousemove="show_ruler_x"></canvas>
         <canvas id="canvas_y" width="50" height="2000" @mousemove="show_ruler_y"></canvas>
+        <my_toast></my_toast>
         <div style="width:100%;height:100%;" @mouseenter="unshow_ruler">
           <my_main_view id="mainview">
             <!-- <my_toast></my_toast> -->
@@ -501,7 +502,7 @@ export default {
           content: "标题",
           imgsrc: [
             {
-              src:require('../../public/images/left/lunbo2.png'),
+              src:require('../../public/images/left/title.png'),
               title: "标题1",
             },
             {
@@ -555,7 +556,7 @@ export default {
           content: "按钮",
           imgsrc: [
             {
-              src: require('../../public/images/left/lunbo2.png'),
+              src: require('../../public/images/left/button.png'),
               title: "按钮1",
             },
             {
@@ -573,7 +574,7 @@ export default {
           content: "分割线",
           imgsrc: [
             {
-              src: require('../../public/images/left/lunbo2.png'),
+              src: require('../../public/images/left/divisor.png'),
               title: "分割线1",
             },
             {
@@ -649,7 +650,7 @@ export default {
           content: "经典语录",
           imgsrc: [
             {
-              src: require('../../public/images/left/lunbo2.png'),
+              src: require('../../public/images/left/talk.png'),
               title: "经典语录1",
             },
             {
